@@ -1,0 +1,25 @@
+{
+  "name": "appular-express-app",
+  "version": "0.0.1",
+  "homepage": "http://github.com/adamwdraper",
+  "description": "Express app to work with appular js framework.",
+  "main": "app.js",
+  "dependencies": {
+    "express": "~3.1.0",
+    "jade": "~0.30.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": {
+    "name": "Adam Draper",
+    "email": "adamwdraper@gmail.com",
+    "url": "http://github.com/adamwdraper"
+  },
+  "license": "BSD",
+  "engines": {
+    "node": "0.8.14",
+    "npm": "1.1.65"
+  }
+}
