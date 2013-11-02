@@ -1,1 +1,0 @@
-define("text!modules/demo/templates/module.html",[],function(){return"Demo Module"}),define("modules/demo/module",["jquery","underscore","backbone","text!modules/demo/templates/module.html"],function(e,t,n,r){var i=n.View.extend({events:{},initialize:function(){},render:function(){return this.$el.html(t.template(r,{})),this}});return i});
