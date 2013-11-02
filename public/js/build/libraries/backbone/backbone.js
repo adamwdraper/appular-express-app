@@ -1,0 +1,1 @@
+define(["jquery","underscore","backboneLib"],function(){return Backbone.noConflict()});

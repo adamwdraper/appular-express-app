@@ -1,5 +1,7 @@
-## Commands
+# Test App
 
-Start dev server `NODE_ENV=development node app.js`
+This is a express app to quickly test ideas.
 
-Start server `node app.js`
+## Grunt Commands
+
+`grunt` - Start dev server and watch for SCSS changes 

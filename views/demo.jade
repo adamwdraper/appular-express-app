@@ -1,0 +1,17 @@
+extends layouts/main
+
+block head
+    
+
+block content
+    div(data-appular-module="user-bar")
+    div(data-appular-module="demo")
+
+
+block scripts
+    - if (environment === 'development')
+        script(src="/js/dev/libraries/require/require-2.1.9.js")
+        script(src="/js/dev/libraries/require/config.js")
+        script(src="/js/dev/libraries/appular/appular.js")
+    - else
+        script(src="/js/build/appular.js")

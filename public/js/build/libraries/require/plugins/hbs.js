@@ -1,0 +1,1 @@
+define(["handlebars"],function(e){return{load:function(t,n,r,i){n(["text!"+t],function(t){i.isBuild?r():r(e.compile(t))})}}});
