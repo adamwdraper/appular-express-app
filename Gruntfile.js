@@ -31,7 +31,7 @@ module.exports = function(grunt) {
                     node_env: 'development'
                 }
             },
-            prod: {
+            production: {
                 options: {
                     node_env: 'production'
                 }
@@ -52,7 +52,7 @@ module.exports = function(grunt) {
     ]);
     
     grunt.registerTask('production', 'Builds starts server in development environment, and watches NODE.js files for changes.', [
-        'espress:production',
+        'express:production',
         'watch'
     ]);
 };
