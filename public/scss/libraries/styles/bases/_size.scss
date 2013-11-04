@@ -1,0 +1,19 @@
+$size-inline-height: 2em;
+
+$size-font-size-mini: rem(10) !default;
+$size-font-size-small: rem(13) !default;
+$size-font-size-medium: rem(16) !default;
+$size-font-size-large: rem(19) !default;
+$size-font-size-huge: rem(22) !default;
+
+$size-sizes:
+    mini,
+    small,
+    large,
+    huge !default;
+
+$size-sizes-vars:
+    $size-font-size-mini,
+    $size-font-size-small,
+    $size-font-size-large,
+    $size-font-size-huge !default;

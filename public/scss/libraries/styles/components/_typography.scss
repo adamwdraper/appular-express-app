@@ -1,0 +1,127 @@
+// Variables -------------------------------------
+// Color
+$typography-color: $color-gray-darker !default;
+
+// Font Families
+$typography-sans-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif !default;
+$typography-serif-family: Georgia, "Times New Roman", Times, serif !default;
+$typography-mono-family: Menlo, Monaco, Consolas, "Courier New", monospace !default;
+
+// Font Size
+$typography-small-screen-font-size: 115% !default;
+$typography-medium-screen-font-size: 105% !default;
+$typography-large-screen-font-size: 100% !default;
+
+// Headers
+// h1
+$typography-h1-font-size: 1.5em !default;
+
+// h2
+$typography-h2-font-size: 1.25em !default;
+
+// h3
+$typography-h3-font-size: 1.15em !default;
+
+// h4
+$typography-h4-font-size: 1em !default;
+
+// h5
+$typography-h5-font-size: .9em !default;
+
+// h6
+$typography-h6-font-size: .8em !default;
+
+
+// Placehoders --------------------------------------
+%typography-body {
+    color: $typography-color;
+    font-family: $typography-sans-family;
+}
+
+%typography-header {
+    margin: 0;
+    line-height: 2em;
+}
+
+%typography-h1 {
+    font-size: $typography-h1-font-size;
+    @extend %typography-header;
+}
+
+%typography-h2 {
+    font-size: $typography-h2-font-size;
+    @extend %typography-header;
+}
+
+%typography-h3 {
+    font-size: $typography-h3-font-size;
+    @extend %typography-header;
+}
+
+%typography-h4 {
+    font-size: $typography-h4-font-size;
+    @extend %typography-header;
+}
+
+%typography-h5 {
+    font-size: $typography-h5-font-size;
+    @extend %typography-header;
+}
+
+%typography-h6 {
+    font-size: $typography-h6-font-size;
+    @extend %typography-header;
+}
+
+
+// Styles --------------------------------------
+@if $include-component-typography {
+    body {
+        @extend %typography-body;
+    }
+
+    h1 {
+        @extend %typography-h1;
+    }
+
+    h2 {
+        @extend %typography-h2;
+    }
+
+    h3 {
+        @extend %typography-h3;
+    }
+
+    h4 {
+        @extend %typography-h4;
+    }
+
+    h5 {
+        @extend %typography-h5;
+    }
+
+    h6 {
+        @extend %typography-h6;
+    }
+
+    // Phone
+    @include target('s') {
+        html, body {
+            font-size: $typography-small-screen-font-size;
+        }
+    }
+     
+    // Tablet
+    @include target('m') {
+        html, body {
+            font-size: $typography-medium-screen-font-size;
+        }
+    }
+     
+    // Desktop
+    @include target('l') {
+        html, body {
+            font-size: $typography-large-screen-font-size;
+        }
+    }
+}

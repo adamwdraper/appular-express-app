@@ -19,6 +19,12 @@ module.exports = function(grunt) {
                 options: {
                     nospawn: true //Without this option specified express won't be reloaded
                 }
+            },
+            sass: {
+                files: 'public/scss/**/*.scss',
+                tasks: [
+                    'sass:dev'
+                ]
             }
         },
         express: {
@@ -128,6 +134,41 @@ module.exports = function(grunt) {
                     removeCombined: true
                 }
             }
+        },
+        sass: {
+            dev: {
+                options: {
+                    noCache: true
+                },
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'public/scss/stylesheets/',
+                        src: [
+                            '*.scss'
+                        ],
+                        dest: 'public/css/',
+                        ext: '.css'
+                    }
+                ]
+            },
+            build: {
+                options: {
+                    style: 'compressed',
+                    noCache: true
+                },
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'public/scss/stylesheets/',
+                        src: [
+                            '*.scss'
+                        ],
+                        dest: 'public/css/',
+                        ext: '.css'
+                    }
+                ]
+            }
         }
     });
 
@@ -138,7 +179,7 @@ module.exports = function(grunt) {
         'develop'
     ]);
     
-    grunt.registerTask('develop', 'Builds starts server in development environment, and watches NODE.js files for changes.', [
+    grunt.registerTask('develop', 'Builds starts server in development environment, and watches NODE.js and SASS files for changes.', [
         'express:development',
         'watch'
     ]);
@@ -149,9 +190,10 @@ module.exports = function(grunt) {
         'watch'
     ]);
 
-    grunt.registerTask('build', 'Builds hints and builds production JS, and builds js documentation json', [
+    grunt.registerTask('build', 'Builds hints and builds production JS, builds JS documentation json, builds production CSS', [
         'jshint',
         'docs:build',
-        'requirejs'
+        'requirejs',
+        'sass:build'
     ]);
 };

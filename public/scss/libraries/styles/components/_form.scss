@@ -1,0 +1,91 @@
+// Variables ------------------------------------
+$form-input-padding: 0 .5em !default;
+$form-input-height: $size-inline-height !default;
+$form-input-border-radius: $border-border-radius !default;
+$form-input-border-width: 1px !default;
+$form-input-border-style: solid !default;
+$form-input-border-color: $border-border-color !default;
+
+$form-label-margin: 0 0 .3em !default;
+
+
+// Placeholders -----------------------------------
+%form-label {
+    display: block;
+    font-weight: bold;
+    line-height: $size-inline-height;
+}
+
+%form-input {
+    display: block;
+    width: 100%;
+    padding: $form-input-padding;
+    height: $form-input-height;
+    border-radius: $form-input-border-radius;
+    
+    @include border($form-input-border-width, $form-input-border-style, $form-input-border-color);
+}
+
+%form-input-inline {
+    width: auto;
+    display: inline-block;
+    vertical-align: middle;    
+}
+
+%form-label-inline {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 1.5em;
+}
+
+%form-label-note {
+    font-size: .8em;
+    color: $color-gray;
+    font-weight: normal;
+}
+
+
+// Styles --------------------------------------
+@if $include-component-form {
+    form {
+
+        &.inline {
+            @extend %form-input-inline;
+        }
+
+        label {
+            @extend %form-label;
+
+            &.inline {
+                @extend %form-label-inline;
+            }
+
+            .note {
+                @extend %form-label-note;
+            }
+        }
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="date"],
+    input[type="datetime"],
+    input[type="datetime-local"],
+    input[type="month"],
+    input[type="week"],
+    input[type="email"],
+    input[type="number"],
+    input[type="search"],
+    input[type="tel"],
+    input[type="time"],
+    input[type="url"],
+    textarea {
+        @extend %form-input;
+
+        &.inline {
+            @extend %form-input-inline;
+        }
+
+        @include sizes();
+    }
+}

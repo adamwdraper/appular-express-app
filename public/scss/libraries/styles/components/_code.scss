@@ -1,0 +1,28 @@
+// Variables -------------------------------------
+$code-background: $color-gray-lightest !default;
+$code-border-width: $border-border-width !default;
+$code-border-style: $border-border-style !default;
+$code-border-color: $border-border-color !default;
+$code-padding: 1em 1.5em !default;
+$code-margin: 1em 0 !default;
+$code-border-radius: .2em !default;
+
+
+// Placehoders --------------------------------------
+%code {
+    background-color: $code-background;
+    border-radius: $code-border-radius;
+    padding: $code-padding;
+    margin: $code-margin;
+    font-size: .9em;
+    @include border($code-border-width, $code-border-style, $code-border-color);
+}
+
+
+// Styles --------------------------------------
+@if $include-component-code {
+    pre,
+    .code {
+        @extend %code;
+    }
+}

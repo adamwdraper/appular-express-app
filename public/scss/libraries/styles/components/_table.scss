@@ -1,0 +1,100 @@
+// Variables ------------------------------------
+
+// Table
+$table-background: white !default;
+$table-border-radius: $border-border-radius !default;
+$table-border-width: $border-border-width !default;
+$table-border-style: $border-border-style !default;
+$table-border-color: $border-border-color !default;
+$table-margin: 1em !default;
+
+// Cells
+$table-cell-line-height: 2rem !default;
+$table-cell-padding: 0 .5em !default;
+$table-cell-text-align: left !default;
+$table-cell-striped: $color-gray-lightest !default;
+$table-cell-font-size: .9em !default;
+
+// Header
+$table-header-cell-font-size: .8em !default;
+
+
+// Placeholders -----------------------------------
+%table-tabular {
+    border-radius: 0 0 $table-border-radius $table-border-radius;
+    border-top: none;
+    margin-top: 0;
+}
+
+%table {
+    border-radius: $table-border-radius;
+    width: 100%;
+    border-spacing: 0;
+    background: $table-background;
+    border-collapse: separate;
+    margin: $table-margin 0;
+    @include border($table-border-width 0 0 $table-border-width, $table-border-style, $table-border-color);    
+
+    // Cells
+    th,
+    td {
+        padding: $table-cell-padding;
+        line-height: $table-cell-line-height;
+        text-align: $table-cell-text-align;
+        border-bottom: $table-border-width $table-border-style $table-border-color;
+        border-right: $table-border-width $table-border-style $table-border-color;
+    }
+
+    th {
+        font-size: $table-header-cell-font-size;
+        font-weight: bold;
+        vertical-align: bottom;
+    }
+
+    td {
+        font-size: $table-cell-font-size;
+        vertical-align: top;
+    }
+
+    tbody {
+        
+        tr {
+
+            &:nth-child(odd) {
+
+                td {
+                    background-color: $table-cell-striped;
+                }
+            }
+
+
+            &:last-child {
+
+                td {
+
+                    &:first-child {
+                        border-radius: 0 0 0 $table-border-radius;
+                    }
+
+                    &:last-child {
+                        border-radius: 0 0 $table-border-radius 0;
+                    }
+                }
+            }
+        }
+    }
+
+    &.tabular {
+        @extend %table-tabular;
+    }
+}
+
+
+
+// Styles --------------------------------------
+
+@if $include-component-table {
+    table {
+        @extend %table;
+    }
+}
