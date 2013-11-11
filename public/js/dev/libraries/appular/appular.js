@@ -7,9 +7,12 @@ require([
     'domReady!',
     'jquery',
     'underscore',
-    'backbone'
+    'backbone',
+    'libraries/appular/extensions/view',
+    'libraries/appular/extensions/app/app'
 ], function (doc, $, _, Backbone) {
-    var $modules = $('[data-appular-module]'),
+    var app,
+        $modules = $('[data-appular-module]'),
         startHistory = _.after($modules.length, function () {
             Backbone.history.start({
                 pushState: true
@@ -22,6 +25,7 @@ require([
                         el: $element
                     };
 
+                // add any data attributes to the modules options
                 _.each($element.data(), function (value, key) {
                     if (key !== 'appularModule') {
                         options[key] = value;
@@ -32,12 +36,14 @@ require([
                     'modules/' + $element.data('appularModule') + '/module'
                 ], function (Module) {
                     var module = new Module(options);
+
+                    module.app = app;
                     
-                    module.plugins = {};
-                    module.views = {};
-                    module.models = {};
-                    module.collections = {};
-                    
+                    // if module has any params add them to the params utility
+                    if (!_.isEmpty(module.params)) {
+
+                    }
+
                     module.render();
 
                     startHistory();
@@ -45,7 +51,16 @@ require([
             });
         };
 
-    if ($modules.length) {
+    // Backbone.on('app:initialized', );
+
+    // include app
+    require([
+        'apps/' + $('body').data('appular-app') + '/app'
+    ], function (App) {
+        app = new App({
+            el: $('body')
+        }).render();
+
         renderModules();
-    }
+    });
 });

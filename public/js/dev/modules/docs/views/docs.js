@@ -9,8 +9,23 @@ define([
     'text!modules/docs/templates/event.html'
 ], function ($, _, Backbone, docs, template, docTemplate, functionTemplate, eventTemplate) {
     var view = Backbone.View.extend({
+            params: {
+                filter: {
+                    default: '',
+                    alias: '',
+                    addToHistory: true,
+                    addToUrl: true,
+                    loadFromCookie: false,
+                    isArray: false,
+                    onChange: function () {
+                        console.log('filter changed');
+                    }
+                }
+            },
             events: {},
-            initialize: function() {},
+            initialize: function() {
+                
+            },
             render: function() {
                 this.$el.html(_.template(template, {
                     docs: docs,
