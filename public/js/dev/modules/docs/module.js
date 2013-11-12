@@ -12,7 +12,11 @@ define([
 ], function ($, _, Backbone, Nav, Docs, template) {
     var View = Backbone.View.extend({
             events: {},
-            initialize: function () {},
+            initialize: function () {
+                this.listenTo(this.app.params, 'param:filter:change', function () {
+                    console.log('filter');
+                });
+            },
             render: function () {
                 this.$el.html(_.template(template));
                 
@@ -23,6 +27,8 @@ define([
                 this.views.docs = new Docs({
                     el: '#module-docs-docs'
                 }).render();
+
+                this.app.params.setValueOf('filter', 'test');
 
                 return this;
             }

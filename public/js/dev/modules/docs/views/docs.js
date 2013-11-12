@@ -8,23 +8,9 @@ define([
     'text!modules/docs/templates/function.html',
     'text!modules/docs/templates/event.html'
 ], function ($, _, Backbone, docs, template, docTemplate, functionTemplate, eventTemplate) {
-    var view = Backbone.View.extend({
-            params: {
-                filter: {
-                    default: '',
-                    alias: '',
-                    addToHistory: true,
-                    addToUrl: true,
-                    loadFromCookie: false,
-                    isArray: false,
-                    onChange: function () {
-                        console.log('filter changed');
-                    }
-                }
-            },
+    var View = Backbone.View.extend({
             events: {},
             initialize: function() {
-                
             },
             render: function() {
                 this.$el.html(_.template(template, {
@@ -41,5 +27,5 @@ define([
             }
         });
 
-    return view;
+    return View;
 });

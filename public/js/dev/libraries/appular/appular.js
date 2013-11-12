@@ -13,11 +13,6 @@ require([
 ], function (doc, $, _, Backbone) {
     var app,
         $modules = $('[data-appular-module]'),
-        startHistory = _.after($modules.length, function () {
-            Backbone.history.start({
-                pushState: true
-            });
-        }),
         renderModules = function () {
             _.each($modules, function (element) {
                 var $element = $(element),
@@ -35,23 +30,20 @@ require([
                 require([
                     'modules/' + $element.data('appularModule') + '/module'
                 ], function (Module) {
-                    var module = new Module(options);
+                    var module;
 
-                    module.app = app;
-                    
-                    // if module has any params add them to the params utility
-                    if (!_.isEmpty(module.params)) {
+                    _.extend(Module.prototype, {
+                        app: app
+                    });
 
-                    }
+                    module = new Module(options);
 
                     module.render();
-
-                    startHistory();
                 });
             });
         };
 
-    // Backbone.on('app:initialized', );
+    Backbone.on('app:initialized', renderModules);
 
     // include app
     require([
@@ -60,7 +52,5 @@ require([
         app = new App({
             el: $('body')
         }).render();
-
-        renderModules();
     });
 });
