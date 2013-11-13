@@ -7,27 +7,30 @@ define([
     'backbone'
 ], function ($, _, Backbone) {
     var App = Backbone.App.extend({
-            initialize: function () {
-                this.params.add([
-                    {
-                        id: 'filter',
-                        value: '',
-                        alias: '',
-                        addToHistory: true,
-                        addToUrl: true,
-                        loadFromCookie: false,
-                        isArray: false
-                    }
-                ]);
-
-                this.listenTo(this.params, 'initialized', function () {
-                    Backbone.trigger('app:initialized');
-                });
+            params: {
+                'filter': {
+                    value: '12345',
+                    alias: '',
+                    addToHistory: true,
+                    addToUrl: true,
+                    loadFromCookie: false,
+                    isArray: false
+                },
+                'test': '123'
             },
+            routes: {
+                'help/:page': 'help'
+            },
+            initialize: function () {},
             render: function () {
-                this.params.load();
+                console.log('app render');
+
+                Backbone.trigger('app:initialized');
 
                 return this;
+            },
+            help: function () {
+                console.log('route: help');
             }
         });
 

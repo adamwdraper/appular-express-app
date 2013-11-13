@@ -10,10 +10,10 @@ define([
     'modules/docs/views/docs',
     'text!modules/docs/templates/module.html'
 ], function ($, _, Backbone, Nav, Docs, template) {
-    var View = Backbone.View.extend({
+    var View = Backbone.Module.extend({
             events: {},
             initialize: function () {
-                this.listenTo(this.app.params, 'param:filter:change', function () {
+                this.listenTo(this.params, 'param:filter:change', function () {
                     console.log('filter');
                 });
             },
@@ -28,7 +28,7 @@ define([
                     el: '#module-docs-docs'
                 }).render();
 
-                this.app.params.setValueOf('filter', 'test');
+                this.params.setValueOf('filter', 'test');
 
                 return this;
             }

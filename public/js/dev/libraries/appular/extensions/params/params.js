@@ -2,7 +2,7 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'libraries/appular/extensions/app/models/param'
+    'libraries/appular/extensions/params/param'
     // 'Cookies'
 ], function ($, _, Backbone, Param) {
     var Collection = Backbone.Collection.extend({
