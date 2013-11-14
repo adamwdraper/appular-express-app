@@ -68,9 +68,6 @@ define([
             // /**
             // @doc {event} initialized - fires when all data has been loaded
             // */
-            // triggerInitialized: function() {
-            //     this.trigger('initialized');
-            // },
 
             /**
             @function getValue - shortcut to get model's value

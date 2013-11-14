@@ -1,5 +1,5 @@
 // Appular Sites
-// version : 1.1.0
+// version : 1.2.0
 // author : Adam Draper
 // license : MIT
 // https://github.com/adamwdraper/Appular
