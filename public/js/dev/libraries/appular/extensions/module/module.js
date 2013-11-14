@@ -7,8 +7,6 @@ define([
 ], function (_, Backbone) {
     Backbone.Module = Backbone.View.extend({
         plugins: {},
-        views: {},
-        router: {},
-        params: {}
+        views: {}
     });
 });

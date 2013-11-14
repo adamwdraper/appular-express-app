@@ -9,10 +9,11 @@ require([
     'underscore',
     'backbone',
     'libraries/appular/extensions/params/params',
+    'libraries/appular/extensions/router/router',
     'libraries/appular/extensions/app/app',
     'libraries/appular/extensions/module/module',
     'libraries/appular/extensions/plugin/plugin'
-], function (doc, $, _, Backbone, Params) {
+], function (doc, $, _, Backbone, Params, Router) {
     var app,
         params = new Params(),
         isDebug = true,
@@ -37,6 +38,7 @@ require([
                     el: $('body')
                 });
                 
+                // add any params to collection
                 _.each(app.params, function (value, key) {
                     if (_.isString(value)) {
                         models.push({
@@ -51,11 +53,14 @@ require([
                         }));
                     }
                 });
-
                 params.add(models);
-
-                // turn app params into collection
                 app.params = params;
+
+                // create router and add params collection
+                _.extend(Router.prototype, {
+                    params: params
+                });
+                app.router = new Router();
 
                 app.render();
             });
@@ -89,6 +94,11 @@ require([
 
                     module = new Module(options).render();
                 });
+            });
+
+            Backbone.history.start({
+                pushState: true,
+                root: window.location.pathname
             });
         };
 

@@ -2,8 +2,8 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'json!modules/docs/json/docs.json',
-    'text!modules/docs/templates/nav.html'
+    'json!../json/docs.json',
+    'text!../templates/nav.html'
 ], function ($, _, Backbone, docs, template) {
     var view = Backbone.View.extend({
             events: {

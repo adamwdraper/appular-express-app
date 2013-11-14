@@ -2,7 +2,7 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'libraries/appular/extensions/params/param'
+    './param'
     // 'Cookies'
 ], function ($, _, Backbone, Param) {
     var Collection = Backbone.Collection.extend({
@@ -12,7 +12,7 @@ define([
 
                 this.on('add', function(model) {
                     model.on('change', function() {
-                        this.trigger('param:' + model.get('id') + ':change');
+                        this.trigger('change:' + model.get('id'), model, model.get('id'));
                     }, this);
                 }, this);
             },

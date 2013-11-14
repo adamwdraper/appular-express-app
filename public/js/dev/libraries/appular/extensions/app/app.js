@@ -6,6 +6,6 @@ define([
 ], function (Backbone) {
     Backbone.App = Backbone.View.extend({
         params: {},
-        routes: {}
+        router: {}
     });
 });

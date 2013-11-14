@@ -6,7 +6,7 @@
     'jquery',
     'underscore',
     'backbone',
-    'text!modules/user-bar/templates/module.html'
+    'text!./templates/module.html'
 ], function ($, _, Backbone, Template) {
     var view = Backbone.View.extend({
             events: {},

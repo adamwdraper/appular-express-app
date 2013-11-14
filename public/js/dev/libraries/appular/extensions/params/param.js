@@ -9,8 +9,7 @@ define([
                 alias: '',
                 addToHistory: true,
                 addToUrl: true,
-                loadFromCookie: false,
-                isArray: false
+                loadFromCookie: false
             }
         });
 
