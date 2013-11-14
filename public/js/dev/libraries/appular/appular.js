@@ -15,35 +15,56 @@ require([
 ], function (doc, $, _, Backbone, Params) {
     var app,
         params = new Params(),
+        isDebug = true,
         $modules = $('[data-appular-module]'),
-        addParams = function (paramsObject) {
-            var models = [];
-
-            _.each(paramsObject, function (value, key) {
-                if (_.isString(value)) {
-                    params.push({
-                        id: key,
-                        value: value
-                    });
-                }
-
-                if (_.isObject(value)) {
-                    params.push(_.extend(value, {
-                        id: key
-                    }));
-                }
-            });
-
-            params.add(models);
-
-            Backbone.trigger('params:initialized', renderApp);
+        log = function (type, name, path) {
+            if (isDebug) {
+                console.log('Appular : ' + type + ' : ' + name + ' : ' + path);
+            }
         },
         renderApp = function () {
-            app.render();
+            var name = $('body').data('appular-app'),
+                path = 'apps/' + name + '/app';
+
+            require([
+                path
+            ], function (App) {
+                var models = [];
+
+                log('App', name, path);
+
+                app = new App({
+                    el: $('body')
+                });
+                
+                _.each(app.params, function (value, key) {
+                    if (_.isString(value)) {
+                        models.push({
+                            id: key,
+                            value: value
+                        });
+                    }
+
+                    if (_.isObject(value)) {
+                        models.push(_.extend(value, {
+                            id: key
+                        }));
+                    }
+                });
+
+                params.add(models);
+
+                // turn app params into collection
+                app.params = params;
+
+                app.render();
+            });
         },
         renderModules = function () {
             _.each($modules, function (element) {
                 var $element = $(element),
+                    name = $element.data('appularModule'),
+                    path = 'modules/' + name + '/module',
                     options = {
                         el: $element
                     };
@@ -56,12 +77,14 @@ require([
                 });
                 
                 require([
-                    'modules/' + $element.data('appularModule') + '/module'
+                    path
                 ], function (Module) {
                     var module;
 
+                    log('Module', name, path);
+
                     _.extend(Module.prototype, {
-                        params: params
+                        app: app
                     });
 
                     module = new Module(options).render();
@@ -70,20 +93,6 @@ require([
         };
 
     Backbone.on('app:initialized', renderModules);
-    Backbone.on('params:initialized', renderApp);
 
-    // include app
-    require([
-        'apps/' + $('body').data('appular-app') + '/app'
-    ], function (App) {
-        app = new App({
-            el: $('body')
-        });
-
-        if (!_.isEmpty(app.params)) {
-            addParams(app.params);
-        } else {
-            Backbone.trigger('params:initialized');
-        }
-    });
+    renderApp();
 });

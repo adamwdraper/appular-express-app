@@ -3,6 +3,11 @@
  */
 requirejs.config({
     baseUrl: '/js/dev',
+    config: {
+        'libraries/appular/appular': {
+            isDebug: true
+        }
+    },
     paths: {
         'modernizr': 'libraries/modernizr/modernizr-2.6.3',
         'jquery': 'libraries/jquery/jquery-1.10.2',

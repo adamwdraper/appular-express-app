@@ -71,14 +71,14 @@ define([
             /**
             @doc {function} getValueOf - shortcut to get model's value
             */
-            getValueOf: function(name) {
+            getValue: function(name) {
                 return this.get(name).get('value');
             },
 
             /**
             @doc {function} setValueOf - shortcut to set model's value
             */
-            setValueOf: function(name, value) {
+            setValue: function(name, value) {
                 return this.get(name).set('value', value);
             }
 

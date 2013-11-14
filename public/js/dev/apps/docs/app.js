@@ -18,19 +18,11 @@ define([
                 },
                 'test': '123'
             },
-            routes: {
-                'help/:page': 'help'
-            },
             initialize: function () {},
             render: function () {
-                console.log('app render');
-
                 Backbone.trigger('app:initialized');
 
                 return this;
-            },
-            help: function () {
-                console.log('route: help');
             }
         });
 

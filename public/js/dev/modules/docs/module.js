@@ -13,7 +13,7 @@ define([
     var View = Backbone.Module.extend({
             events: {},
             initialize: function () {
-                this.listenTo(this.params, 'param:filter:change', function () {
+                this.listenTo(this.app.params, 'param:filter:change', function () {
                     console.log('filter');
                 });
             },
@@ -28,7 +28,7 @@ define([
                     el: '#module-docs-docs'
                 }).render();
 
-                this.params.setValueOf('filter', 'test');
+                this.app.params.setValue('filter', 'test');
 
                 return this;
             }

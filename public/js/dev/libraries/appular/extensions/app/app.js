@@ -4,5 +4,8 @@
 define([
     'backbone'
 ], function (Backbone) {
-    Backbone.App = Backbone.View.extend({});
+    Backbone.App = Backbone.View.extend({
+        params: {},
+        routes: {}
+    });
 });
