@@ -97,7 +97,6 @@ require([
             });
 
             Backbone.history.start({
-                pushState: true,
                 root: window.location.pathname
             });
         };

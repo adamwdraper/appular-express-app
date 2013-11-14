@@ -1,7 +1,7 @@
 define({
     hash: {
         useBang: false,
-        dataSeparator: '&',
+        paramSeparator: '&',
         keyValSeparator: '=',
         arraySeparator: ','
     },

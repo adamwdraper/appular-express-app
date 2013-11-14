@@ -29,8 +29,6 @@ define([
                     el: '#module-docs-docs'
                 }).render();
 
-                this.app.params.setValue('filter', 'test');
-
                 return this;
             },
             update: function () {

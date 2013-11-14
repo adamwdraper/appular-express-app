@@ -15,7 +15,7 @@ app.get('/', function (req, res) {
     });
 });
 
-app.get('/:view', function (req, res) {
+app.get('/:view/:data?', function (req, res) {
     res.render(req.params.view, {
         environment: process.env.NODE_ENV
     });

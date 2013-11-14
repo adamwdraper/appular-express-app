@@ -8,8 +8,7 @@ define([
     var Router = Backbone.Router.extend({
             initialize: function () {
                 // Update the url hash whenever a param changes
-                this.params.on('change', function (param, id) {
-                    console.log('change');
+                this.params.on('change', function (param) {
                     this.navigateHash(!param.get('addToHistory'));
                 }, this);
             },
@@ -17,51 +16,48 @@ define([
                 '*data': 'action'
             },
             action: function (data) {
-                console.log(config);
+                var params = [];
+
+                // if (config.loadFrom === 'query') {
+                //     var query = window.location.search.substr(1);
+
+                //     dataSplit = query.split('&'),
+                //     dataArray = [];
+
+                //     if (dataSplit[0] !== '') {
+                //         _.each(dataSplit, function (data) {
+                //             if (data.indexOf('=') > -1) {
+                //                 dataArray.push(data.split('='));
+                //             }
+                //         });
+                //     }
+
+                //     Data.load(dataArray);
+                // } else {
+                    // Process any data that are present on initial page load
+                    if (data) {
+                        if (config.hash.useBang && data.charAt(0) === '!') {
+                            data = data.substr(1);
+                        }
+
+                        _.each(data.split(config.hash.paramSeparator), function (param) {
+                            var id = param.split(config.hash.keyValSeparator)[0],
+                                value = param.split(config.hash.keyValSeparator)[1];
+
+                            if (value.indexOf(config.hash.arraySeparator) !== -1) {
+                                value = value.split(config.hash.arraySeparator);
+                            }
+
+                            params.push({
+                                id: id,
+                                value: value
+                            });
+                        });
+                    }
+                // }
+                
+                this.params.load(params);
             },
-            //     var dataSplit,
-            //         dataArray = [];
-
-            //     if (config.loadFrom === 'query') {
-            //         var query = window.location.search.substr(1);
-
-            //         dataSplit = query.split('&'),
-            //         dataArray = [];
-
-            //         if (dataSplit[0] !== '') {
-            //             _.each(dataSplit, function (data) {
-            //                 if (data.indexOf('=') > -1) {
-            //                     dataArray.push(data.split('='));
-            //                 }
-            //             });
-            //         }
-
-            //         Data.load(dataArray);
-            //     } else {
-            //         // Process any data that are present on initial page load
-            //         if (data) {
-            //             var self = this;
-
-            //             if (config.hash.useBang) {
-            //                 if (data.charAt(0) === '!') {
-            //                     data = data.substr(1);
-            //                 }
-            //             }
-
-            //             dataSplit = data.split(config.hash.dataSeparator);
-            //             dataArray = [];
-
-            //             _.each(dataSplit, function (data) {
-            //                 dataArray.push(data.split(self.settings.hash.keyValSeparator));
-            //             });
-
-            //             Data.load(dataArray);
-            //         } else {
-            //             Data.trigger('initialized');
-            //         }
-            //     }
-            // },
-
             navigateHash: function (replace) {
                 // Generate and navigate to new hash
                 var params = [],
@@ -90,7 +86,7 @@ define([
                     hash += '!';
                 }
                 if (!_.isEmpty(params)){
-                    hash += params.join(config.hash.dataSeparator);
+                    hash += params.join(config.hash.paramSeparator);
                 }
 
                 this.navigate(hash, {

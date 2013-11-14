@@ -9,29 +9,24 @@ define([
     var App = Backbone.App.extend({
             params: {
                 'filter': {
-                    value: '12345',
+                    value: '',
                     alias: '',
                     addToHistory: true,
                     addToUrl: true,
                     loadFromCookie: false
                 },
                 'noshow': {
-                    value: '12345',
+                    value: '',
                     alias: '',
                     addToUrl: false
                 },
                 'keyword': {
-                    value: '12345',
+                    value: '',
                     alias: 'k'
                 },
-                'test': '123',
+                'test': '',
                 'array': {
-                    value: [
-                        'maynard',
-                        'danny',
-                        'adam',
-                        'justin'
-                    ]
+                    value: []
                 }
             },
             initialize: function () {},

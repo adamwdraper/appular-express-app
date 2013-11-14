@@ -10,29 +10,33 @@ define([
             initialize: function () {
                 _.bindAll(this, 'load');
 
-                this.on('add', function(model) {
-                    model.on('change', function() {
+                this.on('add', function (model) {
+                    model.on('change', function () {
                         this.trigger('change:' + model.get('id'), model, model.get('id'));
                     }, this);
                 }, this);
             },
+            // Sets params based on url data on initial load (ignores any parameters that are not defined in app)
+            load: function (params) {
+                _.each(params, function (param) {
+                    var model = this.get(param.id);
 
-            // Sets data based on url data on initial load (ignores any parameters that are not defined in initialize above)
-            load: function () {
-                // var dataInitialized = _.after(data.length, this.finalizeLoad);
-                // _.each(data, function(dataArray) {
-                //     var model = this.get(dataArray[0]);
+                    // check for alias match
+                    if (!model) {
+                        model = _.find(this.models, function (model) {
+                            return model.get('alias') === param.id;
+                        });
+                    }
 
-                //     if(!model) {
-                //         model = _.find(this.models, function(model) { return model.get('alias').toLowerCase() === dataArray[0].toLowerCase(); });
-                //     }
+                    if (model) {
+                        model.set({
+                            value: param.value
+                        }, {
+                            silent: true
+                        });
+                    }
+                }, this);
 
-                //     if(model) {
-                //         model.set({value: decodeURIComponent(dataArray[1])}, {silent: true});
-                //     }
-
-                //     dataInitialized();
-                // }, this);
                 this.trigger('initialized');
             },
 
@@ -69,14 +73,14 @@ define([
             // },
 
             /**
-            @doc {function} getValueOf - shortcut to get model's value
+            @function getValue - shortcut to get model's value
             */
             getValue: function(name) {
                 return this.get(name).get('value');
             },
 
             /**
-            @doc {function} setValueOf - shortcut to set model's value
+            @function setValueOf - shortcut to set model's value
             */
             setValue: function(name, value) {
                 return this.get(name).set('value', value);
