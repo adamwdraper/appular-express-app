@@ -3,7 +3,6 @@ define([
     'underscore',
     'backbone',
     './param'
-    // 'Cookies'
 ], function ($, _, Backbone, Param) {
     var Collection = Backbone.Collection.extend({
             model: Param,
@@ -39,36 +38,6 @@ define([
 
                 this.trigger('initialized');
             },
-
-            // finalizeLoad: function() {
-            //     var triggerInitialized = _.after(this.length, this.triggerInitialized);
-
-            //     _.each(this.models, function(model) {
-            //         if(model.get('getFromCookie')) {
-            //             var cookieName = null;
-
-            //             if(model.get('alias') !== '') {
-            //                 cookieName = model.get('alias');
-            //             } else {
-            //                 cookieName = model.get('id');
-            //             }
-
-            //             model.set({value: Cookies.get(cookieName)});
-            //         }
-
-            //         if(model.get('isArray') && _.isString(model.get('value'))) {
-            //             var value = model.get('value');
-            //             model.set('value', value.split(','));
-            //         }
-
-            //         triggerInitialized();
-            //     }, this);
-            // },
-
-            // /**
-            // @doc {event} initialized - fires when all data has been loaded
-            // */
-
             /**
             @function getValue - shortcut to get model's value
             */
@@ -82,7 +51,6 @@ define([
             setValue: function(name, value) {
                 return this.get(name).set('value', value);
             }
-
         });
 
     return Collection;

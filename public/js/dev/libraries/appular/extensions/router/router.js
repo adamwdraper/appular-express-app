@@ -18,43 +18,25 @@ define([
             action: function (data) {
                 var params = [];
 
-                // if (config.loadFrom === 'query') {
-                //     var query = window.location.search.substr(1);
+                if (data) {
+                    if (config.hash.useBang && data.charAt(0) === '!') {
+                        data = data.substr(1);
+                    }
 
-                //     dataSplit = query.split('&'),
-                //     dataArray = [];
+                    _.each(data.split(config.hash.paramSeparator), function (param) {
+                        var id = param.split(config.hash.keyValSeparator)[0],
+                            value = param.split(config.hash.keyValSeparator)[1];
 
-                //     if (dataSplit[0] !== '') {
-                //         _.each(dataSplit, function (data) {
-                //             if (data.indexOf('=') > -1) {
-                //                 dataArray.push(data.split('='));
-                //             }
-                //         });
-                //     }
-
-                //     Data.load(dataArray);
-                // } else {
-                    // Process any data that are present on initial page load
-                    if (data) {
-                        if (config.hash.useBang && data.charAt(0) === '!') {
-                            data = data.substr(1);
+                        if (value.indexOf(config.hash.arraySeparator) !== -1) {
+                            value = value.split(config.hash.arraySeparator);
                         }
 
-                        _.each(data.split(config.hash.paramSeparator), function (param) {
-                            var id = param.split(config.hash.keyValSeparator)[0],
-                                value = param.split(config.hash.keyValSeparator)[1];
-
-                            if (value.indexOf(config.hash.arraySeparator) !== -1) {
-                                value = value.split(config.hash.arraySeparator);
-                            }
-
-                            params.push({
-                                id: id,
-                                value: value
-                            });
+                        params.push({
+                            id: id,
+                            value: value
                         });
-                    }
-                // }
+                    });
+                }
                 
                 this.params.load(params);
             },
