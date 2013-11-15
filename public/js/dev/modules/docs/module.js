@@ -7,32 +7,26 @@ define([
     'backbone',
     './views/nav',
     './views/docs',
+    'json!./json/docs.json',
     'text!./templates/module.html'
-], function ($, _, Backbone, Nav, Docs, template) {
+], function ($, _, Backbone, Nav, Docs, DocsJson, template) {
     var View = Backbone.Module.extend({
-            events: {
-                'click a': 'update'
-            },
-            initialize: function () {
-                this.listenTo(this.app.params, 'change:filter', function () {
-                    console.log('filter');
-                });
-            },
+            events: {},
+            initialize: function () {},
             render: function () {
                 this.$el.html(_.template(template));
                 
-                this.views.nav = new Nav({
-                    el: '#module-docs-nav'
+                this.views.nav = this.initView(Nav, {
+                    el: '#module-docs-nav',
+                    docs: DocsJson
                 }).render();
 
-                this.views.docs = new Docs({
-                    el: '#module-docs-docs'
+                this.views.docs = this.initView(Docs, {
+                    el: '#module-docs-docs',
+                    docs: DocsJson
                 }).render();
 
                 return this;
-            },
-            update: function () {
-                this.app.params.setValue('filter', 'new');
             }
         });
 

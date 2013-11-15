@@ -2,17 +2,17 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'json!../json/docs.json',
     'text!../templates/docs.html',
     'text!../templates/doc.html',
     'text!../templates/function.html',
     'text!../templates/event.html'
-], function ($, _, Backbone, docs, template, docTemplate, functionTemplate, eventTemplate) {
+], function ($, _, Backbone, template, docTemplate, functionTemplate, eventTemplate) {
     var View = Backbone.View.extend({
             events: {},
             initialize: function() {
             },
             render: function() {
+                
                 this.$el.html(_.template(template, {
                     docs: docs,
                     templates: {
