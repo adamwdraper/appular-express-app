@@ -64,14 +64,14 @@ define([
             /**
             @function setValueOf - shortcut to set model's value
             */
-            setValue: function(name, value) {
-                var model = this.get(name);
+            setValue: function(id, value) {
+                var model = this.get(id);
 
                 if (model.get('loadFromCookie')) {
-                    cookies.set((model.get('alias') ? model.get('alias') : model.get('id')), value);
+                    cookies.set((model.get('alias') ? model.get('alias') : id), value);
                 }
 
-                return this.get(name).set('value', value);
+                return this.get(id).set('value', value);
             }
         });
 
