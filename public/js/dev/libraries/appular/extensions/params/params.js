@@ -2,8 +2,9 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    './param'
-], function ($, _, Backbone, Param) {
+    './param',
+    'utilities/cookies/utility'
+], function ($, _, Backbone, Param, cookies) {
     var Collection = Backbone.Collection.extend({
             model: Param,
             initialize: function () {
@@ -17,25 +18,40 @@ define([
             },
             // Sets params based on url data on initial load (ignores any parameters that are not defined in app)
             load: function (params) {
+                // params sent from router
                 _.each(params, function (param) {
-                    var model = this.get(param.id);
+                    var id = param.id,
+                        value = param.value,
+                        model = this.get(id);
 
                     // check for alias match
                     if (!model) {
                         model = _.find(this.models, function (model) {
-                            return model.get('alias') === param.id;
+                            return model.get('alias') === id;
                         });
                     }
 
                     if (model) {
                         model.set({
-                            value: param.value
+                            value: value
                         }, {
                             silent: true
                         });
                     }
                 }, this);
 
+                // params from cookies
+                _.each(this.models, function (model) {
+                    if (model.get('loadFromCookie')) {
+                        model.set({
+                            value: cookies.get((model.get('alias') ? model.get('alias') : model.get('id')))
+                        }, {
+                            silent: true
+                        });
+                    }
+                }, this);
+
+                // all params should be loaded
                 this.trigger('initialized');
             },
             /**
@@ -49,6 +65,12 @@ define([
             @function setValueOf - shortcut to set model's value
             */
             setValue: function(name, value) {
+                var model = this.get(name);
+
+                if (model.get('loadFromCookie')) {
+                    cookies.set((model.get('alias') ? model.get('alias') : model.get('id')), value);
+                }
+
                 return this.get(name).set('value', value);
             }
         });

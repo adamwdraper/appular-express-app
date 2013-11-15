@@ -1,0 +1,14 @@
+<ul>
+<% params.each(function (param) { %>
+    <li>
+        <%= param.get('id') %>
+        <ul>
+        <% _.each(param.attributes, function (value, name) { %>
+        <% if (name !== 'id') { %>
+            <li><%= name + ': ' + value %></li>
+        <% } %>
+        <% }); %>
+        </ul>
+    </li>
+<% }); %>
+</ul>
