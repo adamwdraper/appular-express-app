@@ -1,17 +1,10 @@
 extends layouts/main
 
+block vars
+    - var app = 'docs'
+
 block head
-    link(rel='stylesheet', href='/css/docs.css')
-    
+    link(rel='stylesheet', href='/css/docs.css')    
 
 block content
     .docs-container(data-appular-module="docs")
-
-
-block scripts
-    - if (environment === 'development')
-        script(src="/js/dev/libraries/require/require-2.1.9.js")
-        script(src="/js/dev/libraries/require/config.js")
-        script(src="/js/dev/libraries/appular/appular.js")
-    - else
-        script(src="/js/build/appular.js")

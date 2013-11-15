@@ -1,12 +1,14 @@
 doctype 5
 html(lang="en-US")
+    block vars
+
     head
         meta(charset="UTF-8")
         title Appular Project
 
         block head
 
-    body(data-appular-app="docs")
+    body(data-appular-app="#{app}")
 
         header 
             block content
@@ -17,3 +19,9 @@ html(lang="en-US")
             block footer
 
         block scripts
+            - if (environment === 'development')
+                script(src="/js/dev/libraries/require/require-2.1.9.js")
+                script(src="/js/dev/libraries/require/config.js")
+                script(src="/js/dev/libraries/appular/appular.js")
+            - else
+                script(src="/js/build/appular.js")
