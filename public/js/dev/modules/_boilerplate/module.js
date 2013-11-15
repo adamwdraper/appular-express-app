@@ -6,9 +6,9 @@
     'jquery',
     'underscore',
     'backbone',
-    'text!modules/_boilerplate/templates/module.html'
+    'text!./templates/module.html'
 ], function ($, _, Backbone, template) {
-    var view = Backbone.View.extend({
+    var Module = Backbone.Module.extend({
             events: {},
             initialize: function() {},
             render: function() {
@@ -17,5 +17,5 @@
             }
         });
 
-    return view;
+    return Module;
 });
