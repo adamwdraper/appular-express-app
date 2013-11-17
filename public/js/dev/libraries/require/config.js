@@ -4,11 +4,12 @@
 requirejs.config({
     baseUrl: '/js/dev',
     config: {
-        'libraries/appular/appular': {
-            isDebug: true
+        'appular': {
+            env: 'develop'
         }
     },
     paths: {
+        'appular': 'libraries/appular/appular',
         'modernizr': 'libraries/modernizr/modernizr-2.6.3',
         'jquery': 'libraries/jquery/jquery-1.10.2',
         'jqueryFunctions': 'libraries/jquery/extensions/functions',
@@ -25,6 +26,7 @@ requirejs.config({
     deps: [
         'modernizr',
         'jqueryFunctions',
-        'backboneStickit'
+        'backboneStickit',
+        'appular'
     ]
 });

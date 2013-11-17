@@ -3,7 +3,8 @@
 // author : Adam Draper
 // license : MIT
 // https://github.com/adamwdraper/Appular
-require([
+define([
+    'module',
     'domReady!',
     'jquery',
     'underscore',
@@ -13,13 +14,12 @@ require([
     'libraries/appular/extensions/app/app',
     'libraries/appular/extensions/module/module',
     'libraries/appular/extensions/plugin/plugin'
-], function (doc, $, _, Backbone, Params, Router) {
+], function (module, doc, $, _, Backbone, Params, Router) {
     var app,
         params = new Params(),
-        isDebug = true,
         $modules = $('[data-appular-module]'),
         log = function (type, name, path) {
-            if (isDebug) {
+            if (module.config().env === 'develop') {
                 console.log('Appular : ' + type + ' : ' + name + ' : ' + path);
             }
         },
