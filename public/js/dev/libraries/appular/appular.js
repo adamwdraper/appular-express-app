@@ -55,6 +55,7 @@ define([
                 });
                 params.add(models);
                 app.params = params;
+                app.config = module.config();
 
                 // create router and add params collection
                 _.extend(Router.prototype, {
