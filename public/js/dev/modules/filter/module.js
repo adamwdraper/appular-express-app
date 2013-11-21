@@ -1,5 +1,5 @@
 /**
- * @appular boilerplate
+ * @appular filter
  */
 
  define([

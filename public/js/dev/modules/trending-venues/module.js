@@ -12,6 +12,14 @@
 ], function ($, _, Backbone, template, venueTemplate, Venues) {
     var Module = Backbone.Module.extend({
             events: {},
+            options: {
+                lls: {
+                    'San Francisco, CA': '37.7,-122.4',
+                    'Phoenix, AZ': '33.4,112.0',
+                    'Boston, MA': '42.3,71.0',
+                    'Austin, TX': '30.2,97.7'
+                }
+            },
             initialize: function() {
                 this.listenTo(this.app.params, 'change', this.updateVenues);
             },
@@ -26,8 +34,7 @@
                 return this;
             },
             updateVenues: function () {
-                this.collection.keyword = this.app.params.getValue('keyword');
-                this.collection.location = this.app.params.getValue('location');
+                this.collection.ll = this.options.lls[this.app.params.getValue('location')];
 
                 this.collection.fetch({
                     reset: true
@@ -37,19 +44,14 @@
                 var html = '';
 
                 this.collection.each(function (venue) {
-                    var v = venue.get('venue');
-
                     html += _.template(venueTemplate, {
-                        name: v.name,
-                        address: v.location.address,
-                        website: v.url || '',
-                        phone: v.contact.formattedPhone || '',
-                        status: v.hours ? v.hours.status : '',
-                        isOpen: v.hours ? v.hours.isOpen : ''
+                        name: venue.get('name'),
+                        website: venue.get('url'),
+                        isOpen: venue.get('hours') ? venue.get('hours').isOpen : false
                     });
                 });
 
-                $('#recommended-venues').html(html);
+                $('#trending-venues').html(html);
             }
         });
 
