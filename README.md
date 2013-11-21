@@ -65,12 +65,3 @@ Appular can generate documentation code for your project with its [grunt plugin]
 ## Readiness
 
 Appular has been used on several large and small web apps and has made life a whole lot easier for both me and my team that's why I'm sharing.
-
-
-# Test App
-
-This is a express app to quickly test ideas.
-
-## Grunt Commands
-
-`grunt` - Start dev server and watch for SCSS changes 
