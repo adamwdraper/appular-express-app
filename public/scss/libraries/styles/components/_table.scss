@@ -60,25 +60,25 @@ $table-header-cell-font-size: .8em !default;
         
         tr {
 
-            &:nth-child(odd) {
+            &:nth-child(even) {
+                background-color: $table-cell-striped;
+            }
 
-                td {
-                    background-color: $table-cell-striped;
+            &:last-child {
+                &:first-child {
+                    border-radius: 0 0 0 $table-border-radius;
+                }
+
+                &:last-child {
+                    border-radius: 0 0 $table-border-radius 0;
                 }
             }
 
-
-            &:last-child {
-
-                td {
-
-                    &:first-child {
-                        border-radius: 0 0 0 $table-border-radius;
-                    }
-
-                    &:last-child {
-                        border-radius: 0 0 $table-border-radius 0;
-                    }
+            @for $i from 1 through length($color-types) {
+                &.#{nth($color-types, $i)} {
+                    background-color: lighten(nth($color-types-vars, $i), 40%);
+                    color: nth($color-types-vars, $i);
+                    border-color: nth($color-types-vars, $i);
                 }
             }
         }

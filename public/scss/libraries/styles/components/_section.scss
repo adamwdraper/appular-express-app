@@ -4,7 +4,7 @@ $section-border-width: $border-border-width !default;
 $section-border-style: $border-border-style !default;
 $section-border-color: $border-border-color !default;
 $section-padding: 1em 1.5em !default;
-$section-margin: 1em 0 !default;
+$section-margin: 1em !default;
 $section-border-radius: .2em !default;
 
 
@@ -12,7 +12,8 @@ $section-border-radius: .2em !default;
 %section {
     display: block;
     background: $section-background;
-    margin: $section-margin;
+    margin-top: $section-margin;
+    margin-bottom: $section-margin;
     border-radius: $section-border-radius;
     @include border($section-border-width, $section-border-style, $section-border-color);
 }

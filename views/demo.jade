@@ -4,9 +4,17 @@ block vars
     - var app = 'demo'
 
 block head
-    
+    link(rel='stylesheet', href='/css/demo.css')    
 
 block content
-    .module(data-appular-module="filter")
-    .module(data-appular-module="recommended-venues")
-    .module(data-appular-module="tips-venues")
+    .demo-container
+        .section.span-12
+            .content.clearfix(data-appular-module="filter")
+        .section.span-8
+            .header
+                <h3>Recommended</h3>
+            .content(data-appular-module="recommended-venues")
+        .section.span-4
+            .header
+                <h3>Tips</h3>
+            .content(data-appular-module="tips-venues")
