@@ -53,7 +53,7 @@
                         tip: tip.get('text'),
                         venue: {
                             name: venue.name,
-                            website: venue.url,
+                            website: venue.url
                         }
                     });
                 });

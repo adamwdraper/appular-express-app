@@ -1,12 +1,68 @@
 {
+    "apps": [
+        {
+            "path": "apps/docs/app.js",
+            "name": "docs",
+            "version": "",
+            "description": "",
+            "define": "apps/docs/app"
+        },
+        {
+            "path": "apps/test/app.js",
+            "name": "docs",
+            "version": "",
+            "description": "",
+            "define": "apps/test/app"
+        }
+    ],
     "libraries": [
+        {
+            "name": "appular",
+            "extras": {
+                "extensions": [
+                    {
+                        "path": "libraries/appular/extensions/app/app.js",
+                        "name": "app",
+                        "version": "",
+                        "description": "",
+                        "define": "libraries/appular/extensions/app/app"
+                    },
+                    {
+                        "path": "libraries/appular/extensions/module/module.js",
+                        "name": "module",
+                        "version": "",
+                        "description": "",
+                        "define": "libraries/appular/extensions/module/module"
+                    },
+                    {
+                        "path": "libraries/appular/extensions/plugin/plugin.js",
+                        "name": "module",
+                        "version": "",
+                        "description": "",
+                        "define": "libraries/appular/extensions/plugin/plugin"
+                    }
+                ]
+            }
+        },
         {
             "path": "libraries/backbone/backbone-1.0.0.js",
             "name": "backbone",
             "version": "v1.0.0",
             "description": "",
             "link": "http://documentcloud.github.io/backbone/",
-            "define": "backbone"
+            "define": "backbone",
+            "extras": {
+                "extensions": [
+                    {
+                        "path": "libraries/backbone/extensions/stickit.js",
+                        "name": "stickit",
+                        "version": "",
+                        "description": "",
+                        "define": "backboneStickit",
+                        "link": "http://nytimes.github.io/backbone.stickit/"
+                    }
+                ]
+            }
         },
         {
             "name": "jQuery",
@@ -115,13 +171,6 @@
             "define": "modules/_boilerplate/module"
         },
         {
-            "path": "modules/demo/module.js",
-            "name": "demo",
-            "version": "",
-            "description": "",
-            "define": "modules/demo/module"
-        },
-        {
             "path": "modules/docs/module.js",
             "name": "docs",
             "version": "",
@@ -129,11 +178,32 @@
             "define": "modules/docs/module"
         },
         {
-            "path": "modules/user-bar/module.js",
-            "name": "userBar",
+            "path": "modules/filter/module.js",
+            "name": "filter",
             "version": "",
             "description": "",
-            "define": "modules/user-bar/module"
+            "define": "modules/filter/module"
+        },
+        {
+            "path": "modules/recommended-venues/module.js",
+            "name": "demo",
+            "version": "",
+            "description": "",
+            "define": "modules/recommended-venues/module"
+        },
+        {
+            "path": "modules/test/module.js",
+            "name": "test",
+            "version": "",
+            "description": "",
+            "define": "modules/test/module"
+        },
+        {
+            "path": "modules/tips-venues/module.js",
+            "name": "demo",
+            "version": "",
+            "description": "",
+            "define": "modules/tips-venues/module"
         }
     ]
 }

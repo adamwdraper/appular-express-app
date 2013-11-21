@@ -12,6 +12,7 @@ define([
             initialize: function() {
             },
             render: function() {
+                var docs = {};
                 
                 this.$el.html(_.template(template, {
                     docs: docs,
