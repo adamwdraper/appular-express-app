@@ -182,6 +182,7 @@ module.exports = function(grunt) {
     ]);
     
     grunt.registerTask('develop', 'Builds starts server in development environment, and watches NODE.js and SASS files for changes.', [
+        'sass:dev',
         'express:development',
         'watch'
     ]);
