@@ -73,7 +73,9 @@ define([
                     });
                     app.router = new Router();
 
-                    app.render();
+                    Backbone.history.start({
+                        root: window.location.pathname
+                    });
                 });
             } else {
                 throw new Error('Appular : No app found');
@@ -109,12 +111,11 @@ define([
                     module = new Module(options).render();
                 });
             });
-
-            Backbone.history.start({
-                root: window.location.pathname
-            });
         };
 
+    Backbone.on('router:initialized', function () {
+        app.render();
+    });
     Backbone.on('app:initialized', renderModules);
 
     renderApp();
