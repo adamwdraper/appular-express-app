@@ -10,8 +10,19 @@ Appular isn't really a framework.  It does a couple of nice things, like loading
 - Eliminate spagetti code that can occur even when a JS framework is being used
 - Create documentation for your modules from inline comments
 
+## Example Project
+To check out a quick example of appular in action:
+- Clone the repo
+- Run `npm install`
+- Run `grunt`
+- Go to `http://localhost:5000/demo` in your browser
+- Tip: Open your console to see what modules loaded
+
 ## Concepts
 In Appular there are 3 different types of modules.
+
+### App
+This is where you do any prep work like authentication checks before any of your modules load.  They also have a special collection called params that modules use to share data.  An app is added to a page by adding `data-appular-app="app-name"` to the body tag.
 
 ### Modules
 These can be full fledged Backbone apps or a single Backbone View.  Modules are bound to dom elements by adding a `data-appular-module="module-name"` attribute to the element.
@@ -47,13 +58,8 @@ Appular can generate documentation code for your project with its [grunt plugin]
 
 ## Grunt Commands
 `grunt`:
-- jshints all javascript
-- creates documentation json with grunt-appular-docs plugin
-- uses r.js to create production build of javascript
-
-
-## Example Project
-Here is an [example project using Node and Express.js](https://github.com/adamwdraper/appular-express-app)
+- Builds starts server in development environment.
+- Watches NODE.js and SASS files for changes
 
 
 ## Readiness
