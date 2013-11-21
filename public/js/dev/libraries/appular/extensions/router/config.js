@@ -3,7 +3,7 @@ define({
         useBang: false,
         paramSeparator: '&',
         keyValSeparator: '=',
-        arraySeparator: ','
+        arraySeparator: '|'
     },
     // where the router will read the initial data from.  options: hash or query
     loadFrom: 'hash'
