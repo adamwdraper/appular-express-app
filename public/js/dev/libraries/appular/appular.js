@@ -14,12 +14,13 @@ define([
     'libraries/appular/extensions/app/app',
     'libraries/appular/extensions/module/module',
     'libraries/appular/extensions/plugin/plugin'
-], function (module, doc, $, _, Backbone, Params, Router) {
+], function (module, doc, $, _, Backbone, Params, Router, App) {
     var app,
         params = new Params(),
+        isDebug = true,
         $modules = $('[data-appular-module]'),
         log = function (type, name, path) {
-            if (module.config().env === 'develop') {
+            if (isDebug) {
                 console.log('Appular : ' + type + ' : ' + name + ' : ' + path);
             }
         },
