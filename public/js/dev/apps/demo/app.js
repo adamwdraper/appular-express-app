@@ -12,7 +12,7 @@ define([
                     value: ''
                 },
                 'location': {
-                    value: 'San Francisco'
+                    value: 'San Francisco, CA'
                 }
             },
             initialize: function () {},

@@ -14,10 +14,10 @@
             render: function() {
                 this.$el.html(_.template(template, {
                     locations: [
-                        'San Francisco',
-                        'Phoenix',
-                        'Boston',
-                        'Austin'
+                        'San Francisco, CA',
+                        'Phoenix, AZ',
+                        'Boston, MA',
+                        'Austin, TX'
                     ]
                 }));
 
