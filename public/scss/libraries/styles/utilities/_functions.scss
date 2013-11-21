@@ -1,0 +1,17 @@
+@function  visible-color($color, $varient) {
+    @if $color == transparent {
+        $color: white;
+    }
+
+    $visible-color: darken($color, $varient);
+
+    @if lightness($color) <= 50% {
+        $visible-color: lighten($color, $varient);
+    }
+
+    @return $visible-color;
+}
+
+@function rem($px, $base: 16) {
+    @return ($px / $base) * 1rem;
+}

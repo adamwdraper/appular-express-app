@@ -1,6 +1,6 @@
 var express = require('express'),
     app = express(),
-    port = process.env.PORT || 5000;;
+    port = process.env.PORT || 5000;
 
 app.use(express.logger());
 app.use(express.compress());
@@ -15,7 +15,7 @@ app.get('/', function (req, res) {
     });
 });
 
-app.get('/:view', function (req, res, next) {
+app.get('/:view/:data?', function (req, res) {
     res.render(req.params.view, {
         environment: process.env.NODE_ENV
     });

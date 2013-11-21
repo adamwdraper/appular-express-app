@@ -1,0 +1,31 @@
+// Variables -------------------------------------
+$stat-background-color: $color-body-background-color !default;
+$include-component-stat: true !default;
+
+// Placehoders --------------------------------------
+
+
+// Styles --------------------------------------
+@if $include-component-stat {
+    .stat {
+
+        .title {
+            font-size: 1.4em;
+            color: $color-gray;
+
+            i {
+
+            }
+
+            .name {
+                display: inline-block;
+                vertical-align: middle;
+            }
+        }
+
+        .count {
+            font-size: 4em;
+            color: $color-gray-dark;
+        }
+    }
+}

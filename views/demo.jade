@@ -1,17 +1,20 @@
 extends layouts/main
 
+block vars
+    - var app = 'demo'
+
 block head
-    
+    link(rel='stylesheet', href='/css/demo.css')    
 
 block content
-    div(data-appular-module="user-bar")
-    div(data-appular-module="demo")
-
-
-block scripts
-    - if (environment === 'development')
-        script(src="/js/dev/libraries/require/require-2.1.9.js")
-        script(src="/js/dev/libraries/require/config.js")
-        script(src="/js/dev/libraries/appular/appular.js")
-    - else
-        script(src="/js/build/appular.js")
+    .demo-container
+        .section.span-12
+            .content.clearfix(data-appular-module="filter")
+        .section.span-8
+            .header
+                <h3>Recommended</h3>
+            .content(data-appular-module="recommended-venues")
+        .section.span-4
+            .header
+                <h3>Tips</h3>
+            .content(data-appular-module="tips-venues")

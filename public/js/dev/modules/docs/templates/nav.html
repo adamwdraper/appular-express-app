@@ -1,7 +1,7 @@
-<ul>
+<ul class="menu">
     <% _.each(docs, function (value, key) { %>
-    <li>
-        <a href="#<%= key %>"><%= key %></a>
+    <li class="item">
+        <a data-link="<%= key %>"><%= key %></a>
     </li>
     <% }); %>
 </ul>

@@ -1,0 +1,216 @@
+// Variables ------------------------------------
+$menu-background-color: white !default;
+$menu-margin: 0 0 1em !default;
+$menu-border-width: $border-border-width !default;
+$menu-border-style: $border-border-style !default;
+$menu-border-color-varient: 12% !default;
+$menu-border-radius: $border-border-radius !default;
+
+$menu-item-color: $color-primary !default;
+$menu-item-padding: .7em !default;
+$menu-item-line-height: 3em !default;
+$menu-item-hover-varient: 4% !default;
+$menu-item-active-color: $color-gray-darker !default;
+$menu-item-active-background-color: $color-gray-lightest !default;
+
+$menu-tabular-background-color: $color-gray-lightest !default;
+$menu-tabular-item-active-background-color: white !default;
+$menu-tabular-item-line-height: $size-inline-height !default;
+
+
+// Placeholders -----------------------------------
+%menu {
+    display: block;
+    background-color: $menu-background-color;
+    border-radius: $menu-border-radius;
+    margin: $menu-margin;
+    @include border($menu-border-width, $menu-border-style, darken($menu-background-color, $menu-border-color-varient));    
+    @include clearfix;
+}
+
+%menu-main {
+    border-radius: 0;
+    border-width: 0;
+}
+
+%menu-items {
+    display: block;
+    float: left;
+
+    &.right {
+        float: right;
+    }
+}
+
+%menu-item-base {
+    display: block;
+    float: left;
+}
+
+%menu-item {
+    @extend %menu-item-base;
+    line-height: $menu-item-line-height;
+    color: $menu-item-color;
+    cursor: pointer;
+    @include padding-sides($menu-item-padding);
+    @include user-select(none);
+}
+
+%menu-item-hover {
+    background-color: visible-color($menu-background-color, $menu-item-hover-varient);
+}
+
+%menu-item-static {
+    background-color: transparent;
+    cursor: default;
+}
+
+%menu-item-active {
+    background-color: $menu-item-active-background-color;
+    color: $menu-item-active-color;
+
+    &:hover {
+        background-color: $menu-item-active-background-color;
+        cursor: default;
+    }
+}
+    
+%menu-tabular {
+    border-radius: $border-border-radius $border-border-radius 0 0;
+    margin-bottom: 0;
+    background-color: $menu-tabular-background-color;
+}
+
+%menu-tabular-item {
+    line-height: $menu-tabular-item-line-height;
+}
+
+%menu-tabular-item-active {
+    position: relative;
+    background-color: $menu-tabular-item-active-background-color;
+    @include border(0 $menu-border-width, $menu-border-style, darken($menu-background-color, $menu-border-color-varient));    
+
+    &:first-child {
+        border-left: none;
+    }
+
+    &:after {
+        display: block;
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        width: 100%;
+        left: 0;
+        border-bottom: 1px solid $menu-tabular-item-active-background-color;
+    }
+}
+
+%menu-inline {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+%menu-inline-item {
+    line-height: $size-inline-height;
+
+    &:first-child {
+        border-radius: $menu-border-radius 0 0 $menu-border-radius;
+    }
+
+    &:last-child {
+        border-radius: 0 $menu-border-radius $menu-border-radius 0;
+    }
+}
+
+
+@mixin menu-type-color($color) {
+    background-color: $color;
+    border-color: darken($color, $menu-border-color-varient);
+
+    .item,
+    .toggle {
+        color: white;
+
+        &:hover {
+            background-color: visible-color($color, $menu-item-hover-varient);
+        }
+
+        &.active {
+            background-color: $menu-item-active-background-color;
+            color: $menu-item-active-color;
+            
+            &:hover {
+                background-color: $menu-item-active-background-color;
+                cursor: default;
+            }
+        }
+    }
+}
+
+
+// Styles --------------------------------------
+@if $include-component-menu {
+    .menu {
+        @extend %menu;
+
+        &.main {
+            @extend %menu-main;
+        }
+
+        .items {
+            @extend %menu-items;
+        }
+
+        .item,
+        .toggle {
+            @extend %menu-item;
+            
+            &:hover {
+                @extend %menu-item-hover;
+            }
+
+            &.active {
+                @extend %menu-item-active;
+            }
+
+            &.static {
+                @extend %menu-item-static;
+            }
+        }
+
+        .dropdown {
+            @extend %menu-item-base;
+        }
+
+        &.inline {
+            @extend %menu-inline;
+
+            .item {
+                @extend %menu-inline-item;
+            }
+        }
+
+        @include floats();
+
+        &.tabular {
+            @extend %menu-tabular;
+            
+            .item {
+                @extend %menu-tabular-item;
+
+                &.active {
+                    @extend %menu-tabular-item-active;
+                }
+            }
+        }
+
+        @include sizes();
+
+        // Types
+        @for $i from 1 through length($color-types) {
+            &.#{nth($color-types, $i)} {
+                @include menu-type-color(nth($color-types-vars, $i));
+            }
+        }
+    }
+}

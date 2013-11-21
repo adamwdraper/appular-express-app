@@ -2,16 +2,18 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'json!modules/docs/json/docs.json',
-    'text!modules/docs/templates/docs.html',
-    'text!modules/docs/templates/doc.html',
-    'text!modules/docs/templates/function.html',
-    'text!modules/docs/templates/event.html'
-], function ($, _, Backbone, docs, template, docTemplate, functionTemplate, eventTemplate) {
-    var view = Backbone.View.extend({
+    'text!../templates/docs.html',
+    'text!../templates/doc.html',
+    'text!../templates/function.html',
+    'text!../templates/event.html'
+], function ($, _, Backbone, template, docTemplate, functionTemplate, eventTemplate) {
+    var View = Backbone.View.extend({
             events: {},
-            initialize: function() {},
+            initialize: function() {
+            },
             render: function() {
+                var docs = {};
+                
                 this.$el.html(_.template(template, {
                     docs: docs,
                     templates: {
@@ -26,5 +28,5 @@ define([
             }
         });
 
-    return view;
+    return View;
 });

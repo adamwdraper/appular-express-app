@@ -1,0 +1,54 @@
+// Variables ------------------------------------
+$grid-border-width: $border-border-width !default;
+$grid-border-style: $border-border-style !default;
+$grid-border-color: $border-border-color !default;
+
+$grid-cell-padding: 1em 1.5em !default;
+
+
+
+// Placeholders -----------------------------------
+%grid {
+    display: table;
+    width: 100%;
+    // @include border($grid-border-width 0 0 $grid-border-width, $grid-border-style, $grid-border-color);
+}
+
+%row {
+    display: table-row;
+    @include border( 0 0 $grid-border-width, $grid-border-style, $grid-border-color);
+
+    &:last-child {
+        border-bottom: none;
+    
+        & > * {
+            border-bottom: none;
+        }
+    }
+
+    & > * {
+        display: table-cell;
+        padding: $grid-cell-padding;
+        vertical-align: top;
+        @include border( 0 $grid-border-width $grid-border-width 0, $grid-border-style, $grid-border-color);
+
+
+        &:last-child {
+            border-right: none;
+        }
+    }
+}
+
+
+// Styles --------------------------------------
+
+@if $include-component-grid {
+    .grid {
+        @extend %grid;
+
+        .row {
+            @extend %row;
+            @include clearfix;
+        }
+    }
+}

@@ -19,6 +19,8 @@ requirejs.config({
     },
     deps: [
         'modernizr',
-        'jqueryFunctions'
+        'jqueryFunctions',
+        'backboneStickit',
+        'appular'
     ]
 });

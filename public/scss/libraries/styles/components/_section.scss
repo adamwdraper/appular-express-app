@@ -1,0 +1,122 @@
+// Variables ------------------------------------
+$section-background: white !default;
+$section-border-width: $border-border-width !default;
+$section-border-style: $border-border-style !default;
+$section-border-color: $border-border-color !default;
+$section-padding: 1em 1.5em !default;
+$section-margin: 1em !default;
+$section-border-radius: .2em !default;
+
+
+// Placeholders -----------------------------------
+%section {
+    display: block;
+    background: $section-background;
+    margin-top: $section-margin;
+    margin-bottom: $section-margin;
+    border-radius: $section-border-radius;
+    @include border($section-border-width, $section-border-style, $section-border-color);
+}
+
+%section-section {
+    padding: $section-padding;
+    @include clearfix;
+}
+
+%section-tabular {
+    border-radius: 0 0 $section-border-radius $section-border-radius;
+    border-top: none;
+    margin-top: 0;
+}
+
+%section-inline {
+    display: inline-block;
+}
+
+%section-header {    
+    @extend %section-section;
+    border-bottom: $section-border-width $section-border-style $section-border-color;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        line-height: 1; 
+    }      
+}
+
+%section-content {
+    @extend %section-section;
+    border-bottom: $section-border-width $section-border-style $section-border-color;
+
+    &:last-child {
+        border-bottom: none;
+    }
+}
+
+%section-contents-content {
+    margin: 1em 0;
+    @include clearfix;
+
+    &:first-child {
+        margin-top: 0;
+    }
+
+    &:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+    }
+}
+
+%section-footer {
+    @extend %section-section;
+    clear: both;
+}
+
+
+// Styles --------------------------------------
+@if $include-component-section {
+    section, .section {
+        @extend %section;
+
+        &.tabular {
+            @extend %section-tabular;
+        }
+
+        &.inline {
+            @extend %section-inline;
+        }
+
+        & > .header {
+            @extend %section-header;
+        }
+
+        & > .content {
+            @extend %section-content;
+        }
+
+        & > .contents {
+            @extend %section-content;
+
+            .content {
+                @extend %section-contents-content;
+            }
+        }
+
+        & > .footer {
+            @extend %section-footer;
+        }
+
+                // Types
+        @for $i from 1 through length($color-types) {
+            &.#{nth($color-types, $i)} {
+                background-color: lighten(nth($color-types-vars, $i), 40%);
+                color: nth($color-types-vars, $i);
+                border-color: nth($color-types-vars, $i);
+            }
+        }
+
+    }
+}

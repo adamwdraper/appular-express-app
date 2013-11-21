@@ -1,0 +1,130 @@
+// Variables ------------------------------------
+$icon-font-family: "explorer" !default;
+$icon-font-path: "/icons/explorer" !default;
+
+$icon-icons:
+    logo,
+    safari,
+    ie,
+    firefox,
+    chrome,
+    arrow-right,
+    arrow-up,
+    arrow-down,
+    arrow-left,
+    caret-right,
+    caret-up,
+    caret-down,
+    caret-left,
+    home,
+    search,
+    delete,
+    checkmark,
+    folder,
+    circle-arrow-up,
+    archive,
+    settings,
+    close,
+    plus,
+    refresh,
+    save,
+    gauge,
+    star
+    !default;
+
+$icon-icons-content:
+    "\e601",
+    "\e001",
+    "\e002",
+    "\e003",
+    "\e004",
+    "\e005",
+    "\e006",
+    "\e007",
+    "\e008",
+    "\e009",
+    "\e00a",
+    "\e00b",
+    "\e00c",
+    "\e00d",
+    "\e00e",
+    "\e00f",
+    "\e011",
+    "\e012",
+    "\e600",
+    "\e013",
+    "\e014",
+    "\e010",
+    "\e01b",
+    "\f01e",
+    "\e01c",
+    "\e602",
+    "\e603"
+    !default;
+
+// Placeholders -----------------------------------
+%icon-i {
+    font-family: $icon-font-family;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    display: inline-block;
+    vertical-align: middle;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+%icon-disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+@mixin icon-icon($content) {
+    
+    &:before {
+        content: $content;
+    }
+}
+
+// Styles --------------------------------------
+@if $include-component-icon {
+    @font-face {
+        font-family: $icon-font-family;
+        src:url("#{$icon-font-path}.eot");
+        src:url("#{$icon-font-path}.eot?#iefix") format("embedded-opentype"),
+            url("#{$icon-font-path}.woff") format("woff"),
+            url("#{$icon-font-path}.ttf") format("truetype"),
+            url("#{$icon-font-path}.svg#icomoon") format("svg");
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    i {
+        @extend %icon-i;
+
+        // Types
+        @for $i from 1 through length($color-types) {
+            &.#{nth($color-types, $i)} {
+                color: nth($color-types-vars, $i);
+            }
+        }
+
+        @include sizes();
+
+        &.disabled {
+            @extend %icon-disabled;
+        }
+    
+        // Icons
+        @for $i from 1 through length($icon-icons) {
+            &.#{nth($icon-icons, $i)} {
+                @include icon-icon(nth($icon-icons-content, $i));
+            }
+        }
+    }
+}

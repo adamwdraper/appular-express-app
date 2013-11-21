@@ -6,16 +6,18 @@
     'jquery',
     'underscore',
     'backbone',
-    'text!modules/_boilerplate/templates/module.html'
+    'text!./templates/module.html'
 ], function ($, _, Backbone, template) {
-    var view = Backbone.View.extend({
+    var Module = Backbone.Module.extend({
             events: {},
-            initialize: function() {},
+            initialize: function() {
+                
+            },
             render: function() {
                 this.$el.html(_.template(template, {}));
                 return this;
             }
         });
 
-    return view;
+    return Module;
 });
