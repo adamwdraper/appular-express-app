@@ -1,1 +1,6 @@
-This is a module.
+<input id="keyword" type="text" placeholder="Tacos, Pizza" />
+<select id="location">
+    <% _.each(locations, function(location) { %>
+    <option value="<%= location %>"><%= location %></option>
+    <% }); %>
+</select>

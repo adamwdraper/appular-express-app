@@ -1,8 +1,11 @@
 extends layouts/main
 
+block vars
+    - var app = 'demo'
+
 block head
     
 
 block content
-    div(data-appular-module="demo")
-    div(data-appular-module="demo")
+    .module(data-appular-module="filter")
+    .module(data-appular-module="venues")
