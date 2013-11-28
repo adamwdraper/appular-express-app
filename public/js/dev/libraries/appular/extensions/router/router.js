@@ -52,11 +52,11 @@ define([
                         value = model.get('value');
 
                         // join arrays for url
-                        if (_.isArray(value) && !_.isEmpty(value)) {
+                        if (_.isArray(value)) {
                             value = value.join(config.hash.arraySeparator);
                         }
 
-                        if (value && !_.isEmpty(value)) {
+                        if (value) {
                             // use alias if it is defined
                             params.push((model.get('alias') ? model.get('alias') : model.get('id')) + config.hash.keyValSeparator + value);
                         }

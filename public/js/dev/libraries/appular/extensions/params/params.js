@@ -52,26 +52,37 @@ define([
                 }, this);
 
                 // all params should be loaded
-                Backbone.trigger('router:initialized');
+                Backbone.trigger('params:initialized');
             },
             /**
             @function getValue - shortcut to get model's value
             */
             getValue: function(name) {
-                return this.get(name).get('value');
+                var model = this.get(name),
+                    value;
+
+                if (model) {
+                    value = model.get('value');
+                }
+
+                return value;
             },
 
             /**
             @function setValueOf - shortcut to set model's value
             */
-            setValue: function(id, value) {
+            setValue: function(id, value, options) {
                 var model = this.get(id);
+
+                options = options || {};
 
                 if (model.get('loadFromCookie')) {
                     cookies.set((model.get('alias') ? model.get('alias') : id), value);
                 }
 
-                return this.get(id).set('value', value);
+                return this.get(id).set({
+                    value: value
+                }, options);
             }
         });
 

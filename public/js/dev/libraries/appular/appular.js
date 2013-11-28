@@ -23,7 +23,7 @@ define([
                 console.log('Appular : ' + type + ' : ' + name + ' : ' + path);
             }
         },
-        renderApp = function () {
+        requireApp = function () {
             var $element = $('body'),
                 name = $element.data('appularApp'),
                 path = 'apps/' + name + '/app';
@@ -113,10 +113,11 @@ define([
             });
         };
 
-    Backbone.on('router:initialized', function () {
+    Backbone.on('params:initialized', function () {
         app.render();
     });
+
     Backbone.on('app:initialized', renderModules);
 
-    renderApp();
+    requireApp();
 });
