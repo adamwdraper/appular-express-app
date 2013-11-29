@@ -14,7 +14,7 @@
     var Module = Backbone.Module.extend({
             events: {},
             initialize: function() {
-                this.listenTo(this.app.params, 'change', this.updateVenues);
+                this.listenTo(this.app.params, 'change:keyword change:location', this.updateVenues);
             },
             render: function() {
                 this.$el.html(_.template(template, {}));
@@ -24,21 +24,24 @@
                     head: [
                         [
                             {
-                                text: 'Name'
+                                text: 'Name',
+                                sortBy: 'name',
+                                isSortable: true
                             },
                             {
-                                text: 'Address'
-                            },
-                            {
-                                text: 'Status'
+                                text: 'Status',
+                                sortBy: 'status',
+                                isSortable: true
                             },
                             {
                                 text: 'Phone'
                             }
                         ]
                     ],
-                    count: 100
+                    count: 0
                 }).render();
+                this.listenTo(this.plugins.table, 'change:sortOrder', this.setSortOrder);
+                this.listenTo(this.plugins.table, 'change:sortBy', this.setSortBy);
 
                 this.collection = new Venues();
                 this.listenTo(this.collection, 'sync', this.renderVenues);
@@ -61,28 +64,35 @@
                 this.collection.each(function (venue) {
                     venue = venue.get('venue');
 
-                    rows.push([
-                        {
-                            text: _.template(venueTemplate, {
-                                name: venue.name,
-                                url: venue.url || ''
-                            }),
-                            value: venue.name
-                        },
-                        {
-                            text: venue.location.address
-                        },
-                        {
-                            text: venue.hours ? venue.hours.status : '',
-                            value: venue.hours ? venue.hours.isOpen : false
-                        },
-                        {
-                            text: venue.contact.formattedPhone || ''
-                        }
-                    ]);
+                    rows.push({
+                        classes: venue.hours && venue.hours.isOpen ? ['success'] : [],
+                        cells: [
+                            {
+                                text: _.template(venueTemplate, {
+                                    name: venue.name,
+                                    url: venue.url || '',
+                                    address: venue.location.address
+                                }),
+                                value: venue.name
+                            },
+                            {
+                                text: venue.hours ? venue.hours.status : '',
+                                value: venue.hours ? venue.hours.isOpen : false
+                            },
+                            {
+                                text: venue.contact.formattedPhone || ''
+                            }
+                        ]
+                    });
                 });
 
                 this.plugins.table.set('body', rows);
+            },
+            setSortOrder: function (view, sortOrder) {
+                this.app.params.setValue('sortOrder', sortOrder);
+            },
+            setSortBy: function (view, sortBy) {
+                this.app.params.setValue('sortBy', sortBy);
             }
         });
 

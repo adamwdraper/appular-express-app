@@ -9,8 +9,8 @@ $table-border-color: $border-border-color !default;
 $table-margin: 1em !default;
 
 // Cells
-$table-cell-line-height: 2rem !default;
-$table-cell-padding: 0 .5em !default;
+$table-cell-min-height: 2rem !default;
+$table-cell-padding: .7em .5em !default;
 $table-cell-text-align: left !default;
 $table-cell-striped: $color-gray-lightest !default;
 $table-cell-font-size: .9em !default;
@@ -39,7 +39,7 @@ $table-header-cell-font-size: .8em !default;
     th,
     td {
         padding: $table-cell-padding;
-        line-height: $table-cell-line-height;
+        // line-height: $table-cell-line-height;
         text-align: $table-cell-text-align;
         border-bottom: $table-border-width $table-border-style $table-border-color;
         border-right: $table-border-width $table-border-style $table-border-color;
@@ -49,11 +49,19 @@ $table-header-cell-font-size: .8em !default;
         font-size: $table-header-cell-font-size;
         font-weight: bold;
         vertical-align: bottom;
+
+        &.sortable {
+            cursor: pointer;
+        }
     }
 
     td {
         font-size: $table-cell-font-size;
         vertical-align: top;
+
+        &.number {
+            text-align: right;
+        }
     }
 
     tbody {
@@ -64,16 +72,21 @@ $table-header-cell-font-size: .8em !default;
                 background-color: $table-cell-striped;
             }
 
-            &:last-child {
-                &:first-child {
-                    border-radius: 0 0 0 $table-border-radius;
-                }
 
-                &:last-child {
-                    border-radius: 0 0 $table-border-radius 0;
+            &:last-child {
+
+                td {
+
+                    &:first-child {
+                        border-radius: 0 0 0 $table-border-radius;
+                    }
+
+                    &:last-child {
+                        border-radius: 0 0 $table-border-radius 0;
+                    }
                 }
             }
-
+            
             @for $i from 1 through length($color-types) {
                 &.#{nth($color-types, $i)} {
                     background-color: lighten(nth($color-types-vars, $i), 40%);

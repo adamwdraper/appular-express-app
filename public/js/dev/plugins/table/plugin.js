@@ -55,7 +55,7 @@ define([
                 this.set('sortIndex', this.$el.find('th[data-sort-by=' + this.get('sortBy') + ']').data('index'));
 
                 rows = _.sortBy(this.get('body'), function (row) {
-                    return row[this.get('sortIndex')].value;
+                    return _.isArray(row) ? row[this.get('sortIndex')].value : row.cells[this.get('sortIndex')].value;
                 }, this);
 
                 if (this.get('sortOrder') === 'desc') {
@@ -66,8 +66,10 @@ define([
             },
             renderRows: function () {
                 var html = '',
+                    row,
                     firstRow = 0,
-                    i = 0;
+                    i = 0,
+                    count = this.get('count') || this.get('body').length;
 
                 if (this.get('page') === 2) {
                     firstRow = this.get('count');
@@ -75,9 +77,12 @@ define([
                     firstRow = this.get('count') * (this.get('page') - 1);
                 }
 
-                for (i; i < this.get('count'); i++) {
+                for (i; i < count; i++) {
+                    row = this.get('body')[firstRow + i];
+
                     html += _.template(rowTemplate, {
-                        row: this.get('body')[firstRow + i]
+                        classes: row.classes || [],
+                        cells: _.isArray(row) ? row : row.cells
                     });
                 }
 
