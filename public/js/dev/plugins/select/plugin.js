@@ -39,7 +39,7 @@ define([
                 this.collection = new Options(options);
                 this.listenTo(this.collection, 'change:selected', this.setToggleText);
 
-                this.$el.addClass('dropdown').html(_.template(template, {
+                this.$el.html(_.template(template, {
                     options: this.collection.toJSON()
                 }));
 
