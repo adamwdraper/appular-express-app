@@ -9,7 +9,7 @@ define([
     var App = Backbone.App.extend({
             params: {
                 keyword: {
-                    value: ''
+                    value: 'tacos'
                 },
                 location: {
                     value: 'San Francisco, CA'

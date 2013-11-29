@@ -10,12 +10,16 @@
     'plugins/select/plugin'
 ], function ($, _, Backbone, template, Select) {
     var Module = Backbone.Module.extend({
-            events: {},
+            events: {
+                'keyup #keyword': 'keywordChanged'
+            },
             initialize: function() {
                 _.bindAll(this, 'setLocation');
             },
             render: function() {
-                this.$el.html(_.template(template, {}));
+                this.$el.html(_.template(template, {
+                    value: this.app.params.getValue('keyword')
+                }));
 
                 this.plugins.select = new Select({
                     el: '#location',
@@ -29,13 +33,15 @@
                 }).render();
                 this.listenTo(this.plugins.select, 'change:value', this.setLocation);
 
-                // use stickit to bind param models to inputs
-                // this.stickit(this.app.params.get('keyword'), {
-                //     '#keyword': 'value'
-                // });
+                this.$keyword = $('#keyword');
 
                 return this;
             },
+            keywordChanged: _.debounce(function () {
+                if (this.$keyword.val()) {
+                    this.app.params.setValue('keyword', this.$keyword.val());
+                }
+            }, 500),
             setLocation: function (option, value) {
                 this.app.params.setValue('location', value);
             }
