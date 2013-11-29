@@ -49,12 +49,17 @@ $dropdown-item-active-background-color: $color-body-background-color !default;
     right: 0;
 }
 
+%dropdown-toggle {
+    cursor: pointer;
+}
+
 %dropdown-item {
     display: block;
     width: 100%;
     color: $dropdown-item-color;
     line-height: $dropdown-line-height;
     white-space: nowrap;
+    cursor: pointer;
     @include padding-sides($dropdown-item-padding);
 
     &:first-child {
@@ -84,6 +89,10 @@ $dropdown-item-active-background-color: $color-body-background-color !default;
 @if $include-component-dropdown {
     .dropdown {
         @extend %dropdown;
+
+        .toggle {
+            @extend %dropdown-toggle;
+        }
 
         .items {
             @extend %dropdown-items;
