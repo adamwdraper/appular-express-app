@@ -8,8 +8,9 @@
     'backbone',
     'text!./templates/module.html',
     'text!./templates/venue.html',
-    './collections/venues'
-], function ($, _, Backbone, template, venueTemplate, Venues) {
+    './collections/venues',
+    'plugins/table/plugin'
+], function ($, _, Backbone, template, venueTemplate, Venues, Table) {
     var Module = Backbone.Module.extend({
             events: {},
             initialize: function() {
@@ -17,6 +18,27 @@
             },
             render: function() {
                 this.$el.html(_.template(template, {}));
+
+                this.plugins.table = new Table({
+                    el: '#recommended-table',
+                    head: [
+                        [
+                            {
+                                text: 'Name'
+                            },
+                            {
+                                text: 'Address'
+                            },
+                            {
+                                text: 'Status'
+                            },
+                            {
+                                text: 'Phone'
+                            }
+                        ]
+                    ],
+                    count: 100
+                }).render();
 
                 this.collection = new Venues();
                 this.listenTo(this.collection, 'sync', this.renderVenues);
@@ -34,22 +56,33 @@
                 });
             },
             renderVenues: function () {
-                var html = '';
+                var rows = [];
 
                 this.collection.each(function (venue) {
-                    var v = venue.get('venue');
+                    venue = venue.get('venue');
 
-                    html += _.template(venueTemplate, {
-                        name: v.name,
-                        address: v.location.address,
-                        website: v.url || '',
-                        phone: v.contact.formattedPhone || '',
-                        status: v.hours ? v.hours.status : '',
-                        isOpen: v.hours ? v.hours.isOpen : ''
-                    });
+                    rows.push([
+                        {
+                            text: _.template(venueTemplate, {
+                                name: venue.name,
+                                url: venue.url || ''
+                            }),
+                            value: venue.name
+                        },
+                        {
+                            text: venue.location.address
+                        },
+                        {
+                            text: venue.hours ? venue.hours.status : '',
+                            value: venue.hours ? venue.hours.isOpen : false
+                        },
+                        {
+                            text: venue.contact.formattedPhone || ''
+                        }
+                    ]);
                 });
 
-                $('#recommended-venues').html(html);
+                this.plugins.table.set('body', rows);
             }
         });
 

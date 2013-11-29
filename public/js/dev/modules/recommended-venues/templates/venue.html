@@ -1,7 +1,5 @@
-<tr class="<%= isOpen ? 'success' : '' %>">
-    <td><%= name %></td>
-    <td><%= address %></td>
-    <td><%= status %></td>
-    <td><%= phone %></td>
-    <td><a href="<%= website %>" target="_blank">Visit</a></td>
-</tr>
+<% if (url) { %>
+<a href="<%= url %>" target="_blank"><%= name %></a>
+<% } else { %>
+<%= name %>
+<% } %>

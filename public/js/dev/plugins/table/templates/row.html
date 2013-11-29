@@ -1,0 +1,5 @@
+<tr>
+    <% _.each(row, function (row) { %>
+    <td <% if (_.isNumber(row.value)) { %>class="number"<% } %>><%= row.text %></td>
+    <% }); %>
+</tr>
