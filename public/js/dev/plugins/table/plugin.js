@@ -18,12 +18,13 @@ define([
                 sortBy: '',
                 sortOrder: 'asc',
                 page: 1,
-                count: 25
+                count: 25,
+                isSorted: false
             },
             initialize: function () {
                 _.bindAll(this, 'setSort', 'renderRows');
 
-                this.on('change:body change:page change:sortBy change:sortOrder', this.renderRows);
+                this.on('change:body change:page change:sortBy change:sortOrder', this.sort);
             },
             render: function () {
                 this.$el.html(_.template(template, {
@@ -31,8 +32,6 @@ define([
                 }));
 
                 this.$tbody = this.$el.find('tbody');
-
-                this.trigger('sort');
 
                 return this;
             },
@@ -42,26 +41,38 @@ define([
 
                 this.set({
                     sortBy: sortBy,
-                    sortOrder: sortOrder
+                    sortOrder: sortOrder,
+                    isSorted: false
                 });
             },
             sort: function () {
                 var rows,
+                    sortIndex;
+            
+                if (!this.get('isSorted')) {
                     sortIndex = this.$el.find('th[data-sort-by=' + this.get('sortBy') + ']').data('index');
 
-                rows = _.sortBy(this.get('body'), function (row) {
-                    return _.isArray(row) ? row[sortIndex].value : row.cells[sortIndex].value;
-                }, this);
+                    rows = _.sortBy(this.get('body'), function (row) {
+                        return _.isArray(row) ? row[sortIndex].value : row.cells[sortIndex].value;
+                    }, this);
 
-                if (this.get('sortOrder') === 'desc') {
-                    rows.reverse();
+                    if (this.get('sortOrder') === 'desc') {
+                        rows.reverse();
+                    }
+
+                    this.set({
+                        body: rows,
+                        isSorted: true
+                    }, {
+                        silent: true
+                    });
                 }
 
-                return rows;
+                this.renderRows();
             },
             renderRows: function () {
                 var html = '',
-                    rows = this.sort(this.get('body')),
+                    rows = this.get('body'),
                     row,
                     firstRow = 0,
                     i = 0,
