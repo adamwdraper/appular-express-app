@@ -18,13 +18,13 @@ define([
                 sortBy: '',
                 sortOrder: 'asc',
                 page: 1,
-                count: 25,
-                isSorted: false
+                count: 25
             },
             initialize: function () {
                 _.bindAll(this, 'setSort', 'renderRows');
 
-                this.on('change:body change:page change:sortBy change:sortOrder', this.sort);
+                this.on('change:body change:sortBy change:sortOrder', this.sort);
+                this.on('change:page', this.renderRows);
             },
             render: function () {
                 this.$el.html(_.template(template, {
@@ -41,17 +41,15 @@ define([
 
                 this.set({
                     sortBy: sortBy,
-                    sortOrder: sortOrder,
-                    isSorted: false
+                    sortOrder: sortOrder
                 });
             },
             sort: function () {
-                var rows,
-                    sortIndex;
-            
-                if (!this.get('isSorted')) {
-                    sortIndex = this.$el.find('th[data-sort-by=' + this.get('sortBy') + ']').data('index');
+                var sortIndex,
+                    rows;
 
+                if (this.get('sortBy')) {
+                    sortIndex = this.$el.find('th[data-sort-by=' + this.get('sortBy') + ']').data('index');
                     rows = _.sortBy(this.get('body'), function (row) {
                         return _.isArray(row) ? row[sortIndex].value : row.cells[sortIndex].value;
                     }, this);
@@ -60,10 +58,7 @@ define([
                         rows.reverse();
                     }
 
-                    this.set({
-                        body: rows,
-                        isSorted: true
-                    }, {
+                    this.set('body', rows, {
                         silent: true
                     });
                 }
