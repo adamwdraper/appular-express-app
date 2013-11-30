@@ -13,9 +13,8 @@ define([
             var attribute,
                 attributes,
                 changes,
-                changing,
-                changed = [],
                 silent,
+                changing,
                 previous,
                 current;
 
@@ -40,9 +39,9 @@ define([
             this._changing  = true;
 
             if (!changing) {
-                this._changed = {};
+                this.changed = {};
             }
-            
+
             current = this.options;
             previous = _.clone(this.options);
 
@@ -53,9 +52,9 @@ define([
                     changes.push(attribute);
                 }
                 if (!_.isEqual(previous[attribute], value)) {
-                    changed[attribute] = value;
+                    this.changed[attribute] = value;
                 } else {
-                    delete changed[attribute];
+                    delete this.changed[attribute];
                 }
 
                 current[attribute] = value;
@@ -83,7 +82,6 @@ define([
                     this.trigger('change', this, options);
                 }
             }
-            
             this._pending = false;
             this._changing = false;
 
