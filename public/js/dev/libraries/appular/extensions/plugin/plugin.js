@@ -41,9 +41,10 @@ define([
 
             if (!changing) {
                 this._changed = {};
-                current = this.options;
-                previous = _.clone(this.options);
             }
+            
+            current = this.options;
+            previous = _.clone(this.options);
 
             // For each `set` option, update or delete the current value.
             for (attribute in attributes) {
