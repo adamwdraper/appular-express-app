@@ -19,6 +19,13 @@ define([
                 },
                 sortOrder: {
                     value: 'asc'
+                },
+                page: {
+                    value: 1
+                },
+                count: {
+                    value: 10,
+                    addToUrl: false
                 }
             },
             initialize: function () {},

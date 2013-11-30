@@ -21,7 +21,7 @@
                 }
             },
             initialize: function() {
-                this.listenTo(this.app.params, 'change', this.updateVenues);
+                this.listenTo(this.app.params, 'change:keyword change:location', this.updateVenues);
             },
             render: function() {
                 this.$el.html(_.template(template, {}));

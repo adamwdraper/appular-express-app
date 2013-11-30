@@ -9,8 +9,9 @@
     'text!./templates/module.html',
     'text!./templates/venue.html',
     './collections/venues',
-    'plugins/table/plugin'
-], function ($, _, Backbone, template, venueTemplate, Venues, Table) {
+    'plugins/table/plugin',
+    'plugins/pagination/plugin'
+], function ($, _, Backbone, template, venueTemplate, Venues, Table, Pagination) {
     var Module = Backbone.Module.extend({
             events: {},
             initialize: function() {
@@ -38,12 +39,20 @@
                             }
                         ]
                     ],
-                    count: 0,
+                    count: this.app.params.getValue('count'),
                     sortOrder: this.app.params.getValue('sortOrder'),
                     sortBy: this.app.params.getValue('sortBy')
                 }).render();
                 this.listenTo(this.plugins.table, 'change:sortOrder', this.setSortOrder);
                 this.listenTo(this.plugins.table, 'change:sortBy', this.setSortBy);
+
+                this.plugins.pagination = new Pagination({
+                    el: '#recommended-pagination',
+                    count: this.app.params.getValue('count'),
+                    page: this.app.params.getValue('page'),
+                    scrollTopSelector: false
+                }).render();
+                this.listenTo(this.plugins.pagination, 'change:page', this.setPage);
 
                 this.collection = new Venues();
                 this.listenTo(this.collection, 'sync', this.renderVenues);
@@ -89,8 +98,14 @@
                 });
 
                 this.plugins.table.set('body', rows);
+                this.plugins.pagination.set('total', this.collection.length);
+            },
+            setPage: function (view, page) {
+                this.plugins.table.set('page', page);
+                this.app.params.setValue('page', page);
             },
             setSortOrder: function (view, sortOrder) {
+                console.log(arguments);
                 this.app.params.setValue('sortOrder', sortOrder);
             },
             setSortBy: function (view, sortBy) {
