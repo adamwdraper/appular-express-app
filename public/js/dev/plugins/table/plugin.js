@@ -16,7 +16,6 @@ define([
                 body: [],
                 head: [],
                 sortBy: '',
-                sortIndex: '',
                 sortOrder: 'asc',
                 page: 1,
                 count: 25
@@ -24,8 +23,7 @@ define([
             initialize: function () {
                 _.bindAll(this, 'setSort', 'renderRows');
 
-                this.on('sort', this.sort);
-                this.on('change:body change:page', this.renderRows);
+                this.on('change:body change:page change:sortBy change:sortOrder', this.renderRows);
             },
             render: function () {
                 this.$el.html(_.template(template, {
@@ -46,26 +44,24 @@ define([
                     sortBy: sortBy,
                     sortOrder: sortOrder
                 });
-
-                this.trigger('sort');
             },
             sort: function () {
-                var rows;
-
-                this.set('sortIndex', this.$el.find('th[data-sort-by=' + this.get('sortBy') + ']').data('index'));
+                var rows,
+                    sortIndex = this.$el.find('th[data-sort-by=' + this.get('sortBy') + ']').data('index');
 
                 rows = _.sortBy(this.get('body'), function (row) {
-                    return _.isArray(row) ? row[this.get('sortIndex')].value : row.cells[this.get('sortIndex')].value;
+                    return _.isArray(row) ? row[sortIndex].value : row.cells[sortIndex].value;
                 }, this);
 
                 if (this.get('sortOrder') === 'desc') {
                     rows.reverse();
                 }
 
-                this.set('body', rows);
+                return rows;
             },
             renderRows: function () {
                 var html = '',
+                    rows = this.sort(this.get('body')),
                     row,
                     firstRow = 0,
                     i = 0,
@@ -78,7 +74,7 @@ define([
                 }
 
                 for (i; i < count; i++) {
-                    row = this.get('body')[firstRow + i];
+                    row = rows[firstRow + i];
 
                     html += _.template(rowTemplate, {
                         classes: row.classes || [],

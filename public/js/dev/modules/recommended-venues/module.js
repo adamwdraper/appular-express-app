@@ -38,7 +38,9 @@
                             }
                         ]
                     ],
-                    count: 0
+                    count: 0,
+                    sortOrder: this.app.params.getValue('sortOrder'),
+                    sortBy: this.app.params.getValue('sortBy')
                 }).render();
                 this.listenTo(this.plugins.table, 'change:sortOrder', this.setSortOrder);
                 this.listenTo(this.plugins.table, 'change:sortBy', this.setSortBy);
