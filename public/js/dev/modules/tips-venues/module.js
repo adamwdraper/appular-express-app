@@ -44,7 +44,7 @@
             renderVenues: function () {
                 var html = '';
 
-                this.collection.each(function (tip) {
+                _.each(this.collection.first(3), function (tip) {
                     var user = tip.get('user'),
                         venue = tip.get('venue');
 

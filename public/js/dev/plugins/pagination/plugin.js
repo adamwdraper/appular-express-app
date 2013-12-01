@@ -63,8 +63,8 @@ define([
                 this.set('page', $(e.currentTarget).data('page'));
 
                 if (this.get('scrollTopSelector')) {
-                    $(this.get('scrollTopSelector')).animate({
-                        scrollTop: 0
+                    $('html, body').animate({
+                        scrollTop: $(this.get('scrollTopSelector')).offset().top
                     }, 'fast');
                 }
             }

@@ -50,7 +50,7 @@
                     el: '#recommended-pagination',
                     count: this.app.params.getValue('count'),
                     page: this.app.params.getValue('page'),
-                    scrollTopSelector: false
+                    scrollTopSelector: '#recommended-table'
                 }).render();
                 this.listenTo(this.plugins.pagination, 'change:page', this.setPage);
 
@@ -105,10 +105,10 @@
                 this.app.params.setValue('page', page);
             },
             setSortOrder: function (view, sortOrder) {
-                console.log(arguments);
                 this.app.params.setValue('sortOrder', sortOrder);
             },
             setSortBy: function (view, sortBy) {
+                this.plugins.table.set('page', 1);
                 this.app.params.setValue('sortBy', sortBy);
             }
         });
