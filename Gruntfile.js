@@ -1,4 +1,30 @@
+var fs = require('fs');
+
 module.exports = function(grunt) {
+
+    var appular = {
+        apps: [],
+        modules: []
+    };
+
+    // add appular app definition for build
+    fs.readdirSync('./public/js/dev/apps').forEach(function (path) {
+        appular.apps.push({
+            name: 'apps/' + path + '/app',
+            exclude: [
+                'appular'
+            ]
+        });
+    });
+    // add appular module definition for build
+    fs.readdirSync('./public/js/dev/modules').forEach(function (path) {
+        appular.modules.push({
+            name: 'modules/' + path + '/module',
+            exclude: [
+                'appular'
+            ]
+        });
+    });
 
     // Project configuration.
     grunt.initConfig({
@@ -84,14 +110,15 @@ module.exports = function(grunt) {
                     baseUrl: 'public/js/dev',
                     dir: 'public/js/build',
                     paths: {
+                        'appular': 'libraries/appular/appular-2.3.0',
                         'modernizr': 'libraries/modernizr/modernizr-2.6.3',
-                        'jquery': 'empty:',
+                        'jquery': 'libraries/jquery/jquery-1.10.2',
                         'jqueryFunctions': 'libraries/jquery/extensions/functions',
                         'underscore': 'libraries/underscore/underscore-1.5.0',
                         'backbone': 'libraries/backbone/backbone-1.0.0',
                         'backboneStickit': 'libraries/backbone/extensions/stickit',
-                        'moment': 'empty:',
-                        'numeral': 'empty:',
+                        'moment': 'libraries/moment/moment-2.4.0',
+                        'numeral': 'libraries/numeral/numeral-1.5.2',
                         'domReady': 'libraries/require/plugins/domReady',
                         'async': 'libraries/require/plugins/async',
                         'json': 'libraries/require/plugins/json',
@@ -99,12 +126,12 @@ module.exports = function(grunt) {
                     },
                     modules: [
                         {
-                            name: 'appular',
+                            name: './appular',
                             include: [
                                 'modernizr',
                                 'libraries/require/require-2.1.9',
                                 'libraries/require/config-build',
-                                'libraries/appular/appular',
+                                'appular',
                                 'jquery',
                                 'jqueryFunctions',
                                 'underscore',
@@ -113,26 +140,8 @@ module.exports = function(grunt) {
                                 'domReady',
                                 'text'
                             ]
-                        },
-                        {
-                            name: 'modules/demo/module',
-                            exclude: [
-                                'appular'
-                            ]
-                        },
-                        {
-                            name: 'modules/user-bar/module',
-                            exclude: [
-                                'appular'
-                            ]
-                        },
-                        {
-                            name: 'modules/docs/module',
-                            exclude: [
-                                'appular'
-                            ]
                         }
-                    ],
+                    ].concat(appular.apps, appular.modules),
                     removeCombined: true
                 }
             }
