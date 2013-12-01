@@ -5,6 +5,7 @@ define([
     'backbone'
 ], function (Backbone) {
     Backbone.App = Backbone.View.extend({
+        config: {},
         params: {},
         router: {},
         /**

@@ -95,8 +95,8 @@
                                 value: venue.name
                             },
                             {
-                                text: venue.price.message || '',
-                                value: venue.price.tier || 0
+                                text: venue.price ? venue.price.message : '',
+                                value: venue.price ? venue.price.tier : 0
                             },
                             {
                                 text: venue.hours ? venue.hours.status : '',
