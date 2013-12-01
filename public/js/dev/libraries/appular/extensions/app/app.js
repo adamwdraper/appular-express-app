@@ -11,13 +11,13 @@ define([
         @function get - shortcut to get params's value
         */
         get: function(name) {
-            return this.params.getValue(name);
+            return this._params.getValue(name);
         },
         /**
         @function set - shortcut to set param's value
         */
         set: function(id, value, options) {
-            return this.params.setValue(id, value, options);
+            return this._params.setValue(id, value, options);
         }
     });
 });

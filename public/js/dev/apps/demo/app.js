@@ -28,11 +28,7 @@ define([
                     addToUrl: false
                 }
             },
-            initialize: function () {
-                this.on('change', function () {
-                    console.log(arguments);
-                });
-            },
+            initialize: function () {},
             render: function () {
                 Backbone.trigger('app:initialized');
 

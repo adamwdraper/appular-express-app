@@ -64,10 +64,11 @@ define([
                     });
 
                     params.add(models);
-                    app.params = params;
+                    app._params = params;
                     app.config = module.config();
 
-                    app.params.on('all', function () {
+                    // pass through params collection changes
+                    app._params.on('all', function () {
                         var args = Array.prototype.slice.call(arguments),
                             event = args.shift();
                         if (event !== 'change:value') {
@@ -78,7 +79,7 @@ define([
 
                     // create router and add params collection
                     _.extend(Router.prototype, {
-                        params: params
+                        _params: params
                     });
                     app.router = new Router();
 
