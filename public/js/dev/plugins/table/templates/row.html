@@ -1,5 +1,5 @@
 <tr class="<% _.each(classes, function (name) { %><%= name %><% }); %>">
     <% _.each(cells, function (cell) { %>
-    <td <% if (_.isNumber(cell.value)) { %>class="number"<% } %>><%= cell.text %></td>
+    <td><%= cell.text %></td>
     <% }); %>
 </tr>

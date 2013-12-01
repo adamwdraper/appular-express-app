@@ -6,19 +6,17 @@ block vars
 block head
     link(rel='stylesheet', href='/css/demo.css')
 
-block header
-    .menu.main
-        .item Appular Demo 
-
 block content
     .demo-container
-        .section.span-12
+        .section
+            .content Appular Demo 
+        .section
             .content.clearfix(data-appular-module="filter")
-        .section.span-12
+        .section
             .header
                 h3 Top Tips
             .contents(data-appular-module="tips-venues")
-        .section.span-12
+        .section
             .header
                 h3 Recommended Places
             .content(data-appular-module="recommended-venues")

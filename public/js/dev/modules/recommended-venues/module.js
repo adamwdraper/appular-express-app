@@ -8,10 +8,11 @@
     'backbone',
     'text!./templates/module.html',
     'text!./templates/venue.html',
+    'text!./templates/address.html',
     './collections/venues',
     'plugins/table/plugin',
     'plugins/pagination/plugin'
-], function ($, _, Backbone, template, venueTemplate, Venues, Table, Pagination) {
+], function ($, _, Backbone, template, venueTemplate, addressTemplate, Venues, Table, Pagination) {
     var Module = Backbone.Module.extend({
             events: {},
             initialize: function() {
@@ -30,9 +31,17 @@
                                 isSortable: true
                             },
                             {
+                                text: 'Price',
+                                sortBy: 'price',
+                                isSortable: true
+                            },
+                            {
                                 text: 'Status',
                                 sortBy: 'status',
                                 isSortable: true
+                            },
+                            {
+                                text: 'Address'
                             },
                             {
                                 text: 'Phone'
@@ -81,21 +90,30 @@
                             {
                                 text: _.template(venueTemplate, {
                                     name: venue.name,
-                                    url: venue.url || '',
-                                    address: venue.location.address
+                                    url: venue.url || ''
                                 }),
                                 value: venue.name
+                            },
+                            {
+                                text: venue.price.message || '',
+                                value: venue.price.tier || 0
                             },
                             {
                                 text: venue.hours ? venue.hours.status : '',
                                 value: venue.hours ? venue.hours.isOpen : false
                             },
                             {
+                                text: _.template(addressTemplate, {
+                                    address: venue.location.address + ' ' + this.app.params.getValue('location'),
+                                    url: 'https://www.google.com/maps/preview#!q=' + encodeURIComponent(venue.location.address + ' ' + this.app.params.getValue('location'))
+                                })
+                            },
+                            {
                                 text: venue.contact.formattedPhone || ''
                             }
                         ]
                     });
-                });
+                }, this);
 
                 this.plugins.table.set('body', rows);
                 this.plugins.pagination.set('total', this.collection.length);
