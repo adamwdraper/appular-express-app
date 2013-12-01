@@ -16,7 +16,7 @@
     var Module = Backbone.Module.extend({
             events: {},
             initialize: function() {
-                this.listenTo(this.app.params, 'change:keyword change:location', this.updateVenues);
+                this.listenTo(this.app, 'change:keyword change:location', this.updateVenues);
             },
             render: function() {
                 this.$el.html(_.template(template, {}));
@@ -48,17 +48,17 @@
                             }
                         ]
                     ],
-                    count: this.app.params.getValue('count'),
-                    sortOrder: this.app.params.getValue('sortOrder'),
-                    sortBy: this.app.params.getValue('sortBy')
+                    count: this.app.get('count'),
+                    sortOrder: this.app.get('sortOrder'),
+                    sortBy: this.app.get('sortBy')
                 }).render();
                 this.listenTo(this.plugins.table, 'change:sortOrder', this.setSortOrder);
                 this.listenTo(this.plugins.table, 'change:sortBy', this.setSortBy);
 
                 this.plugins.pagination = new Pagination({
                     el: '#recommended-pagination',
-                    count: this.app.params.getValue('count'),
-                    page: this.app.params.getValue('page'),
+                    count: this.app.get('count'),
+                    page: this.app.get('page'),
                     scrollTopSelector: '#recommended-table'
                 }).render();
                 this.listenTo(this.plugins.pagination, 'change:page', this.setPage);
@@ -71,8 +71,8 @@
                 return this;
             },
             updateVenues: function () {
-                this.collection.keyword = this.app.params.getValue('keyword');
-                this.collection.location = this.app.params.getValue('location');
+                this.collection.keyword = this.app.get('keyword');
+                this.collection.location = this.app.get('location');
 
                 this.collection.fetch({
                     reset: true
@@ -104,8 +104,8 @@
                             },
                             {
                                 text: _.template(addressTemplate, {
-                                    address: venue.location.address + ' ' + this.app.params.getValue('location'),
-                                    url: 'https://www.google.com/maps/preview#!q=' + encodeURIComponent(venue.location.address + ' ' + this.app.params.getValue('location'))
+                                    address: venue.location.address + ' ' + this.app.get('location'),
+                                    url: 'https://www.google.com/maps/preview#!q=' + encodeURIComponent(venue.location.address + ' ' + this.app.get('location'))
                                 })
                             },
                             {
@@ -120,14 +120,14 @@
             },
             setPage: function (view, page) {
                 this.plugins.table.set('page', page);
-                this.app.params.setValue('page', page);
+                this.app.set('page', page);
             },
             setSortOrder: function (view, sortOrder) {
-                this.app.params.setValue('sortOrder', sortOrder);
+                this.app.set('sortOrder', sortOrder);
             },
             setSortBy: function (view, sortBy) {
                 this.plugins.table.set('page', 1);
-                this.app.params.setValue('sortBy', sortBy);
+                this.app.set('sortBy', sortBy);
             }
         });
 

@@ -11,7 +11,7 @@ define([
                 _.bindAll(this, 'load');
 
                 this.on('add', function (model) {
-                    model.on('change', function () {
+                    model.on('change:value', function () {
                         this.trigger('change:' + model.get('id'), model, model.get('id'));
                     }, this);
                 }, this);

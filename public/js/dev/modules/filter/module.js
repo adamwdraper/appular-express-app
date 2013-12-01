@@ -18,7 +18,7 @@
             },
             render: function() {
                 this.$el.html(_.template(template, {
-                    value: this.app.params.getValue('keyword')
+                    value: this.app.get('keyword')
                 }));
 
                 this.plugins.select = new Select({
@@ -29,7 +29,7 @@
                         'Boston, MA',
                         'Austin, TX'
                     ],
-                    value: this.app.params.getValue('location')
+                    value: this.app.get('location')
                 }).render();
                 this.listenTo(this.plugins.select, 'change:value', this.setLocation);
 
@@ -39,11 +39,11 @@
             },
             keywordChanged: _.debounce(function () {
                 if (this.$keyword.val()) {
-                    this.app.params.setValue('keyword', this.$keyword.val());
+                    this.app.set('keyword', this.$keyword.val());
                 }
             }, 500),
             setLocation: function (option, value) {
-                this.app.params.setValue('location', value);
+                this.app.set('location', value);
             }
         });
 

@@ -1,5 +1,5 @@
 // Appular Sites
-// version : 2.0.0
+// version : 2.3.0
 // author : Adam Draper
 // license : MIT
 // https://github.com/adamwdraper/Appular
@@ -66,6 +66,15 @@ define([
                     params.add(models);
                     app.params = params;
                     app.config = module.config();
+
+                    app.params.on('all', function () {
+                        var args = Array.prototype.slice.call(arguments),
+                            event = args.shift();
+                        if (event !== 'change:value') {
+                            this.trigger(event, args);
+                        }
+                    }, app);
+
 
                     // create router and add params collection
                     _.extend(Router.prototype, {
