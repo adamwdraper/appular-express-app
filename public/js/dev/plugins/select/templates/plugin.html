@@ -1,0 +1,6 @@
+<a data-action="toggle" class="button toggle"><span data-toggle-text></span></a>
+<div class="items">
+<% _.each(options, function (option) { %>
+      <a class="item" data-value="<%= option.value %>"><%= option.text %></a>
+<% }); %>
+</div>

@@ -9,7 +9,7 @@ requirejs.config({
         }
     },
     paths: {
-        'appular': 'libraries/appular/appular',
+        'appular': 'libraries/appular/appular-2.3.0',
         'modernizr': 'libraries/modernizr/modernizr-2.6.3',
         'jquery': 'libraries/jquery/jquery-1.10.2',
         'jqueryFunctions': 'libraries/jquery/extensions/functions',

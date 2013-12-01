@@ -1,0 +1,9 @@
+<div class="menu inline small">
+    <span class="item<% if (page === 1) { %> disabled<% } %>" data-page="1">&lt;&lt;</span>
+    <span class="item<% if (page === 1) { %> disabled<% } %>" data-page="<%= previousPage %>">&lt;</span>
+    <% _.each(pages, function (page) { %>
+        <span class="item<%= (page.current) ? ' active' : '' %>" data-page="<%= page.page %>"><%= page.page %></span>
+    <% }) %>
+    <span class="item<% if (nextPage > lastPage) { %> disabled<% } %>" data-page="<%= nextPage %>">&gt;</span>
+    <span class="item<% if (nextPage > lastPage) { %> disabled<% } %>" data-page="<%= lastPage %>">&gt;&gt;</span>
+</div>

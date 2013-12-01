@@ -1,0 +1,12 @@
+<table class="tabular">
+    <thead>
+        <% _.each(head, function (row) { %>
+        <tr>
+            <% _.each(row, function (column, index) { %>
+            <th <% if (column.isSortable) { %>class="sortable" data-sort-by="<%= column.sortBy %>" data-index="<%= index %>"<% } %> <% if (column.span) { %>colspan="<%= column.span %>"<% } %>><%= column.text %></th>
+            <% }); %>
+        </tr>
+        <% }); %>
+    </thead>
+    <tbody></tbody>
+</table>

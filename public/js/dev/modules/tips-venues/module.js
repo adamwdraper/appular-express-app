@@ -21,7 +21,7 @@
                 }
             },
             initialize: function() {
-                this.listenTo(this.app.params, 'change', this.updateVenues);
+                this.listenTo(this.app, 'change:keyword change:location', this.updateVenues);
             },
             render: function() {
                 this.$el.html(_.template(template, {}));
@@ -34,8 +34,8 @@
                 return this;
             },
             updateVenues: function () {
-                this.collection.ll = this.options.lls[this.app.params.getValue('location')];
-                this.collection.keyword = this.app.params.getValue('keyword');
+                this.collection.ll = this.options.lls[this.app.get('location')];
+                this.collection.keyword = this.app.get('keyword');
 
                 this.collection.fetch({
                     reset: true
@@ -44,7 +44,7 @@
             renderVenues: function () {
                 var html = '';
 
-                this.collection.each(function (tip) {
+                _.each(this.collection.first(3), function (tip) {
                     var user = tip.get('user'),
                         venue = tip.get('venue');
 

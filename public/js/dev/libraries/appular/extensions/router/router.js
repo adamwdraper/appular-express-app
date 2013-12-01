@@ -8,7 +8,7 @@ define([
     var Router = Backbone.Router.extend({
             initialize: function () {
                 // Update the url hash whenever a param changes
-                this.params.on('change', function (param) {
+                this._params.on('change', function (param) {
                     this.navigateHash(!param.get('addToHistory'));
                 }, this);
             },
@@ -38,7 +38,7 @@ define([
                     });
                 }
                 
-                this.params.load(params);
+                this._params.load(params);
             },
             navigateHash: function (replace) {
                 // Generate and navigate to new hash
@@ -46,17 +46,17 @@ define([
                     hash = '',
                     value;
 
-                this.params.each(function (model) {
+                this._params.each(function (model) {
                     if (model.get('addToUrl')) {
                         // get value
                         value = model.get('value');
 
                         // join arrays for url
-                        if (_.isArray(value) && !_.isEmpty(value)) {
+                        if (_.isArray(value)) {
                             value = value.join(config.hash.arraySeparator);
                         }
 
-                        if (value && !_.isEmpty(value)) {
+                        if (value) {
                             // use alias if it is defined
                             params.push((model.get('alias') ? model.get('alias') : model.get('id')) + config.hash.keyValSeparator + value);
                         }

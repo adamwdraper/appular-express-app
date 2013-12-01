@@ -8,11 +8,24 @@ define([
 ], function ($, _, Backbone) {
     var App = Backbone.App.extend({
             params: {
-                'keyword': {
+                keyword: {
+                    value: 'tacos'
+                },
+                location: {
+                    value: 'San Francisco, CA'
+                },
+                sortBy: {
                     value: ''
                 },
-                'location': {
-                    value: 'San Francisco, CA'
+                sortOrder: {
+                    value: 'asc'
+                },
+                page: {
+                    value: 1
+                },
+                count: {
+                    value: 10,
+                    addToUrl: false
                 }
             },
             initialize: function () {},

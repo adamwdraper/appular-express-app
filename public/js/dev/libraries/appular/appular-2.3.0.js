@@ -1,5 +1,5 @@
 // Appular Sites
-// version : 2.0.0
+// version : 2.3.0
 // author : Adam Draper
 // license : MIT
 // https://github.com/adamwdraper/Appular
@@ -23,7 +23,7 @@ define([
                 console.log('Appular : ' + type + ' : ' + name + ' : ' + path);
             }
         },
-        renderApp = function () {
+        requireApp = function () {
             var $element = $('body'),
                 name = $element.data('appularApp'),
                 path = 'apps/' + name + '/app';
@@ -64,12 +64,22 @@ define([
                     });
 
                     params.add(models);
-                    app.params = params;
+                    app._params = params;
                     app.config = module.config();
+
+                    // pass through params collection changes
+                    app._params.on('all', function () {
+                        var args = Array.prototype.slice.call(arguments),
+                            event = args.shift();
+                        if (event !== 'change:value') {
+                            this.trigger(event, args);
+                        }
+                    }, app);
+
 
                     // create router and add params collection
                     _.extend(Router.prototype, {
-                        params: params
+                        _params: params
                     });
                     app.router = new Router();
 
@@ -113,10 +123,11 @@ define([
             });
         };
 
-    Backbone.on('router:initialized', function () {
+    Backbone.on('params:initialized', function () {
         app.render();
     });
+
     Backbone.on('app:initialized', renderModules);
 
-    renderApp();
+    requireApp();
 });
