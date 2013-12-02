@@ -1,6 +1,13 @@
 {
     "apps": [
         {
+            "path": "apps/_boilerplate/app.js",
+            "name": "boilerplate",
+            "version": "",
+            "description": "",
+            "define": "apps/_boilerplate/app"
+        },
+        {
             "path": "apps/docs/app.js",
             "name": "docs",
             "version": "",
@@ -25,7 +32,19 @@
                         "name": "app",
                         "version": "",
                         "description": "",
-                        "define": "libraries/appular/extensions/app/app"
+                        "define": "libraries/appular/extensions/app/app",
+                        "functions": [
+                            {
+                                "path": "libraries/appular/extensions/app/app.js",
+                                "name": "get",
+                                "description": "shortcut to get params's value"
+                            },
+                            {
+                                "path": "libraries/appular/extensions/app/app.js",
+                                "name": "set",
+                                "description": "shortcut to set param's value"
+                            }
+                        ]
                     },
                     {
                         "path": "libraries/appular/extensions/module/module.js",
@@ -36,7 +55,7 @@
                     },
                     {
                         "path": "libraries/appular/extensions/plugin/plugin.js",
-                        "name": "module",
+                        "name": "plugin",
                         "version": "",
                         "description": "",
                         "define": "libraries/appular/extensions/plugin/plugin"
@@ -186,9 +205,9 @@
         },
         {
             "path": "modules/recommended-venues/module.js",
-            "name": "demo",
-            "version": "",
-            "description": "",
+            "name": "recommendedVenues",
+            "version": "v0.0.1",
+            "description": "Uses keyword and location to get recommended venues from foursquare api",
             "define": "modules/recommended-venues/module"
         },
         {
@@ -204,6 +223,29 @@
             "version": "",
             "description": "",
             "define": "modules/tips-venues/module"
+        }
+    ],
+    "plugins": [
+        {
+            "path": "plugins/_boilerplate/plugin.js",
+            "name": "boilerplate",
+            "version": "",
+            "description": "",
+            "define": "plugins/_boilerplate/plugin"
+        },
+        {
+            "path": "plugins/pagination/plugin.js",
+            "name": "pagination",
+            "version": "",
+            "description": "",
+            "define": "plugins/pagination/plugin"
+        },
+        {
+            "path": "plugins/table/plugin.js",
+            "name": "table",
+            "version": "",
+            "description": "",
+            "define": "plugins/table/plugin"
         }
     ]
 }

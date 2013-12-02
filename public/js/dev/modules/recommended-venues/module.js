@@ -1,5 +1,5 @@
 /**
- * @appular demo
+ * @appular recommendedVenues v0.0.1 - Uses keyword and location to get recommended venues from foursquare api
  */
 
  define([
