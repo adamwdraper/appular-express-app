@@ -1,8 +1,7 @@
 /**
  * @appular boilerplate
  */
-
- define([
+define([
     'jquery',
     'underscore',
     'backbone',
