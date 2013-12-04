@@ -8,22 +8,26 @@ module.exports = function(grunt) {
     };
 
     // add appular app definition for build
-    fs.readdirSync('./public/js/dev/apps').forEach(function (path) {
-        appular.apps.push({
-            name: 'apps/' + path + '/app',
-            exclude: [
-                'appular'
-            ]
-        });
+    fs.readdirSync('./public/js/dev/apps').forEach(function (name) {
+        if (name[0] !== '.') {
+            appular.apps.push({
+                name: 'apps/' + name + '/app',
+                exclude: [
+                    'appular'
+                ]
+            });
+        }
     });
     // add appular module definition for build
-    fs.readdirSync('./public/js/dev/modules').forEach(function (path) {
-        appular.modules.push({
-            name: 'modules/' + path + '/module',
-            exclude: [
-                'appular'
-            ]
-        });
+    fs.readdirSync('./public/js/dev/modules').forEach(function (name) {
+        if (name[0] !== '.') {
+            appular.modules.push({
+                name: 'modules/' + name + '/module',
+                exclude: [
+                    'appular'
+                ]
+            });
+        }
     });
 
     // Project configuration.

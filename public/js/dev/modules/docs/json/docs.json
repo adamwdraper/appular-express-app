@@ -13,13 +13,6 @@
             "version": "",
             "description": "",
             "define": "apps/docs/app"
-        },
-        {
-            "path": "apps/test/app.js",
-            "name": "docs",
-            "version": "",
-            "description": "",
-            "define": "apps/test/app"
         }
     ],
     "libraries": [
@@ -209,13 +202,6 @@
             "version": "v0.0.1",
             "description": "Uses keyword and location to get recommended venues from foursquare api",
             "define": "modules/recommended-venues/module"
-        },
-        {
-            "path": "modules/test/module.js",
-            "name": "test",
-            "version": "",
-            "description": "",
-            "define": "modules/test/module"
         },
         {
             "path": "modules/tips-venues/module.js",
