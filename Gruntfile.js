@@ -1,7 +1,6 @@
 var fs = require('fs');
 
 module.exports = function(grunt) {
-
     var appular = {
         apps: [],
         modules: []
@@ -29,6 +28,8 @@ module.exports = function(grunt) {
             });
         }
     });
+
+    require('load-grunt-tasks')(grunt);
 
     // Project configuration.
     grunt.initConfig({
@@ -186,9 +187,6 @@ module.exports = function(grunt) {
             }
         }
     });
-
-    // load all grunt tasks
-    require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
     grunt.registerTask('default', [
         'develop'
