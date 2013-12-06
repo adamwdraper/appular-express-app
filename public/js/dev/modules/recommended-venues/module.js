@@ -14,12 +14,13 @@
     'plugins/pagination/plugin'
 ], function ($, _, Backbone, template, venueTemplate, addressTemplate, Venues, Table, Pagination) {
     var Module = Backbone.Module.extend({
+            template: _.template(template),
             events: {},
             initialize: function() {
                 this.listenTo(this.app, 'change:keyword change:location', this.updateVenues);
             },
             render: function() {
-                this.$el.html(_.template(template, {}));
+                this.$el.html(this.template());
 
                 this.plugins.table = new Table({
                     el: '#recommended-table',

@@ -10,6 +10,7 @@
     'plugins/select/plugin'
 ], function ($, _, Backbone, template, Select) {
     var Module = Backbone.Module.extend({
+            template: _.template(template),
             events: {
                 'keyup #keyword': 'keywordChanged'
             },
@@ -17,7 +18,7 @@
                 _.bindAll(this, 'setLocation');
             },
             render: function() {
-                this.$el.html(_.template(template, {
+                this.$el.html(this.template({
                     value: this.app.get('keyword')
                 }));
 

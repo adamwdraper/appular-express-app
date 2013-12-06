@@ -11,6 +11,7 @@
     './collections/venues'
 ], function ($, _, Backbone, template, venueTemplate, Venues) {
     var Module = Backbone.Module.extend({
+            template: _.template(template),
             events: {},
             options: {
                 lls: {
@@ -24,7 +25,7 @@
                 this.listenTo(this.app, 'change:keyword change:location', this.updateVenues);
             },
             render: function() {
-                this.$el.html(_.template(template, {}));
+                this.$el.html(this.template());
 
                 this.collection = new Venues();
                 this.listenTo(this.collection, 'sync', this.renderVenues);
