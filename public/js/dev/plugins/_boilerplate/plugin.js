@@ -8,10 +8,11 @@ define([
     'text!./templates/plugin.html'
 ], function ($, _, Backbone, template) {
     var Plugin = Backbone.Plugin.extend({
+            template: _.template(template),
             events: {},
             initialize: function () {},
             render: function () {
-                this.$el.html(_.template(template, {}));
+                this.$el.html(this.template());
                 
                 return this;
             }

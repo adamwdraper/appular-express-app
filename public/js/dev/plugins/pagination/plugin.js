@@ -8,6 +8,7 @@ define([
     'text!./templates/plugin.html'
 ], function($, _, Backbone, template) {
     var Plugin = Backbone.Plugin.extend({
+            template: _.template(template),
             events: {
                 'click [data-page]': 'updatePage'
             },
@@ -51,7 +52,7 @@ define([
                     page++;
                 }
 
-                this.$el.html(_.template(template, {
+                this.$el.html(this.template({
                     page: this.get('page'),
                     pages: pages,
                     previousPage: this.get('page') - 1 || 1,

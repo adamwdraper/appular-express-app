@@ -9,6 +9,7 @@ define([
     'text!./templates/row.html'
 ], function($, _, Backbone, template, rowTemplate) {
     var Plugin = Backbone.Plugin.extend({
+            template: _.template(template),
             events: {
                 'click [data-sort-by]': 'setSort'
             },
@@ -27,7 +28,7 @@ define([
                 this.on('change:page', this.renderRows);
             },
             render: function () {
-                this.$el.html(_.template(template, {
+                this.$el.html(this.template({
                     head: this.get('head')
                 }));
 

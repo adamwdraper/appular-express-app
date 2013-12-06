@@ -7,6 +7,7 @@ define([
 ], function ($, _, Backbone, Options, template) {
     var selects = [],
         Plugin = Backbone.Plugin.extend({
+            template: _.template(template),
             options: {
                 isOpen: false,
                 options: [],
@@ -39,7 +40,7 @@ define([
                 this.collection = new Options(options);
                 this.listenTo(this.collection, 'change:selected', this.setToggleText);
 
-                this.$el.html(_.template(template, {
+                this.$el.html(this.template({
                     options: this.collection.toJSON()
                 }));
 
