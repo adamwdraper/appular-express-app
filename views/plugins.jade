@@ -1,0 +1,15 @@
+extends layouts/main
+
+block vars
+    - var app = 'demo'
+
+block head
+    link(rel='stylesheet', href='/css/demo.css')
+
+block content
+    .demo-container
+        .section
+            .content Appular Plugin Tester 
+        .section(data-appular-module="plugins")
+            .header Multi Select
+            #multi-select.content.clearfix
