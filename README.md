@@ -26,8 +26,8 @@ This is where you do any prep work like authentication checks before any of your
 
 Apps also have a special collection that modules use to share data.  Any changes to this collection are automatically populated to the hash.  
 
-### Modules
-Modules are bound to dom elements by adding a `data-appular-module="module-name"` attribute to the element.
+### Components
+Components are bound to dom elements by adding a `data-appular-component="component-name"` attribute to the element.
 
 ### Plugins
 Plugins are used by modules and are meant for very specific functionality that you are using in several modules.  Use them for tasks like long-polling or watching for infinite scrolling.  Ideally these are kept small and dumb. (i.e. they do their work, trigger events when necessary, and modules react to those events)

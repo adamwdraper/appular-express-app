@@ -1,5 +1,5 @@
 // Appular Sites
-// version : 2.3.0
+// version : 2.4.0
 // author : Adam Draper
 // license : MIT
 // https://github.com/adamwdraper/Appular
@@ -12,12 +12,11 @@ define([
     'libraries/appular/extensions/params/params',
     'libraries/appular/extensions/router/router',
     'libraries/appular/extensions/app/app',
-    'libraries/appular/extensions/module/module',
-    'libraries/appular/extensions/plugin/plugin'
+    'libraries/appular/extensions/module/module'
 ], function (module, doc, $, _, Backbone, Params, Router) {
     var app,
         params = new Params(),
-        $modules = $('[data-appular-module]'),
+        $components = $('[data-appular-component]'),
         log = function (type, name, path) {
             if (module.config().env === 'develop') {
                 console.log('Appular : ' + type + ' : ' + name + ' : ' + path);
@@ -91,34 +90,34 @@ define([
                 throw new Error('Appular : No app found');
             }
         },
-        renderModules = function () {
-            _.each($modules, function (element) {
+        renderComponents = function () {
+            _.each($components, function (element) {
                 var $element = $(element),
-                    name = $element.data('appularModule'),
-                    path = 'modules/' + name + '/module',
+                    name = $element.data('appularComponent'),
+                    path = 'components/' + name + '/component',
                     options = {
                         el: $element
                     };
 
-                // add any data attributes to the modules options
+                // add any data attributes to the components options
                 _.each($element.data(), function (value, key) {
-                    if (key !== 'appularModule') {
+                    if (key !== 'appularComponent') {
                         options[key] = value;
                     }
                 });
                 
                 require([
                     path
-                ], function (Module) {
-                    var module;
+                ], function (Component) {
+                    var component;
 
-                    log('Module', name, path);
+                    log('Component', name, path);
 
-                    _.extend(Module.prototype, {
+                    _.extend(Component.prototype, {
                         app: app
                     });
 
-                    module = new Module(options).render();
+                    component = new Component(options).render();
                 });
             });
         };
@@ -127,7 +126,7 @@ define([
         app.render();
     });
 
-    Backbone.on('app:initialized', renderModules);
+    Backbone.on('app:initialized', renderComponents);
 
     requireApp();
 });

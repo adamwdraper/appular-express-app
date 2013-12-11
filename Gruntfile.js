@@ -3,7 +3,7 @@ var fs = require('fs');
 module.exports = function(grunt) {
     var appular = {
         apps: [],
-        modules: []
+        components: []
     };
 
     // add appular app definition for build
@@ -17,11 +17,11 @@ module.exports = function(grunt) {
             });
         }
     });
-    // add appular module definition for build
-    fs.readdirSync('./public/js/dev/modules').forEach(function (name) {
+    // add appular component definition for build
+    fs.readdirSync('./public/js/dev/components').forEach(function (name) {
         if (name[0] !== '.') {
-            appular.modules.push({
-                name: 'modules/' + name + '/module',
+            appular.components.push({
+                name: 'components/' + name + '/component',
                 exclude: [
                     'appular'
                 ]
@@ -80,7 +80,7 @@ module.exports = function(grunt) {
                     pretty: true
                 },
                 files: {
-                    'public/js/dev/modules/docs/json/docs.json': [
+                    'public/js/dev/components/docs/json/docs.json': [
                         'public/js/dev/**/*.js'
                     ]
                 }
@@ -88,7 +88,7 @@ module.exports = function(grunt) {
         },
         jshint: {
             all: [
-                'public/js/dev/modules/**/*.js',
+                'public/js/dev/components/**/*.js',
                 'public/js/dev/plugins/**/*.js',
                 'public/js/dev/utilities/**/*.js'
             ],
@@ -146,7 +146,7 @@ module.exports = function(grunt) {
                                 'text'
                             ]
                         }
-                    ].concat(appular.apps, appular.modules),
+                    ].concat(appular.apps, appular.components),
                     removeCombined: true
                 }
             }

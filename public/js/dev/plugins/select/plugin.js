@@ -6,7 +6,7 @@ define([
     'text!./templates/plugin.html'
 ], function ($, _, Backbone, Options, template) {
     var selects = [],
-        Plugin = Backbone.Plugin.extend({
+        Module = Backbone.Module.extend({
             template: _.template(template),
             options: {
                 isOpen: false,
@@ -92,5 +92,5 @@ define([
             }
         });
 
-    return Plugin;
+    return Module;
 });
