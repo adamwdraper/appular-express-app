@@ -127,12 +127,12 @@ define([
        return View.extend({
             config: module.config(),
             plugins: {},
-            listeners: {},
+            triggers: {},
             options: {},
             constructor: function(options) {
                 _.extend(this.options, options);
 
-                _.each(this.listeners, function (value, key) {
+                _.each(this.triggers, function (value, key) {
                     this.on(key, this[value]);
                 }, this);
                 

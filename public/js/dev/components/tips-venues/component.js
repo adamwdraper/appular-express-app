@@ -13,7 +13,7 @@
     var Module = Backbone.Module.extend({
             template: template,
             events: {},
-            listeners: {
+            triggers: {
                 'render': 'updateVenues'
             },
             collection: new Venues(),
