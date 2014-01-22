@@ -119,7 +119,7 @@ module.exports = function(grunt) {
                         'modernizr': 'libraries/modernizr/modernizr-2.6.3',
                         'jquery': 'libraries/jquery/jquery-2.0.3',
                         'jqueryFunctions': 'libraries/jquery/extensions/functions',
-                        'underscore': 'libraries/underscore/underscore-1.5.0',
+                        'underscore': 'libraries/underscore/underscore-1.5.2',
                         'backbone': 'libraries/backbone/backbone-1.0.0',
                         'backboneStickit': 'libraries/backbone/extensions/stickit',
                         'moment': 'libraries/moment/moment-2.4.0',
