@@ -1,5 +1,5 @@
-// Appular Sites
-// version : 2.4.0
+// Appular
+// version : 2.5.0
 // author : Adam Draper
 // license : MIT
 // https://github.com/adamwdraper/Appular
@@ -11,8 +11,7 @@ define([
     'backbone',
     'libraries/appular/extensions/params/params',
     'libraries/appular/extensions/router/router',
-    'libraries/appular/extensions/app/app',
-    'libraries/appular/extensions/module/module'
+    'libraries/appular/extensions/app/app'
 ], function (module, doc, $, _, Backbone, Params, Router) {
     var app,
         params = new Params(),
@@ -122,11 +121,66 @@ define([
             });
         };
 
+
+    // add configs and custom functions to models, views, and collections
+    Backbone.View = Backbone.Module = (function(View) {
+       return View.extend({
+            config: module.config(),
+            plugins: {},
+            listeners: {},
+            constructor: function(options) {
+                _.extend(this.options, options);
+
+                _.each(this.listeners, function (value, key) {
+                    this.on(key, this[value]);
+                }, this);
+                
+                View.apply(this, arguments);
+            },
+            set: function () {
+                return this.model ? this.model.set(arguments) : false;
+            },
+            get: function () {
+                return this.model ? this.model.get(arguments) : false;
+            }
+        });
+    })(Backbone.View);
+
+    Backbone.Model = (function(Model) {
+        return Model.extend({
+            config: module.config(),
+            fetch: function (options) {
+                if (this.fixture && this.config.useFixtures) {
+                    options.url = this.fixture;
+                }
+
+                return Model.prototype.fetch.apply(this, arguments);
+            }
+        });
+    })(Backbone.Model);
+
+    Backbone.Collection = (function(Collection) {
+        return Collection.extend({
+            config: module.config(),
+            fetch: function (options) {
+                if (this.fixture && this.config.useFixtures) {
+                    options.url = this.fixture;
+                }
+
+                return Collection.prototype.fetch.apply(this, arguments);
+            }
+        });
+    })(Backbone.Collection);
+
+
+    // Render App when all params are loaded
     Backbone.on('params:initialized', function () {
         app.render();
     });
 
+    // Render all components when app is ready
     Backbone.on('app:initialized', renderComponents);
 
+    // Get this party started
     requireApp();
 });

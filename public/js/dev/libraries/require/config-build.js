@@ -5,8 +5,8 @@ requirejs.config({
     baseUrl: '/js/build',
     paths: {
         'jquery': [
-            '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min',
-            'libraries/jquery/jquery-1.10.2'
+            '//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min',
+            'libraries/jquery/jquery-2.0.3'
         ],
         'moment': [
             '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.4.0/moment.min',

@@ -6,13 +6,17 @@
     'jquery',
     'underscore',
     'backbone',
-    'text!./templates/module.html',
-    'text!./templates/venue.html',
+    'template!./templates/module.html',
+    'template!./templates/venue.html',
     './collections/venues'
 ], function ($, _, Backbone, template, venueTemplate, Venues) {
     var Module = Backbone.Module.extend({
-            template: _.template(template),
+            template: template,
             events: {},
+            listeners: {
+                'render': 'updateVenues'
+            },
+            collection: new Venues(),
             options: {
                 lls: {
                     'San Francisco, CA': '37.7,-122.4',
@@ -23,14 +27,12 @@
             },
             initialize: function() {
                 this.listenTo(this.app, 'change:keyword change:location', this.updateVenues);
+                this.listenTo(this.collection, 'sync', this.renderVenues);
             },
             render: function() {
                 this.$el.html(this.template());
 
-                this.collection = new Venues();
-                this.listenTo(this.collection, 'sync', this.renderVenues);
-
-                this.updateVenues();
+                this.trigger('render');
 
                 return this;
             },
@@ -49,7 +51,7 @@
                     var user = tip.get('user'),
                         venue = tip.get('venue');
 
-                    html += _.template(venueTemplate, {
+                    html += venueTemplate({
                         name: user.firstName + ' ' + user.lastName,
                         tip: tip.get('text'),
                         venue: {
