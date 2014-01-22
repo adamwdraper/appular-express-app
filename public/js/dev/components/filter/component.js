@@ -6,11 +6,11 @@
     'jquery',
     'underscore',
     'backbone',
-    'text!./templates/module.html',
+    'template!./templates/module.html',
     'plugins/select/plugin'
 ], function ($, _, Backbone, template, Select) {
     var Module = Backbone.Module.extend({
-            template: _.template(template),
+            template: template,
             events: {
                 'keyup #keyword': 'keywordChanged'
             },

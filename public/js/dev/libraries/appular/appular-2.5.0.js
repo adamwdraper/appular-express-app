@@ -128,6 +128,7 @@ define([
             config: module.config(),
             plugins: {},
             listeners: {},
+            options: {},
             constructor: function(options) {
                 _.extend(this.options, options);
 
