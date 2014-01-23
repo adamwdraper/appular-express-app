@@ -9,7 +9,7 @@ define([
     var selects = [],
         Controller = Backbone.Controller.extend({
             template: template,
-            model: new Model(),
+            options: new Model(),
             triggers: {
                 'change:value': 'setToggleText'
             },
@@ -28,7 +28,7 @@ define([
                     _this.closeAll();
                 });
 
-                _.each(this.model.get('options'), function (option) {
+                _.each(this.get('options'), function (option) {
                     options.push(_.isObject(option) ? option : {
                         text: option,
                         value: option
@@ -44,7 +44,7 @@ define([
 
                 this.$toggleText = this.$el.find('[data-toggle-text]');
 
-                this.collection.select(this.model.get('value'));
+                this.collection.select(this.get('value'));
 
                 // add to array of all selects on page
                 selects.push(this);
@@ -52,19 +52,19 @@ define([
                 return this;
             },
             setToggleText: function () {
-                this.$toggleText.text(this.model.get('value'));
+                this.$toggleText.text(this.get('value'));
             },
             select: function (event) {
                 var value = $(event.currentTarget).data('value');
 
                 this.collection.select(value);
-                this.model.set('value', value);
+                this.set('value', value);
 
                 event.preventDefault();
             },
             toggle: function (e) {
                 this.$el.toggleClass('open');
-                this.model.set('isOpen', !this.model.get('isOpen'));
+                this.set('isOpen', !this.get('isOpen'));
 
                 // close all other selects
                 _.each(selects, function (select) {
@@ -78,11 +78,11 @@ define([
             },
             open: function () {
                 this.$el.addClass('open');
-                this.model.set('isOpen', true);
+                this.set('isOpen', true);
             },
             close: function () {
                 this.$el.removeClass('open');
-                this.model.set('isOpen', false);
+                this.set('isOpen', false);
             },
             closeAll: function () {
                 _.each(selects, function(select) {

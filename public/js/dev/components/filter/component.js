@@ -9,7 +9,7 @@
     'template!./templates/module.html',
     'plugins/select/plugin'
 ], function ($, _, Backbone, template, Select) {
-    var View = Backbone.View.extend({
+    var Controller = Backbone.Controller.extend({
             template: template,
             events: {
                 'keyup #keyword': 'keywordChanged'
@@ -32,6 +32,7 @@
                     ],
                     value: this.app.get('location')
                 }).render();
+
                 this.listenTo(this.plugins.select, 'change:value', this.setLocation);
 
                 this.$keyword = $('#keyword');
@@ -48,5 +49,5 @@
             }
         });
 
-    return View;
+    return Controller;
 });

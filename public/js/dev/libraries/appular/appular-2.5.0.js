@@ -16,6 +16,16 @@ define([
     var app,
         params = new Params(),
         $components = $('[data-appular-component]'),
+        viewOptions = [
+            'model',
+            'collection',
+            'el',
+            'id',
+            'attributes',
+            'className',
+            'tagName',
+            'events'
+        ],
         log = function (type, name, path) {
             if (module.config().env === 'develop') {
                 console.log('Appular : ' + type + ' : ' + name + ' : ' + path);
@@ -149,18 +159,43 @@ define([
         });
     })(Backbone.Collection);
 
-    Backbone.Controller = Backbone.View = (function(View) {
-        var viewOptions = [
-                'model',
-                'collection',
-                'el',
-                'id',
-                'attributes',
-                'className',
-                'tagName',
-                'events'
-            ];
+    Backbone.Controller = (function(View) {
+        return View.extend({
+            config: module.config(),
+            plugins: {},
+            triggers: {},
+            constructor: function(options) {
+                var optionAttributes = _.omit(options, viewOptions);
 
+                _.each(this.triggers, function (value, key) {
+                    this.on(key, this[value]);
+                }, this);
+
+                if (this.options) {
+                    this.options.set(optionAttributes, {
+                        silent: true
+                    });
+                } else {
+                    // create new model here
+                    this.options = new Backbone.Model(optionAttributes);
+                }
+
+                this.listenTo(this.options, 'all', function () {
+                    this.trigger.apply(this, arguments);
+                });
+                
+                View.apply(this, arguments);
+            },
+            set: function () {
+                return this.options.set.apply(this.options, arguments);
+            },
+            get: function () {
+                return this.options.get.apply(this.options, arguments);
+            }
+        });
+    })(Backbone.View);
+
+    Backbone.View = (function(View) {
         return View.extend({
             config: module.config(),
             plugins: {},
@@ -186,12 +221,6 @@ define([
                 });
                 
                 View.apply(this, arguments);
-            },
-            set: function () {
-                return this.model.set.apply(this, arguments);
-            },
-            get: function () {
-                return this.model.get.apply(this, arguments);
             }
         });
     })(Backbone.View);
