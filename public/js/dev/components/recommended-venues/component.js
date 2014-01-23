@@ -13,7 +13,7 @@
     'plugins/table/plugin',
     'plugins/pagination/plugin'
 ], function ($, _, Backbone, template, venueTemplate, addressTemplate, Venues, Table, Pagination) {
-    var Module = Backbone.Module.extend({
+    var View = Backbone.View.extend({
             template: _.template(template),
             events: {},
             initialize: function() {
@@ -132,5 +132,5 @@
             }
         });
 
-    return Module;
+    return View;
 });

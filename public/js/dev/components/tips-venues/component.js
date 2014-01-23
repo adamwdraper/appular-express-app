@@ -10,7 +10,7 @@
     'template!./templates/venue.html',
     './collections/venues'
 ], function ($, _, Backbone, template, venueTemplate, Venues) {
-    var Module = Backbone.Module.extend({
+    var View = Backbone.View.extend({
             template: template,
             events: {},
             triggers: {
@@ -65,5 +65,5 @@
             }
         });
 
-    return Module;
+    return View;
 });

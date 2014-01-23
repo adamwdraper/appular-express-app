@@ -8,7 +8,7 @@ define([
     'text!./templates/plugin.html',
     'text!./templates/row.html'
 ], function($, _, Backbone, template, rowTemplate) {
-    var Module = Backbone.Module.extend({
+    var View = Backbone.View.extend({
             template: _.template(template),
             events: {
                 'click [data-sort-by]': 'setSort'
@@ -93,5 +93,5 @@ define([
             }
         });
 
-    return Module;
+    return View;
 });

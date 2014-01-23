@@ -123,30 +123,6 @@ define([
 
 
     // add configs and custom functions to models, views, and collections
-    Backbone.View = Backbone.Module = (function(View) {
-       return View.extend({
-            config: module.config(),
-            plugins: {},
-            triggers: {},
-            options: {},
-            constructor: function(options) {
-                _.extend(this.options, options);
-
-                _.each(this.triggers, function (value, key) {
-                    this.on(key, this[value]);
-                }, this);
-                
-                View.apply(this, arguments);
-            },
-            set: function () {
-                return this.model ? this.model.set(arguments) : false;
-            },
-            get: function () {
-                return this.model ? this.model.get(arguments) : false;
-            }
-        });
-    })(Backbone.View);
-
     Backbone.Model = (function(Model) {
         return Model.extend({
             config: module.config(),
@@ -172,6 +148,53 @@ define([
             }
         });
     })(Backbone.Collection);
+
+    Backbone.Controller = Backbone.View = (function(View) {
+        var viewOptions = [
+                'model',
+                'collection',
+                'el',
+                'id',
+                'attributes',
+                'className',
+                'tagName',
+                'events'
+            ];
+
+        return View.extend({
+            config: module.config(),
+            plugins: {},
+            triggers: {},
+            constructor: function(options) {
+                var modelAttributes = _.omit(options, viewOptions);
+
+                _.each(this.triggers, function (value, key) {
+                    this.on(key, this[value]);
+                }, this);
+
+                if (this.model) {
+                    this.model.set(modelAttributes, {
+                        silent: true
+                    });
+                } else {
+                    // create new model here
+                    this.model = new Backbone.Model(modelAttributes);
+                }
+
+                this.listenTo(this.model, 'all', function () {
+                    this.trigger.apply(this, arguments);
+                });
+                
+                View.apply(this, arguments);
+            },
+            set: function () {
+                return this.model.set.apply(this, arguments);
+            },
+            get: function () {
+                return this.model.get.apply(this, arguments);
+            }
+        });
+    })(Backbone.View);
 
 
     // Render App when all params are loaded

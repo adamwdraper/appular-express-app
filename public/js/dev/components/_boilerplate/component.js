@@ -7,7 +7,7 @@ define([
     'backbone',
     'text!./templates/module.html'
 ], function ($, _, Backbone, template) {
-    var Module = Backbone.Module.extend({
+    var View = Backbone.View.extend({
             template: _.template(template),
             events: {},
             initialize: function () {},
@@ -18,5 +18,5 @@ define([
             }
         });
 
-    return Module;
+    return View;
 });

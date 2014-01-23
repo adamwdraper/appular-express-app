@@ -10,7 +10,7 @@ define([
     'json!./json/docs.json',
     'text!./templates/module.html'
 ], function ($, _, Backbone, Nav, Docs, DocsJson, template) {
-    var View = Backbone.Module.extend({
+    var View = Backbone.View.extend({
             events: {},
             initialize: function () {},
             render: function () {

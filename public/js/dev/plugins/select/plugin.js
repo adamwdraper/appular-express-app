@@ -3,15 +3,15 @@ define([
     'underscore',
     'backbone',
     './collections/options',
-    'text!./templates/plugin.html'
-], function ($, _, Backbone, Options, template) {
+    './models/plugin',
+    'template!./templates/plugin.html'
+], function ($, _, Backbone, Options, Model, template) {
     var selects = [],
-        Module = Backbone.Module.extend({
-            template: _.template(template),
-            options: {
-                isOpen: false,
-                options: [],
-                value: ''
+        Controller = Backbone.Controller.extend({
+            template: template,
+            model: new Model(),
+            triggers: {
+                'change:value': 'setToggleText'
             },
             events: {
                 'click [data-action="toggle"]': 'toggle',
@@ -19,8 +19,6 @@ define([
             },
             initialize: function () {
                 _.bindAll(this, 'toggle', 'setToggleText');
-
-                this.on('change:value', this.setToggleText);
             },
             render: function () {
                 var _this = this,
@@ -30,7 +28,7 @@ define([
                     _this.closeAll();
                 });
 
-                _.each(this.options.options, function (option) {
+                _.each(this.model.get('options'), function (option) {
                     options.push(_.isObject(option) ? option : {
                         text: option,
                         value: option
@@ -46,7 +44,7 @@ define([
 
                 this.$toggleText = this.$el.find('[data-toggle-text]');
 
-                this.collection.select(this.options.value);
+                this.collection.select(this.model.get('value'));
 
                 // add to array of all selects on page
                 selects.push(this);
@@ -54,18 +52,19 @@ define([
                 return this;
             },
             setToggleText: function () {
-                this.$toggleText.text(this.options.value);
+                this.$toggleText.text(this.model.get('value'));
             },
             select: function (event) {
                 var value = $(event.currentTarget).data('value');
+
                 this.collection.select(value);
-                this.set('value', value);
+                this.model.set('value', value);
 
                 event.preventDefault();
             },
             toggle: function (e) {
                 this.$el.toggleClass('open');
-                this.options.isOpen = !this.options.isOpen;
+                this.model.set('isOpen', !this.model.get('isOpen'));
 
                 // close all other selects
                 _.each(selects, function (select) {
@@ -79,11 +78,11 @@ define([
             },
             open: function () {
                 this.$el.addClass('open');
-                this.options.isOpen = true;
+                this.model.set('isOpen', true);
             },
             close: function () {
                 this.$el.removeClass('open');
-                this.options.isOpen = false;
+                this.model.set('isOpen', false);
             },
             closeAll: function () {
                 _.each(selects, function(select) {
@@ -92,5 +91,5 @@ define([
             }
         });
 
-    return Module;
+    return Controller;
 });
