@@ -12,7 +12,7 @@ requirejs.config({
     paths: {
         'appular': 'libraries/appular/appular-2.5.0',
         'modernizr': 'libraries/modernizr/modernizr-2.6.3',
-        'jquery': 'libraries/jquery/jquery-2.0.3',
+        'jquery': 'libraries/jquery/jquery-2.1.0',
         'jqueryFunctions': 'libraries/jquery/extensions/functions',
         'underscore': 'libraries/underscore/underscore-1.5.2',
         'backbone': 'libraries/backbone/backbone-1.1.0',

@@ -1,14 +1,16 @@
 /**
- * @appular boilerplate
+ * @appular plugin
  */
 define([
     'jquery',
     'underscore',
     'backbone',
-    'text!./templates/plugin.html'
+    'template!./template.html'
 ], function ($, _, Backbone, template) {
     var View = Backbone.View.extend({
-            template: _.template(template),
+            template: template(),
+            bindings: {},
+            triggers: {},
             events: {},
             initialize: function () {},
             render: function () {

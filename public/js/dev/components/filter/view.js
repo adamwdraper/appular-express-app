@@ -6,10 +6,10 @@
     'jquery',
     'underscore',
     'backbone',
-    'template!./templates/module.html',
-    'plugins/select/plugin'
+    'template!./template.html',
+    'plugins/select/view'
 ], function ($, _, Backbone, template, Select) {
-    var Controller = Backbone.Controller.extend({
+    var View = Backbone.View.extend({
             template: template,
             events: {
                 'keyup #keyword': 'keywordChanged'
@@ -49,5 +49,5 @@
             }
         });
 
-    return Controller;
+    return View;
 });

@@ -16,16 +16,6 @@ define([
     var app,
         params = new Params(),
         $components = $('[data-appular-component]'),
-        viewOptions = [
-            'model',
-            'collection',
-            'el',
-            'id',
-            'attributes',
-            'className',
-            'tagName',
-            'events'
-        ],
         log = function (type, name, path) {
             if (module.config().env === 'develop') {
                 console.log('Appular : ' + type + ' : ' + name + ' : ' + path);
@@ -34,7 +24,7 @@ define([
         requireApp = function () {
             var $element = $('body'),
                 name = $element.data('appularApp'),
-                path = 'apps/' + name + '/app';
+                path = 'apps/' + name + '/view';
 
             if (name) {
                 require([
@@ -103,7 +93,7 @@ define([
             _.each($components, function (element) {
                 var $element = $(element),
                     name = $element.data('appularComponent'),
-                    path = 'components/' + name + '/component',
+                    path = 'components/' + name + '/view',
                     options = {
                         el: $element
                     };
@@ -159,45 +149,21 @@ define([
         });
     })(Backbone.Collection);
 
-    Backbone.Controller = (function(View) {
+    Backbone.Controller = Backbone.View = (function(View) {
+        var viewOptions = [
+                'model',
+                'collection',
+                'el',
+                'id',
+                'attributes',
+                'className',
+                'tagName',
+                'events'
+            ];
+
         return View.extend({
             config: module.config(),
-            plugins: {},
-            triggers: {},
-            constructor: function(options) {
-                var optionAttributes = _.omit(options, viewOptions);
-
-                _.each(this.triggers, function (value, key) {
-                    this.on(key, this[value]);
-                }, this);
-
-                if (this.options) {
-                    this.options.set(optionAttributes, {
-                        silent: true
-                    });
-                } else {
-                    // create new model here
-                    this.options = new Backbone.Model(optionAttributes);
-                }
-
-                this.listenTo(this.options, 'all', function () {
-                    this.trigger.apply(this, arguments);
-                });
-                
-                View.apply(this, arguments);
-            },
-            set: function () {
-                return this.options.set.apply(this.options, arguments);
-            },
-            get: function () {
-                return this.options.get.apply(this.options, arguments);
-            }
-        });
-    })(Backbone.View);
-
-    Backbone.View = (function(View) {
-        return View.extend({
-            config: module.config(),
+            views: {},
             plugins: {},
             triggers: {},
             constructor: function(options) {
@@ -221,6 +187,12 @@ define([
                 });
                 
                 View.apply(this, arguments);
+            },
+            set: function () {
+                return this.model.set.apply(this.model, arguments);
+            },
+            get: function () {
+                return this.model.get.apply(this.model, arguments);
             }
         });
     })(Backbone.View);
