@@ -6,10 +6,10 @@
     'jquery',
     'underscore',
     'backbone',
-    'template!./templates/module.html',
-    'template!./templates/venue.html',
-    './collections/venues'
-], function ($, _, Backbone, template, venueTemplate, Venues) {
+    'template!./template.html',
+    './collection',
+    './views/tip/view'
+], function ($, _, Backbone, template, Venues, Tip) {
     var View = Backbone.View.extend({
             template: template,
             events: {},
@@ -45,23 +45,15 @@
                 });
             },
             renderVenues: function () {
-                var html = '';
+                var tips = [];
 
                 _.each(this.collection.first(3), function (tip) {
-                    var user = tip.get('user'),
-                        venue = tip.get('venue');
-
-                    html += venueTemplate({
-                        name: user.firstName + ' ' + user.lastName,
-                        tip: tip.get('text'),
-                        venue: {
-                            name: venue.name,
-                            website: venue.url
-                        }
-                    });
+                    tips.push(new Tip({
+                        model: tip
+                    }).render().$el);
                 });
 
-                $('#tips-venues').html(html);
+                $('#tips-venues').empty().append(tips);
             }
         });
 

@@ -135,7 +135,7 @@ module.exports = function(grunt) {
                             name: './appular',
                             include: [
                                 'modernizr',
-                                'libraries/require/require-2.1.9',
+                                'libraries/require/require-2.1.10',
                                 'libraries/require/config-build',
                                 'appular',
                                 'jquery',

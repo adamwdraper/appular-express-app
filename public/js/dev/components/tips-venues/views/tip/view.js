@@ -12,7 +12,17 @@ define([
             events: {},
             initialize: function () {},
             render: function () {
-                this.$el.html(this.template());
+                var user = this.get('user'),
+                    venue = this.get('venue');
+
+                this.$el.html(this.template({
+                    name: user.firstName + ' ' + user.lastName,
+                    tip: this.get('text'),
+                    venue: {
+                        name: venue.name,
+                        website: venue.url
+                    }
+                }));
 
                 return this;
             }
