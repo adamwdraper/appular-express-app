@@ -6,15 +6,15 @@
     'jquery',
     'underscore',
     'backbone',
-    'text!./templates/module.html',
-    'text!./templates/venue.html',
-    'text!./templates/address.html',
-    './collections/venues',
-    'plugins/table/plugin',
-    'plugins/pagination/plugin'
+    'template!./templates/module.html',
+    'template!./templates/venue.html',
+    'template!./templates/address.html',
+    './collection',
+    'plugins/table/view',
+    'plugins/pagination/view'
 ], function ($, _, Backbone, template, venueTemplate, addressTemplate, Venues, Table, Pagination) {
     var View = Backbone.View.extend({
-            template: _.template(template),
+            template: template,
             events: {},
             initialize: function() {
                 this.listenTo(this.app, 'change:keyword change:location', this.updateVenues);
@@ -89,7 +89,7 @@
                         classes: venue.hours && venue.hours.isOpen ? ['success'] : [],
                         cells: [
                             {
-                                text: _.template(venueTemplate, {
+                                text: venueTemplate({
                                     name: venue.name,
                                     url: venue.url || ''
                                 }),
@@ -104,7 +104,7 @@
                                 value: venue.hours ? venue.hours.isOpen : false
                             },
                             {
-                                text: _.template(addressTemplate, {
+                                text: addressTemplate({
                                     address: venue.location.address + ' ' + this.app.get('location'),
                                     url: 'https://www.google.com/maps/preview#!q=' + encodeURIComponent(venue.location.address + ' ' + this.app.get('location'))
                                 })

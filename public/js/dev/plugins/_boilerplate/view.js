@@ -8,7 +8,7 @@ define([
     'template!./template.html'
 ], function ($, _, Backbone, template) {
     var View = Backbone.View.extend({
-            template: template(),
+            template: template,
             bindings: {},
             triggers: {},
             events: {},

@@ -5,27 +5,22 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'text!./templates/plugin.html',
-    'text!./templates/row.html'
-], function($, _, Backbone, template, rowTemplate) {
+    './model',
+    'template!./template.html',
+    'template!./templates/row.html'
+], function($, _, Backbone, Model, template, rowTemplate) {
     var View = Backbone.View.extend({
-            template: _.template(template),
+            template: template,
+            triggers: {
+                'change:body change:sortBy change:sortOrder': 'sort',
+                'change:page': 'renderRows'
+            },
             events: {
                 'click [data-sort-by]': 'setSort'
             },
-            options: {
-                body: [],
-                head: [],
-                sortBy: '',
-                sortOrder: 'asc',
-                page: 1,
-                count: 25
-            },
+            model: new Model(),
             initialize: function () {
                 _.bindAll(this, 'setSort', 'renderRows');
-
-                this.on('change:body change:sortBy change:sortOrder', this.sort);
-                this.on('change:page', this.renderRows);
             },
             render: function () {
                 this.$el.html(this.template({
@@ -83,7 +78,7 @@ define([
                 for (i; i < count; i++) {
                     row = rows[firstRow + i];
 
-                    html += _.template(rowTemplate, {
+                    html += rowTemplate({
                         classes: row.classes || [],
                         cells: _.isArray(row) ? row : row.cells
                     });
