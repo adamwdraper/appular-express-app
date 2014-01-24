@@ -22,16 +22,18 @@ To check out a quick example of appular in action:
 In Appular there are 3 different types of modules.
 
 ### App
-This is where you do any prep work like authentication checks before any of your modules load.  They also have a special collection called params that modules use to share data.  An app is added to a page by adding `data-appular-app="app-name"` to the body tag.
+This is where you do any prep work like authentication checks before any of your modules load.  An app is added to a page by adding `data-appular-app="app-name"` to the body tag.
 
-### Modules
-Modules are bound to dom elements by adding a `data-appular-module="module-name"` attribute to the element.
+Apps also have a special collection that modules use to share data.  Any changes to this collection are automatically populated to the hash.  
+
+### Components
+Components are bound to dom elements by adding a `data-appular-component="component-name"` attribute to the element.
 
 ### Plugins
 Plugins are used by modules and are meant for very specific functionality that you are using in several modules.  Use them for tasks like long-polling or watching for infinite scrolling.  Ideally these are kept small and dumb. (i.e. they do their work, trigger events when necessary, and modules react to those events)
 
 ### Utilities
-These are top level "helpers" that can act as mini libraries.
+These "helpers" that can act as mini libraries.
 
 ## Use
 Included these scripts based on environment.  This way debuging is easy since nothing is uglified.

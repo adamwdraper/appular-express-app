@@ -1,30 +1,35 @@
 var fs = require('fs');
 
 module.exports = function(grunt) {
-
     var appular = {
         apps: [],
-        modules: []
+        components: []
     };
 
     // add appular app definition for build
-    fs.readdirSync('./public/js/dev/apps').forEach(function (path) {
-        appular.apps.push({
-            name: 'apps/' + path + '/app',
-            exclude: [
-                'appular'
-            ]
-        });
+    fs.readdirSync('./public/js/dev/apps').forEach(function (name) {
+        if (name[0] !== '.') {
+            appular.apps.push({
+                name: 'apps/' + name + '/app',
+                exclude: [
+                    'appular'
+                ]
+            });
+        }
     });
-    // add appular module definition for build
-    fs.readdirSync('./public/js/dev/modules').forEach(function (path) {
-        appular.modules.push({
-            name: 'modules/' + path + '/module',
-            exclude: [
-                'appular'
-            ]
-        });
+    // add appular component definition for build
+    fs.readdirSync('./public/js/dev/components').forEach(function (name) {
+        if (name[0] !== '.') {
+            appular.components.push({
+                name: 'components/' + name + '/component',
+                exclude: [
+                    'appular'
+                ]
+            });
+        }
     });
+
+    require('load-grunt-tasks')(grunt);
 
     // Project configuration.
     grunt.initConfig({
@@ -75,7 +80,7 @@ module.exports = function(grunt) {
                     pretty: true
                 },
                 files: {
-                    'public/js/dev/modules/docs/json/docs.json': [
+                    'public/js/dev/components/docs/json/docs.json': [
                         'public/js/dev/**/*.js'
                     ]
                 }
@@ -83,7 +88,7 @@ module.exports = function(grunt) {
         },
         jshint: {
             all: [
-                'public/js/dev/modules/**/*.js',
+                'public/js/dev/components/**/*.js',
                 'public/js/dev/plugins/**/*.js',
                 'public/js/dev/utilities/**/*.js'
             ],
@@ -110,18 +115,19 @@ module.exports = function(grunt) {
                     baseUrl: 'public/js/dev',
                     dir: 'public/js/build',
                     paths: {
-                        'appular': 'libraries/appular/appular-2.3.0',
+                        'appular': 'libraries/appular/appular-3.0.0',
                         'modernizr': 'libraries/modernizr/modernizr-2.6.3',
-                        'jquery': 'libraries/jquery/jquery-1.10.2',
+                        'jquery': 'libraries/jquery/jquery-2.1.0',
                         'jqueryFunctions': 'libraries/jquery/extensions/functions',
-                        'underscore': 'libraries/underscore/underscore-1.5.0',
-                        'backbone': 'libraries/backbone/backbone-1.0.0',
+                        'underscore': 'libraries/underscore/underscore-1.5.2',
+                        'backbone': 'libraries/backbone/backbone-1.1.0',
                         'backboneStickit': 'libraries/backbone/extensions/stickit',
                         'moment': 'libraries/moment/moment-2.4.0',
                         'numeral': 'libraries/numeral/numeral-1.5.2',
                         'domReady': 'libraries/require/plugins/domReady',
                         'async': 'libraries/require/plugins/async',
                         'json': 'libraries/require/plugins/json',
+                        'template': 'libraries/require/plugins/template',
                         'text': 'libraries/require/plugins/text'
                     },
                     modules: [
@@ -129,7 +135,7 @@ module.exports = function(grunt) {
                             name: './appular',
                             include: [
                                 'modernizr',
-                                'libraries/require/require-2.1.9',
+                                'libraries/require/require-2.1.10',
                                 'libraries/require/config-build',
                                 'appular',
                                 'jquery',
@@ -141,7 +147,7 @@ module.exports = function(grunt) {
                                 'text'
                             ]
                         }
-                    ].concat(appular.apps, appular.modules),
+                    ].concat(appular.apps, appular.components),
                     removeCombined: true
                 }
             }
@@ -182,9 +188,6 @@ module.exports = function(grunt) {
             }
         }
     });
-
-    // load all grunt tasks
-    require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
     grunt.registerTask('default', [
         'develop'
