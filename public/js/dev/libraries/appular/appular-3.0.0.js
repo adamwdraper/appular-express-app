@@ -149,7 +149,7 @@ define([
         });
     })(Backbone.Collection);
 
-    Backbone.Controller = Backbone.View = (function(View) {
+    Backbone.View = (function(View) {
         var viewOptions = [
                 'model',
                 'collection',
