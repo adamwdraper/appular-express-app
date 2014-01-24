@@ -5,24 +5,20 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'text!./templates/plugin.html'
-], function($, _, Backbone, template) {
-    var Module = Backbone.Module.extend({
-            template: _.template(template),
+    './model',
+    'template!./template.html'
+], function($, _, Backbone, Model, template) {
+    var View = Backbone.View.extend({
+            template: template,
+            model: new Model(),
+            triggers: {
+                'change:page change:total': 'renderHtml'
+            },
             events: {
                 'click [data-page]': 'updatePage'
             },
-            options: {
-                page: 1,
-                total: 1,
-                count: 1,
-                items: 7,
-                scrollTopSelector: 'html, body'
-            },
             initialize: function() {
                 _.bindAll(this, 'updatePage');
-                
-                this.on('change:page change:total', this.renderHtml);
             },
             render: function () {
                 return this;
@@ -71,5 +67,5 @@ define([
             }
         });
     
-    return Module;
+    return View;
 });

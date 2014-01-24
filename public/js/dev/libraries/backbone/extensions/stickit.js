@@ -64,7 +64,7 @@ define([
         stickit: function(optionalModel, optionalBindingsConfig) {
             var model = optionalModel || this.model,
                 namespace = '.stickit.' + model.cid,
-                bindings = optionalBindingsConfig || this.bindings || {};
+                bindings = optionalBindingsConfig || _.result(this, "bindings") || {};
 
             this._modelBindings || (this._modelBindings = []);
             this.unstickit(model);
@@ -110,9 +110,10 @@ define([
                         var method = function(event) {
                             var val = config.getVal.call(this, $el, event, config, _.rest(arguments));
                             // Don't update the model if false is returned from the `updateModel` configuration.
-                            if (evaluateBoolean(this, config.updateModel, val, config))
+                            if (evaluateBoolean(this, config.updateModel, val, event, config))
                                 setAttr(model, modelAttr, val, options, this, config);
                         };
+                        method = _.bind(method, this);
                         if (selector === ':el') this.$el.on(event, method);
                         else this.$el.on(event, selector, method);
                     }, this);
@@ -140,12 +141,14 @@ define([
 
             // Wrap `view.remove` to unbind stickit model and dom events.
             var remove = this.remove;
-            this.remove = function() {
-                var ret = this;
-                this.unstickit();
-                if (remove) ret = remove.apply(this, _.rest(arguments));
-                return ret;
-            };
+            if (!remove.stickitWrapped)
+                this.remove = function() {
+                    var ret = this;
+                    this.unstickit();
+                    if (remove) ret = remove.apply(this, _.rest(arguments));
+                    return ret;
+                };
+            this.remove.stickitWrapped = true;
         }
     });
 
@@ -163,7 +166,7 @@ define([
     // If the given `fn` is a string, then view[fn] is called, otherwise it is
     // a function that should be executed.
     var applyViewFn = function(view, fn) {
-        if (fn) return (_.isString(fn) ? view[fn] : fn).apply(view, _.rest(arguments, 2));
+        if (fn) return (_.isString(fn) ? evaluatePath(view,fn) : fn).apply(view, _.rest(arguments, 2));
     };
 
     var getSelectedOption = function($select) { return $select.find('option').not(function(){ return !this.selected; }); };
@@ -186,8 +189,24 @@ define([
 
     // Prepares the given `val`ue and sets it into the `model`.
     var setAttr = function(model, attr, val, options, context, config) {
-        if (config.onSet) val = applyViewFn(context, config.onSet, val, config);
-        model.set(attr, val, options);
+        var value = {};
+        if (config.onSet)
+            val = applyViewFn(context, config.onSet, val, config);
+
+        if (config.set)
+            applyViewFn(context, config.set, attr, val, options, config);
+        else {
+            value[attr] = val;
+            // If `observe` is defined as an array and `onSet` returned
+            // an array, then map attributes to their values.
+            if (_.isArray(attr) && _.isArray(val)) {
+                value = _.reduce(attr, function(memo, attribute, index) {
+                    memo[attribute] = _.has(val, index) ? val[index] : null;
+                    return memo;
+                }, {});
+            }
+            model.set(value, options);
+        }
     };
 
     // Returns the given `attr`'s value from the `model`, escaping and
@@ -240,7 +259,7 @@ define([
     //     }, ...]
     //
     var initializeAttributes = function(view, $el, config, model, modelAttr) {
-        var props = ['autofocus', 'autoplay', 'async', 'checked', 'controls', 'defer', 'disabled', 'hidden', 'loop', 'multiple', 'open', 'readonly', 'required', 'scoped', 'selected'];
+        var props = ['autofocus', 'autoplay', 'async', 'checked', 'controls', 'defer', 'disabled', 'hidden', 'indeterminate', 'loop', 'multiple', 'open', 'readonly', 'required', 'scoped', 'selected'];
 
         _.each(config.attributes || [], function(attrConfig) {
             var lastClass = '', observed, updateAttr;
@@ -342,20 +361,22 @@ define([
                 // There are multiple checkboxes so we need to go through them and check
                 // any that have value attributes that match what's in the array of `val`s.
                 val || (val = []);
-                _.each($el, function(el) {
-                    if (_.indexOf(val, $(el).val()) > -1) $(el).prop('checked', true);
-                    else $(el).prop('checked', false);
+                $el.each(function(i, el) {
+                    var checkbox = Backbone.$(el);
+                    var checked = _.indexOf(val, checkbox.val()) > -1;
+                    checkbox.prop('checked', checked);
                 });
             } else {
-                if (_.isBoolean(val)) $el.prop('checked', val);
-                else $el.prop('checked', val === $el.val());
+                var checked = _.isBoolean(val) ? val : val === $el.val();
+                $el.prop('checked', checked);
             }
         },
         getVal: function($el) {
             var val;
             if ($el.length > 1) {
                 val = _.reduce($el, function(memo, el) {
-                    if ($(el).prop('checked')) memo.push($(el).val());
+                    var checkbox = Backbone.$(el);
+                    if (checkbox.prop('checked')) memo.push(checkbox.val());
                     return memo;
                 }, []);
             } else {
@@ -393,13 +414,13 @@ define([
                     if ($el.find('> option').length) {
                         list.opt_labels.push(undefined);
                         _.each($el.find('> option'), function(el) {
-                            list[undefined] = getList($(el));
+                            list[undefined] = getList(Backbone.$(el));
                         });
                     }
                     _.each($el.find('optgroup'), function(el) {
-                        var label = $(el).attr('label');
+                        var label = Backbone.$(el).attr('label');
                         list.opt_labels.push(label);
-                        list[label] = getList($(el).find('option'));
+                        list[label] = getList(Backbone.$(el).find('option'));
                     });
                 } else {
                     list = getList($el.find('option'));
@@ -412,7 +433,7 @@ define([
 
             var addSelectOptions = function(optList, $el, fieldVal) {
                 _.each(optList, function(obj) {
-                    var option = $('<option/>'), optionVal = obj;
+                    var option = Backbone.$('<option/>'), optionVal = obj;
 
                     var fillOption = function(text, val) {
                         option.text(text);
@@ -460,7 +481,7 @@ define([
             if (optList instanceof Backbone.Collection) optList = optList.toJSON();
 
             if (selectConfig.defaultOption) {
-                addSelectOptions(["__default__"], $el)
+                addSelectOptions(["__default__"], $el);
             }
 
             if (_.isArray(optList)) {
@@ -476,7 +497,7 @@ define([
                 //     }
                 //
                 _.each(optList.opt_labels, function(label) {
-                    var $group = $('<optgroup/>').attr('label', label);
+                    var $group = Backbone.$('<optgroup/>').attr('label', label);
                     addSelectOptions(optList[label], $group, val);
                     $el.append($group);
                 });
@@ -496,8 +517,8 @@ define([
         getVal: function($el) {
             var val;
             if ($el.prop('multiple')) {
-                val = $(getSelectedOption($el).map(function() {
-                    return $(this).data('stickit_bind_val');
+                val = Backbone.$(getSelectedOption($el).map(function() {
+                    return Backbone.$(this).data('stickit_bind_val');
                 })).get();
             } else {
                 val = getSelectedOption($el).data('stickit_bind_val');
@@ -505,5 +526,4 @@ define([
             return val;
         }
     }]);
-
 });

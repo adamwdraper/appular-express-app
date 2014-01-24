@@ -2,7 +2,7 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    '../models/option'
+    './model'
 ], function ($, _, Backbone, Option) {
     var Collection = Backbone.Collection.extend({
             model: Option,

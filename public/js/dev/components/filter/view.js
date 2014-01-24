@@ -6,11 +6,11 @@
     'jquery',
     'underscore',
     'backbone',
-    'text!./templates/module.html',
-    'plugins/select/plugin'
+    'template!./template.html',
+    'plugins/select/view'
 ], function ($, _, Backbone, template, Select) {
-    var Module = Backbone.Module.extend({
-            template: _.template(template),
+    var View = Backbone.View.extend({
+            template: template,
             events: {
                 'keyup #keyword': 'keywordChanged'
             },
@@ -32,6 +32,7 @@
                     ],
                     value: this.app.get('location')
                 }).render();
+
                 this.listenTo(this.plugins.select, 'change:value', this.setLocation);
 
                 this.$keyword = $('#keyword');
@@ -48,5 +49,5 @@
             }
         });
 
-    return Module;
+    return View;
 });
