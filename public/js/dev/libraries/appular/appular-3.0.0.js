@@ -1,5 +1,5 @@
 // Appular
-// version : 2.5.0
+// version : 3.0.0
 // author : Adam Draper
 // license : MIT
 // https://github.com/adamwdraper/Appular
