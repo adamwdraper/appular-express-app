@@ -28,18 +28,15 @@
                         [
                             {
                                 text: 'Name',
-                                sortBy: 'name',
-                                isSortable: true
+                                sortBy: 'name'
                             },
                             {
                                 text: 'Price',
-                                sortBy: 'price',
-                                isSortable: true
+                                sortBy: 'price'
                             },
                             {
                                 text: 'Status',
-                                sortBy: 'status',
-                                isSortable: true
+                                sortBy: 'status'
                             },
                             {
                                 text: 'Address'
