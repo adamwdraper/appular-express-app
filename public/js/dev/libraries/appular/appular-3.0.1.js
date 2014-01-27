@@ -13,12 +13,15 @@ define([
     'libraries/appular/extensions/router/router',
     'libraries/appular/extensions/app/app'
 ], function (module, doc, $, _, Backbone, Params, Router) {
-    var app,
+    var Appular = {
+            version: '3.0.1'
+        },
+        app,
         params = new Params(),
         $components = $('[data-appular-component]'),
-        log = function (type, name, path) {
+        log = function () {
             if (module.config().env === 'develop') {
-                console.log('Appular : ' + type + ' : ' + name + ' : ' + path);
+                console.log('Appular : ' + Array.prototype.slice.call(arguments).join(' : '));
             }
         },
         requireApp = function () {
@@ -217,6 +220,8 @@ define([
 
     // Render all components when app is ready
     Backbone.on('app:initialized', renderComponents);
+
+    log('v' + Appular.version);
 
     // Get this party started
     requireApp();

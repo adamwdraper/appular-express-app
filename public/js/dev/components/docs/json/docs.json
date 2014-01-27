@@ -1,27 +1,27 @@
 {
     "apps": [
         {
-            "path": "apps/_boilerplate/app.js",
+            "path": "apps/_boilerplate/view.js",
             "name": "boilerplate",
             "version": "",
             "description": "",
-            "define": "apps/_boilerplate/app"
+            "define": "apps/_boilerplate/view"
         },
         {
-            "path": "apps/docs/app.js",
+            "path": "apps/docs/view.js",
             "name": "docs",
             "version": "",
             "description": "",
-            "define": "apps/docs/app"
+            "define": "apps/docs/view"
         }
     ],
     "components": [
         {
-            "path": "components/_boilerplate/component.js",
+            "path": "components/_boilerplate/view.js",
             "name": "boilerplate",
             "version": "",
             "description": "",
-            "define": "components/_boilerplate/component"
+            "define": "components/_boilerplate/view"
         },
         {
             "path": "components/docs/component.js",
@@ -31,25 +31,39 @@
             "define": "components/docs/component"
         },
         {
-            "path": "components/filter/component.js",
+            "path": "components/filter/view.js",
             "name": "filter",
             "version": "",
             "description": "",
-            "define": "components/filter/component"
+            "define": "components/filter/view"
         },
         {
-            "path": "components/recommended-venues/component.js",
+            "path": "components/recommended-venues/view.js",
             "name": "recommendedVenues",
             "version": "v0.0.1",
             "description": "Uses keyword and location to get recommended venues from foursquare api",
-            "define": "components/recommended-venues/component"
+            "define": "components/recommended-venues/view"
         },
         {
-            "path": "components/tips-venues/component.js",
+            "path": "components/tips-venues/view.js",
             "name": "demo",
             "version": "",
             "description": "",
-            "define": "components/tips-venues/component"
+            "define": "components/tips-venues/view"
+        },
+        {
+            "name": "tips-venues",
+            "extras": {
+                "views": [
+                    {
+                        "path": "components/tips-venues/views/tip/view.js",
+                        "name": "boilerplate",
+                        "version": "",
+                        "description": "",
+                        "define": "components/tips-venues/views/tip/view"
+                    }
+                ]
+            }
         }
     ],
     "libraries": [
@@ -75,24 +89,12 @@
                                 "description": "shortcut to set param's value"
                             }
                         ]
-                    },
-                    {
-                        "path": "libraries/appular/extensions/module/module.js",
-                        "name": "module",
-                        "version": "",
-                        "description": "",
-                        "define": "libraries/appular/extensions/module/module"
                     }
                 ]
             }
         },
         {
-            "path": "libraries/backbone/backbone-1.1.0.js",
             "name": "backbone",
-            "version": "v1.0.0",
-            "description": "",
-            "link": "http://documentcloud.github.io/backbone/",
-            "define": "backbone",
             "extras": {
                 "extensions": [
                     {
@@ -107,7 +109,7 @@
             }
         },
         {
-            "name": "jQuery",
+            "name": "jquery",
             "extras": {
                 "extensions": [
                     {
@@ -139,12 +141,7 @@
                         ]
                     }
                 ]
-            },
-            "path": "libraries/jquery/jquery-1.10.2.js",
-            "version": "v1.10.2",
-            "description": "",
-            "link": "http://jquery.com/",
-            "define": "jquery"
+            }
         },
         {
             "path": "libraries/moment/moment-2.4.0.js",
@@ -188,43 +185,30 @@
                         "define": "text!"
                     }
                 ]
-            },
-            "path": "libraries/require/require-2.1.9.js",
-            "version": "v2.1.9",
-            "description": "",
-            "link": "http://requirejs.com/",
-            "define": "require"
-        },
-        {
-            "path": "libraries/underscore/underscore-1.5.0.js",
-            "name": "underscore",
-            "version": "v1.5.0",
-            "description": "",
-            "link": "http://documentcloud.github.io/underscore/",
-            "define": "underscore"
+            }
         }
     ],
     "plugins": [
         {
-            "path": "plugins/_boilerplate/plugin.js",
-            "name": "boilerplate",
+            "path": "plugins/_boilerplate/view.js",
+            "name": "plugin",
             "version": "",
             "description": "",
-            "define": "plugins/_boilerplate/plugin"
+            "define": "plugins/_boilerplate/view"
         },
         {
-            "path": "plugins/pagination/plugin.js",
+            "path": "plugins/pagination/view.js",
             "name": "pagination",
             "version": "",
             "description": "",
-            "define": "plugins/pagination/plugin"
+            "define": "plugins/pagination/view"
         },
         {
-            "path": "plugins/table/plugin.js",
+            "path": "plugins/table/view.js",
             "name": "table",
             "version": "",
             "description": "",
-            "define": "plugins/table/plugin"
+            "define": "plugins/table/view"
         }
     ]
 }
