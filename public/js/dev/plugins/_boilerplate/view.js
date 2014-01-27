@@ -10,7 +10,7 @@ define([
     var View = Backbone.View.extend({
             template: template,
             bindings: {},
-            triggers: {},
+            listeners: {},
             events: {},
             initialize: function () {},
             render: function () {

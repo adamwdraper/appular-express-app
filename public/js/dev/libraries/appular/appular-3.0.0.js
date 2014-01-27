@@ -1,5 +1,5 @@
 // Appular
-// version : 3.0.0
+// version : 3.0.1
 // author : Adam Draper
 // license : MIT
 // https://github.com/adamwdraper/Appular
@@ -165,12 +165,24 @@ define([
             config: module.config(),
             views: {},
             plugins: {},
-            triggers: {},
+            listeners: {},
             constructor: function(options) {
                 var modelAttributes = _.omit(options, viewOptions);
 
-                _.each(this.triggers, function (value, key) {
-                    this.on(key, this[value]);
+                _.each(this.listeners, function (value, key) {
+                    var events = key.split(' '),
+                        property,
+                        callback = _.isFunction(value) ? value : this[value];
+
+                    // find out if we are listening to app, model, or collection so that we can use listenTo
+                    property = events[0] === 'app' || events[0] === 'model' || events[0] === 'collection' ? events.shift() : null;
+
+                    // add appropriate listening action
+                    if (property) {
+                        this.listenTo(this[property], events.join(' '), callback);
+                    } else {
+                        this.on(events.join(' '), callback);
+                    }
                 }, this);
 
                 if (this.model) {

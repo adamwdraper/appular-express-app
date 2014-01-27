@@ -13,7 +13,7 @@ define([
             bindings: {
                 '[data-toggle-text]': 'value'
             },
-            triggers: {},
+            listeners: {},
             events: {
                 'click [data-action="toggle"]': 'toggle'
             },

@@ -11,7 +11,7 @@ define([
 ], function($, _, Backbone, Model, template, rowTemplate) {
     var View = Backbone.View.extend({
             template: template,
-            triggers: {
+            listeners: {
                 'change:body change:sortBy change:sortOrder': 'sort',
                 'change:page': 'renderRows'
             },

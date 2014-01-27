@@ -32,7 +32,6 @@
                     ],
                     value: this.app.get('location')
                 }).render();
-
                 this.listenTo(this.plugins.select, 'change:value', this.setLocation);
 
                 this.$keyword = $('#keyword');
