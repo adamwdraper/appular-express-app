@@ -20,8 +20,16 @@ define([
         params = new Params(),
         $components = $('[data-appular-component]'),
         log = function () {
+            var colors = {
+                    Library: 'FC913A',
+                    App: '00A8C6',
+                    Component: '40C0CB',
+                    Event: '8FBE00'
+                },
+                info = Array.prototype.slice.call(arguments);
+
             if (module.config().env === 'develop') {
-                console.log('Appular : ' + Array.prototype.slice.call(arguments).join(' : '));
+                console.log('%c' + info.join(' : '), 'color: #' + colors[info[0]]);
             }
         },
         requireApp = function () {
@@ -116,7 +124,11 @@ define([
                     log('Component', name, path);
 
                     _.extend(Component.prototype, {
-                        app: app
+                        app: app,
+                        data: {
+                            path: path,
+                            name: name
+                        }
                     });
 
                     component = new Component(options).render();
@@ -166,6 +178,7 @@ define([
 
         return View.extend({
             config: module.config(),
+            data: {},
             views: {},
             plugins: {},
             listeners: {},
@@ -200,6 +213,10 @@ define([
                 this.listenTo(this.model, 'all', function () {
                     this.trigger.apply(this, arguments);
                 });
+
+                this.on('all', function (name) {
+                    log('Event', name);
+                });
                 
                 View.apply(this, arguments);
             },
@@ -221,7 +238,7 @@ define([
     // Render all components when app is ready
     Backbone.on('app:initialized', renderComponents);
 
-    log('v' + Appular.version);
+    log('Library', 'Appular', 'v' + Appular.version);
     log('Library', 'jQuery', 'v' + $().jquery);
     log('Library', 'Backbone', 'v' + Backbone.VERSION);
     log('Library', 'Underscore', 'v' + _.VERSION);
