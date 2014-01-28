@@ -222,6 +222,9 @@ define([
     Backbone.on('app:initialized', renderComponents);
 
     log('v' + Appular.version);
+    log('Library', 'jQuery', 'v' + $().jquery);
+    log('Library', 'Backbone', 'v' + Backbone.VERSION);
+    log('Library', 'Underscore', 'v' + _.VERSION);
 
     // Get this party started
     requireApp();
