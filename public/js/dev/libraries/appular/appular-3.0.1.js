@@ -213,10 +213,6 @@ define([
                 this.listenTo(this.model, 'all', function () {
                     this.trigger.apply(this, arguments);
                 });
-
-                this.on('all', function (name) {
-                    log('Event', name);
-                });
                 
                 View.apply(this, arguments);
             },
