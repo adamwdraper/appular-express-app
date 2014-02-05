@@ -35,7 +35,7 @@ define([
         requireApp = function () {
             var $element = $('body'),
                 name = $element.data('appularApp'),
-                path = 'apps/' + name + '/view';
+                path = 'apps/' + name + '/app';
 
             if (name) {
                 require([
@@ -104,7 +104,7 @@ define([
             _.each($components, function (element) {
                 var $element = $(element),
                     name = $element.data('appularComponent'),
-                    path = 'components/' + name + '/view',
+                    path = 'components/' + name + '/component',
                     options = {
                         el: $element
                     };

@@ -10,8 +10,8 @@
     'template!./templates/venue.html',
     'template!./templates/address.html',
     './collection',
-    'plugins/table/view',
-    'plugins/pagination/view'
+    'plugins/table/plugin',
+    'plugins/pagination/plugin'
 ], function ($, _, Backbone, template, venueTemplate, addressTemplate, Venues, Table, Pagination) {
     var View = Backbone.View.extend({
             template: template,
