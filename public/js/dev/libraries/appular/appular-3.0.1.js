@@ -76,15 +76,13 @@ define([
                 require([
                     path
                 ], function (Component) {
-                    var component;
-
                     log('Component', name, path);
 
                     _.extend(Component.prototype, {
                         app: app
                     });
 
-                    component = new Component(options).render();
+                    new Component(options).render();
                 });
             });
         };
