@@ -51,6 +51,12 @@ define([
             constructor: function(options) {
                 var modelAttributes = _.omit(options, viewOptions);
 
+                // go ahead and set the model if sent in options
+                if (options.model) {
+                    this.model = options.model;
+                }
+
+                // set up on's or listenTo's from the listeners object
                 _.each(this.listeners, function (value, key) {
                     var events = key.split(' '),
                         property,
@@ -67,6 +73,7 @@ define([
                     }
                 }, this);
 
+                // add options to view's model as attributes
                 if (this.model) {
                     this.model.set(modelAttributes, {
                         silent: true
@@ -76,6 +83,7 @@ define([
                     this.model = new Backbone.Model(modelAttributes);
                 }
 
+                // propagate all model events to the view
                 this.listenTo(this.model, 'all', function () {
                     this.trigger.apply(this, arguments);
                 });
