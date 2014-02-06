@@ -45,7 +45,7 @@ define([
                             id: id,
                             value: value
                         });
-                    });
+                    }, this);
                 }
                 
                 this.collection.load(params);

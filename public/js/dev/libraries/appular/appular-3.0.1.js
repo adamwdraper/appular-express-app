@@ -34,7 +34,7 @@ define([
                 name = $element.data('appularApp'),
                 path = 'apps/' + name + '/app';
 
-            // require app or through error if none defined
+            // require app or throw error if none defined
             if (name) {
                 require([
                     path
@@ -43,8 +43,7 @@ define([
                     log('App', name, path);
 
                     app = new App({
-                        el: $element,
-                        config: module.config()
+                        el: $element
                     });
 
                     Backbone.history.start({
@@ -82,14 +81,30 @@ define([
                     log('Component', name, path);
 
                     _.extend(Component.prototype, {
-                        app: app,
-                        config: module.config()
+                        app: app
                     });
 
                     component = new Component(options).render();
                 });
             });
         };
+
+    // add config to backbone objects
+    _.extend(Backbone.App.prototype, {
+        config: module.config()
+    });
+
+    _.extend(Backbone.View.prototype, {
+        config: module.config()
+    });
+
+    _.extend(Backbone.Collection.prototype, {
+        config: module.config()
+    });
+
+    _.extend(Backbone.Model.prototype, {
+        config: module.config()
+    });
 
     // render app when all params are loaded
     Backbone.on('params:initialized', function () {
