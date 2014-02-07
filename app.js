@@ -15,6 +15,13 @@ app.get('/', function (req, res) {
     });
 });
 
+app.get('/tests/:app', function (req, res) {
+    res.render('tests/apps/' + req.params.app, {
+        environment: process.env.NODE_ENV,
+        app: req.params.app
+    });
+});
+
 app.get('/:view/:data?', function (req, res) {
     res.render(req.params.view, {
         environment: process.env.NODE_ENV

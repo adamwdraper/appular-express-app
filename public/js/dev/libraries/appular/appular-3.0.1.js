@@ -3,121 +3,98 @@
 // author : Adam Draper
 // license : MIT
 // https://github.com/adamwdraper/Appular
+
 define([
     'module',
-    'domReady!',
     'jquery',
     'underscore',
     'backbone',
     'libraries/appular/extensions/backbone/backbone',
     'libraries/appular/extensions/app/app'
-], function (module, doc, $, _, Backbone) {
-    var Appular = {
-            version: '3.0.1'
-        },
-        app,
-        log = function () {
-            var colors = {
-                    Library: 'FC913A',
-                    App: '00A8C6',
-                    Component: '40C0CB',
-                    Event: '8FBE00'
-                },
-                info = Array.prototype.slice.call(arguments);
+], function (module, $, _, Backbone) {
+    var Appular = {};
 
-            if (module.config().env === 'develop') {
-                console.log('%c' + info.join(' : '), 'color: #' + colors[info[0]]);
-            }
-        },
-        requireApp = function () {
-            var $element = $('body'),
-                name = $element.data('appularApp'),
-                path = 'apps/' + name + '/app';
+    Appular.version = '3.0.1';
 
-            // require app or throw error if none defined
-            if (name) {
-                require([
-                    path
-                ], function (App) {
-                    // log load in dev
-                    log('App', name, path);
+    Appular.app = '';
 
-                    app = new App({
-                        el: $element
-                    });
+    Appular.components = {};
 
-                    Backbone.history.start({
-                        root: window.location.pathname
-                    });
-                });
+    Appular.config = module.config();
 
-            } else {
-                throw new Error('Appular : No app found');
-            }
-        },
-        renderComponents = function () {
-            var $components = $('[data-appular-component]');
+    Appular.log = function () {
+        var colors = {
+                Library: 'FC913A',
+                App: '00A8C6',
+                Component: '40C0CB',
+                Event: '8FBE00'
+            },
+            info = Array.prototype.slice.call(arguments);
 
-            _.each($components, function (element) {
-                var $element = $(element),
-                    name = $element.data('appularComponent'),
-                    path = 'components/' + name + '/component',
-                    options = {
-                        el: $element
-                    };
+        if (module.config().env === 'develop') {
+            console.log('%c' + info.join(' : '), 'color: #' + colors[info[0]]);
+        }
+    };
 
-                // add any data attributes to the components options
-                _.each($element.data(), function (value, key) {
-                    if (key !== 'appularComponent') {
-                        options[key] = value;
-                    }
-                });
-                
-                require([
-                    path
-                ], function (Component) {
-                    log('Component', name, path);
+    Appular.require = {};
 
-                    _.extend(Component.prototype, {
-                        app: app
-                    });
+    Appular.require.app = function (name, options) {
+        var path = 'apps/' + name + '/app';
 
-                    new Component(options).render();
-                });
+        options = options || {};
+
+        _.extend(options, {
+            el: $('body')
+        });
+
+        require([
+            path
+        ], function (App) {
+            // log load in dev
+            Appular.log('App', name, path);
+
+            Appular.app = new App(options);
+
+            Backbone.trigger('appular:app:initialized', Appular.app);
+        });
+    };
+    
+    Appular.require.component = function (name, options) {
+        var path = 'components/' + name + '/component';
+
+        options = options || {};
+
+        require([
+            path
+        ], function (Component) {
+            Appular.log('Component', name, path);
+
+            _.extend(Component.prototype, {
+                app: Appular.app
             });
-        };
+
+            Appular.components[name] = new Component(options);
+
+            Backbone.trigger('appular:component:initialized', Appular.components[name]);
+        });
+    };
 
     // add config to backbone objects
     _.extend(Backbone.App.prototype, {
-        config: module.config()
+        config: Appular.config
     });
 
     _.extend(Backbone.View.prototype, {
-        config: module.config()
+        config: Appular.config
     });
 
     _.extend(Backbone.Collection.prototype, {
-        config: module.config()
+        config: Appular.config
     });
 
     _.extend(Backbone.Model.prototype, {
-        config: module.config()
+        config: Appular.config
     });
 
-    // render app when all params are loaded
-    Backbone.on('params:initialized', function () {
-        app.render();
-    });
-
-    // Render all components when app is ready
-    Backbone.on('app:initialized', renderComponents);
-
-    // log major libraries being used
-    log('Library', 'Appular', 'v' + Appular.version);
-    log('Library', 'jQuery', 'v' + $().jquery);
-    log('Library', 'Backbone', 'v' + Backbone.VERSION);
-    log('Library', 'Underscore', 'v' + _.VERSION);
-
-    // Get this party started
-    requireApp();
+    return Appular;
 });

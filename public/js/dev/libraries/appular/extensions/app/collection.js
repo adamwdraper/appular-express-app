@@ -52,7 +52,7 @@ define([
                 }, this);
 
                 // all params should be loaded
-                Backbone.trigger('params:initialized');
+                Backbone.trigger('appular:params:initialized');
             },
             /**
             @function getValue - shortcut to get model's value

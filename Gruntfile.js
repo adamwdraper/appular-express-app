@@ -74,6 +74,13 @@ module.exports = function(grunt) {
                 }
             }
         },
+        mocha: {
+            test: {
+                src: [
+                    'test/app/default'
+                ]
+            }
+        },
         docs: {
             build: {
                 options: {
