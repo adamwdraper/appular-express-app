@@ -55,7 +55,7 @@ define([
 
             Appular.app = new App(options);
 
-            Backbone.trigger('appular:app:initialized', Appular.app);
+            Backbone.trigger('appular:app:required', Appular.app);
         });
     };
     
@@ -75,7 +75,7 @@ define([
 
             Appular.components[name] = new Component(options);
 
-            Backbone.trigger('appular:component:initialized', Appular.components[name]);
+            Backbone.trigger('appular:component:required', Appular.components[name]);
         });
     };
 

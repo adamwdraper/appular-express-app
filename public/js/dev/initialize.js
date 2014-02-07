@@ -14,14 +14,14 @@ define([
     });
 
     // Render all components when app is ready
-    Backbone.on('appular:app:initialized', function () {
+    Backbone.on('appular:app:required', function () {
         Backbone.history.start({
             root: window.location.pathname
         });
     });
 
     // Render all components when app is ready
-    Backbone.on('appular:component:initialized', function (component) {
+    Backbone.on('appular:component:required', function (component) {
         component.render();
     });
 
