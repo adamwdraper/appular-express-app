@@ -6,6 +6,7 @@ define([
     'appular'
 ], function (doc, $, _, Backbone, Appular) {
     var app = $('body').data('appularApp'),
+        options = {`},
         $components = $('[data-appular-component]');
 
     // render app when all params are loaded
@@ -53,7 +54,7 @@ define([
     
     // require app
     if (app) {
-        Appular.require.app(app);
+        Appular.require.app(app, options);
     } else {
         throw new Error('Appular : No app found');
     }

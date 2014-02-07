@@ -9,19 +9,24 @@ define([
     '../backbone/backbone'
 ], function (_, Backbone, Collection, Router) {
     Backbone.App = (function(View) {
+        var viewOptions = [
+                'model',
+                'collection',
+                'el',
+                'id',
+                'attributes',
+                'className',
+                'tagName',
+                'events'
+            ];
+
         return View.extend({
-            config: {},
             params: {},
             collection: new Collection(),
             router: {},
-            constructor: function() {
-                // call original constructor
-                View.apply(this, arguments);
-
-                this._loadCollection();
-            },
-            _loadCollection: function () {
-                var models = [];
+            constructor: function(options) {
+                var models = [],
+                    paramValues = _.omit(options, viewOptions);
                 
                 // add any params to collection
                 _.each(this.params, function (value, key) {
@@ -37,9 +42,9 @@ define([
                         model = _.extend(model, value);
                     }
 
-                    // set the value of any param by data attribute on body
-                    if (this.$el.data(key)) {
-                        model.value = this.$el.data(key);
+                    // set the value of any options
+                    if (paramValues[key]) {
+                        model.value = paramValues[key];
                     }
 
                     models.push(model);
@@ -61,6 +66,9 @@ define([
                 this.router = new Router({
                     collection: this.collection
                 });
+
+                // call original constructor
+                View.apply(this, arguments);
             },
             /**
             @function get - shortcut to get params's value
