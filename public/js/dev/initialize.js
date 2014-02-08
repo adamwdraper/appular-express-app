@@ -6,7 +6,7 @@ define([
     'appular'
 ], function (doc, $, _, Backbone, Appular) {
     var app = $('body').data('appularApp'),
-        options = {`},
+        options = {},
         $components = $('[data-appular-component]');
 
     // render app when all params are loaded
