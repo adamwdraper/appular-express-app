@@ -6,7 +6,8 @@ requirejs.config({
     baseUrl: '/js/dev',
     config: {
         'appular': {
-            env: 'develop'
+            env: 'develop',
+            useFixtures: true
         }
     },
     paths: {
@@ -28,10 +29,18 @@ requirejs.config({
         'template': 'libraries/require/plugins/template',
         'text': 'libraries/require/plugins/text'
     },
+    shim: {
+        mocha: {
+             exports: 'mocha'
+        },
+        chai: {
+             exports: 'chai'
+        }
+    },
     deps: [
         'modernizr',
         'jqueryFunctions',
         'backboneStickit',
-        'initialize'
+        'test'
     ]
 });

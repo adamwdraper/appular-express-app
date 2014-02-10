@@ -15,10 +15,10 @@ app.get('/', function (req, res) {
     });
 });
 
-app.get('/tests/:app', function (req, res) {
-    res.render('tests/apps/' + req.params.app, {
+app.get('/tests', function (req, res) {
+    res.render('tests/apps/default', {
         environment: process.env.NODE_ENV,
-        app: req.params.app
+        app: 'default'
     });
 });
 
