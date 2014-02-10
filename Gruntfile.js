@@ -111,6 +111,7 @@ module.exports = function(grunt) {
                 undef: true,
                 globals: {
                     define: false,
+                    require: false,
                     requirejs: false
                 },
                 strict: false

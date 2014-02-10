@@ -9,7 +9,6 @@ html(lang="en-US")
             link(rel='stylesheet', href='/css/mocha.css')
 
     body
-        //- (data-appular-app="#{app}")
 
         #mocha
 
@@ -17,7 +16,7 @@ html(lang="en-US")
 
         block scripts
             - if (environment === 'development')
-                script(src="/js/dev/libraries/require/require-2.1.10.js")
                 script(src="/js/dev/libraries/require/config-test.js")
+                script(src="/js/dev/libraries/require/require-2.1.10.js", data-main="test")
             - else
                 script(src="/js/build/appular.js")

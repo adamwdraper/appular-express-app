@@ -5,7 +5,10 @@ define([
     'backbone',
     'appular',
     'mocha',
-    'chai'
+    'chai',
+    'modernizr',
+    'jqueryFunctions',
+    'backboneStickit'
 ], function (doc, $, _, Backbone, Appular, mocha, chai) {
     mocha.setup('bdd');
 
@@ -22,8 +25,7 @@ define([
 
     if (window.mochaPhantomJS) {
         mochaPhantomJS.run();
-    }
-    else {
+    } else {
         mocha.run();
     }
 });
