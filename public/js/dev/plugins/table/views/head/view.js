@@ -5,7 +5,7 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'template!./template.html',
+    'template!./template.html'
 ], function($, _, Backbone, template) {
     var View = Backbone.View.extend({
             template: template,

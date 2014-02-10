@@ -76,9 +76,12 @@ module.exports = function(grunt) {
         },
         mocha: {
             test: {
-                src: [
-                    'test/app/default'
-                ]
+                options: {
+                    urls: [
+                        'http://127.0.0.1:5000/test/appular'
+                    ],
+                    run: false,
+                }
             }
         },
         docs: {
@@ -201,13 +204,18 @@ module.exports = function(grunt) {
         'develop'
     ]);
     
-    grunt.registerTask('develop', 'Builds starts server in development environment, and watches NODE.js and SASS files for changes.', [
+    grunt.registerTask('develop', 'Starts server in development environment, and watches NODE.js and SASS files for changes.', [
         'sass:dev',
         'express:development',
         'watch'
     ]);
     
-    grunt.registerTask('production', 'Builds starts server in development environment, and watches NODE.js files for changes.', [
+    grunt.registerTask('test', 'Runs tests', [
+        'express:development',
+        'mocha'
+    ]);
+    
+    grunt.registerTask('production', 'Builds starts server in production environment, and watches NODE.js files for changes.', [
         'build',
         'express:production',
         'watch'
@@ -215,6 +223,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('build', 'Builds hints and builds production JS, builds JS documentation json, builds production CSS', [
         'jshint',
+        'test',
         'docs:build',
         'requirejs',
         'sass:build'
