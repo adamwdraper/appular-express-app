@@ -21,7 +21,6 @@ html(lang="en-US")
 
         block scripts
             - if (environment === 'development')
-                script(src="/js/dev/libraries/require/config.js")
-                script(src="/js/dev/libraries/require/require-2.1.10.js", data-main="initialize")
+                script(src="/js/dev/libraries/require/require-2.1.10.js", data-main="/js/dev/libraries/require/config")
             - else
                 script(src="/js/build/appular.js")

@@ -3,10 +3,7 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'appular',
-    'modernizr',
-    'jqueryFunctions',
-    'backboneStickit'
+    'appular'
 ], function (doc, $, _, Backbone, Appular) {
     var app = $('body').data('appularApp'),
         options = {},
