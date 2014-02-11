@@ -2,6 +2,7 @@
  * Prod Config Settings
  */
 requirejs.config({
+    waitSeconds: 15,
     baseUrl: '/js/build',
     paths: {
         'jquery': [
@@ -20,7 +21,11 @@ requirejs.config({
     deps: [
         'modernizr',
         'jqueryFunctions',
-        'backboneStickit',
-        'appular'
-    ]
+        'backboneStickit'
+    ],
+    callback: function () {
+        require([
+            'initialize'
+        ]);
+    }
 });

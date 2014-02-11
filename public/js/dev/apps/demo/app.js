@@ -9,19 +9,28 @@ define([
     var App = Backbone.App.extend({
             params: {
                 keyword: {
-                    value: 'tacos'
+                    value: 'tacos',
+                    alias: 'k'
                 },
                 location: {
-                    value: 'San Francisco, CA'
+                    value: 'San Francisco, CA',
+                    alias: 'l'
                 },
                 sortBy: {
-                    value: ''
+                    value: '',
+                    alias: 's'
                 },
                 sortOrder: {
-                    value: 'asc'
+                    value: 'asc',
+                    alias: 'o'
+                },
+                sortIndex: {
+                    value: '',
+                    alias: 'i'
                 },
                 page: {
-                    value: 1
+                    value: 1,
+                    alias: 'p'
                 },
                 count: {
                     value: 10,
@@ -30,7 +39,7 @@ define([
             },
             initialize: function () {},
             render: function () {
-                Backbone.trigger('app:initialized');
+                Backbone.trigger('appular:app:rendered');
 
                 return this;
             }

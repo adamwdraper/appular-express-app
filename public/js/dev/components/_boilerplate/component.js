@@ -1,6 +1,7 @@
 /**
- * @appular plugin
+ * @appular boilerplate
  */
+
 define([
     'jquery',
     'underscore',
@@ -9,13 +10,11 @@ define([
 ], function ($, _, Backbone, template) {
     var View = Backbone.View.extend({
             template: template,
-            bindings: {},
-            triggers: {},
             events: {},
             initialize: function () {},
             render: function () {
                 this.$el.html(this.template());
-                
+
                 return this;
             }
         });

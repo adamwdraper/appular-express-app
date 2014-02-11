@@ -12,11 +12,13 @@
 ], function ($, _, Backbone, template, Venues, Tip) {
     var View = Backbone.View.extend({
             template: template,
-            events: {},
-            triggers: {
-                'render': 'updateVenues'
-            },
             collection: new Venues(),
+            events: {},
+            listeners: {
+                'render': 'updateVenues',
+                'collection sync': 'renderVenues',
+                'app change:keyword change:location': 'updateVenues'
+            },
             options: {
                 lls: {
                     'San Francisco, CA': '37.7,-122.4',
@@ -25,10 +27,7 @@
                     'Austin, TX': '30.2,-97.7'
                 }
             },
-            initialize: function() {
-                this.listenTo(this.app, 'change:keyword change:location', this.updateVenues);
-                this.listenTo(this.collection, 'sync', this.renderVenues);
-            },
+            initialize: function() {},
             render: function() {
                 this.$el.html(this.template());
 

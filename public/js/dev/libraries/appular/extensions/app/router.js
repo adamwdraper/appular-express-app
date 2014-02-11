@@ -2,13 +2,23 @@
 define([
     'jquery',
     'underscore',
-    'backbone',
-    './config'
-], function($, _, Backbone, config){
+    'backbone'
+], function($, _, Backbone){
     var Router = Backbone.Router.extend({
-            initialize: function () {
+            settings: {
+                hash: {
+                    useBang: false,
+                    paramSeparator: '&',
+                    keyValSeparator: '=',
+                    arraySeparator: '|'
+                },
+                // where the router will read the initial data from.  options: hash or query
+                loadFrom: 'hash'
+            },
+            initialize: function (options) {
                 // Update the url hash whenever a param changes
-                this._params.on('change', function (param) {
+                this.collection = options.collection;
+                this.collection.on('change', function (param) {
                     this.navigateHash(!param.get('addToHistory'));
                 }, this);
             },
@@ -19,26 +29,26 @@ define([
                 var params = [];
 
                 if (data) {
-                    if (config.hash.useBang && data.charAt(0) === '!') {
+                    if (this.settings.hash.useBang && data.charAt(0) === '!') {
                         data = data.substr(1);
                     }
 
-                    _.each(data.split(config.hash.paramSeparator), function (param) {
-                        var id = param.split(config.hash.keyValSeparator)[0],
-                            value = param.split(config.hash.keyValSeparator)[1];
+                    _.each(data.split(this.settings.hash.paramSeparator), function (param) {
+                        var id = param.split(this.settings.hash.keyValSeparator)[0],
+                            value = param.split(this.settings.hash.keyValSeparator)[1];
 
-                        if (value.indexOf(config.hash.arraySeparator) !== -1) {
-                            value = value.split(config.hash.arraySeparator);
+                        if (value.indexOf(this.settings.hash.arraySeparator) !== -1) {
+                            value = value.split(this.settings.hash.arraySeparator);
                         }
 
                         params.push({
                             id: id,
                             value: value
                         });
-                    });
+                    }, this);
                 }
                 
-                this._params.load(params);
+                this.collection.load(params);
             },
             navigateHash: function (replace) {
                 // Generate and navigate to new hash
@@ -46,29 +56,29 @@ define([
                     hash = '',
                     value;
 
-                this._params.each(function (model) {
+                this.collection.each(function (model) {
                     if (model.get('addToUrl')) {
                         // get value
                         value = model.get('value');
 
                         // join arrays for url
                         if (_.isArray(value)) {
-                            value = value.join(config.hash.arraySeparator);
+                            value = value.join(this.settings.hash.arraySeparator);
                         }
 
                         if (value) {
                             // use alias if it is defined
-                            params.push((model.get('alias') ? model.get('alias') : model.get('id')) + config.hash.keyValSeparator + value);
+                            params.push((model.get('alias') ? model.get('alias') : model.get('id')) + this.settings.hash.keyValSeparator + value);
                         }
                     }
                 }, this);
 
                 // Add bang to hash if enabled
-                if (config.hash.useBang) {
+                if (this.settings.hash.useBang) {
                     hash += '!';
                 }
                 if (!_.isEmpty(params)){
-                    hash += params.join(config.hash.paramSeparator);
+                    hash += params.join(this.settings.hash.paramSeparator);
                 }
 
                 this.navigate(hash, {

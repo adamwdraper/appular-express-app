@@ -10,15 +10,18 @@
     'template!./templates/venue.html',
     'template!./templates/address.html',
     './collection',
-    'plugins/table/view',
-    'plugins/pagination/view'
+    'plugins/table/plugin',
+    'plugins/pagination/plugin'
 ], function ($, _, Backbone, template, venueTemplate, addressTemplate, Venues, Table, Pagination) {
     var View = Backbone.View.extend({
             template: template,
+            collection: new Venues(),
             events: {},
-            initialize: function() {
-                this.listenTo(this.app, 'change:keyword change:location', this.updateVenues);
+            listeners: {
+                'collection sync': 'renderVenues',
+                'app change:keyword change:location': 'updateVenues'
             },
+            initialize: function() {},
             render: function() {
                 this.$el.html(this.template());
 
@@ -28,18 +31,15 @@
                         [
                             {
                                 text: 'Name',
-                                sortBy: 'name',
-                                isSortable: true
+                                sortBy: 'name'
                             },
                             {
                                 text: 'Price',
-                                sortBy: 'price',
-                                isSortable: true
+                                sortBy: 'price'
                             },
                             {
                                 text: 'Status',
-                                sortBy: 'status',
-                                isSortable: true
+                                sortBy: 'status'
                             },
                             {
                                 text: 'Address'
@@ -63,9 +63,6 @@
                     scrollTopSelector: '#recommended-table'
                 }).render();
                 this.listenTo(this.plugins.pagination, 'change:page', this.setPage);
-
-                this.collection = new Venues();
-                this.listenTo(this.collection, 'sync', this.renderVenues);
 
                 this.updateVenues();
 

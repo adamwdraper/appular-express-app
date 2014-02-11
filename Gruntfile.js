@@ -74,6 +74,16 @@ module.exports = function(grunt) {
                 }
             }
         },
+        mocha: {
+            test: {
+                options: {
+                    urls: [
+                        'http://127.0.0.1:5000/test/appular'
+                    ],
+                    run: false,
+                }
+            }
+        },
         docs: {
             build: {
                 options: {
@@ -104,6 +114,7 @@ module.exports = function(grunt) {
                 undef: true,
                 globals: {
                     define: false,
+                    require: false,
                     requirejs: false
                 },
                 strict: false
@@ -115,7 +126,7 @@ module.exports = function(grunt) {
                     baseUrl: 'public/js/dev',
                     dir: 'public/js/build',
                     paths: {
-                        'appular': 'libraries/appular/appular-3.0.0',
+                        'appular': 'libraries/appular/appular-3.0.1',
                         'modernizr': 'libraries/modernizr/modernizr-2.6.3',
                         'jquery': 'libraries/jquery/jquery-2.1.0',
                         'jqueryFunctions': 'libraries/jquery/extensions/functions',
@@ -132,11 +143,11 @@ module.exports = function(grunt) {
                     },
                     modules: [
                         {
-                            name: './appular',
+                            name: 'initialize',
                             include: [
                                 'modernizr',
                                 'libraries/require/require-2.1.10',
-                                'libraries/require/config-build',
+                                'libraries/require/configs/build',
                                 'appular',
                                 'jquery',
                                 'jqueryFunctions',
@@ -144,7 +155,8 @@ module.exports = function(grunt) {
                                 'backbone',
                                 'backboneStickit',
                                 'domReady',
-                                'text'
+                                'text',
+                                'initialize'
                             ]
                         }
                     ].concat(appular.apps, appular.components),
@@ -193,20 +205,25 @@ module.exports = function(grunt) {
         'develop'
     ]);
     
-    grunt.registerTask('develop', 'Builds starts server in development environment, and watches NODE.js and SASS files for changes.', [
+    grunt.registerTask('develop', 'Starts server in development environment, and watches NODE.js and SASS files for changes.', [
         'sass:dev',
         'express:development',
         'watch'
     ]);
     
-    grunt.registerTask('production', 'Builds starts server in development environment, and watches NODE.js files for changes.', [
-        'build',
+    grunt.registerTask('test', 'Runs tests', [
+        'express:development',
+        'mocha'
+    ]);
+    
+    grunt.registerTask('production', 'Starts server in production environment.', [
         'express:production',
         'watch'
     ]);
 
     grunt.registerTask('build', 'Builds hints and builds production JS, builds JS documentation json, builds production CSS', [
         'jshint',
+        'test',
         'docs:build',
         'requirejs',
         'sass:build'

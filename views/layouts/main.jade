@@ -1,6 +1,7 @@
 doctype 5
 html(lang="en-US")
     block vars
+        - var app = 'default'
 
     head
         meta(charset="UTF-8")
@@ -20,7 +21,6 @@ html(lang="en-US")
 
         block scripts
             - if (environment === 'development')
-                script(src="/js/dev/libraries/require/require-2.1.10.js")
-                script(src="/js/dev/libraries/require/config.js")
+                script(src="/js/dev/libraries/require/require-2.1.10.js", data-main="/js/dev/libraries/require/configs/dev")
             - else
-                script(src="/js/build/appular.js")
+                script(src="/js/build/initialize.js")

@@ -10,7 +10,7 @@ requirejs.config({
         }
     },
     paths: {
-        'appular': 'libraries/appular/appular-3.0.0',
+        'appular': 'libraries/appular/appular-3.0.1',
         'modernizr': 'libraries/modernizr/modernizr-2.6.3',
         'jquery': 'libraries/jquery/jquery-2.1.0',
         'jqueryFunctions': 'libraries/jquery/extensions/functions',
@@ -28,7 +28,11 @@ requirejs.config({
     deps: [
         'modernizr',
         'jqueryFunctions',
-        'backboneStickit',
-        'appular'
-    ]
+        'backboneStickit'
+    ],
+    callback: function () {
+        require([
+            'initialize'
+        ]);
+    }
 });

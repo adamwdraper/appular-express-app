@@ -8,6 +8,13 @@
             "define": "apps/_boilerplate/app"
         },
         {
+            "path": "apps/default/app.js",
+            "name": "default",
+            "version": "",
+            "description": "",
+            "define": "apps/default/app"
+        },
+        {
             "path": "apps/docs/app.js",
             "name": "docs",
             "version": "",
@@ -50,6 +57,20 @@
             "version": "",
             "description": "",
             "define": "components/tips-venues/component"
+        },
+        {
+            "name": "tips-venues",
+            "extras": {
+                "views": [
+                    {
+                        "path": "components/tips-venues/views/tip/view.js",
+                        "name": "boilerplate",
+                        "version": "",
+                        "description": "",
+                        "define": "components/tips-venues/views/tip/view"
+                    }
+                ]
+            }
         }
     ],
     "libraries": [
@@ -77,22 +98,17 @@
                         ]
                     },
                     {
-                        "path": "libraries/appular/extensions/module/module.js",
-                        "name": "module",
+                        "path": "libraries/appular/extensions/backbone/backbone.js",
+                        "name": "app",
                         "version": "",
                         "description": "",
-                        "define": "libraries/appular/extensions/module/module"
+                        "define": "libraries/appular/extensions/backbone/backbone"
                     }
                 ]
             }
         },
         {
-            "path": "libraries/backbone/backbone-1.1.0.js",
             "name": "backbone",
-            "version": "v1.0.0",
-            "description": "",
-            "link": "http://documentcloud.github.io/backbone/",
-            "define": "backbone",
             "extras": {
                 "extensions": [
                     {
@@ -107,7 +123,7 @@
             }
         },
         {
-            "name": "jQuery",
+            "name": "jquery",
             "extras": {
                 "extensions": [
                     {
@@ -139,12 +155,7 @@
                         ]
                     }
                 ]
-            },
-            "path": "libraries/jquery/jquery-1.10.2.js",
-            "version": "v1.10.2",
-            "description": "",
-            "link": "http://jquery.com/",
-            "define": "jquery"
+            }
         },
         {
             "path": "libraries/moment/moment-2.4.0.js",
@@ -188,26 +199,13 @@
                         "define": "text!"
                     }
                 ]
-            },
-            "path": "libraries/require/require-2.1.9.js",
-            "version": "v2.1.9",
-            "description": "",
-            "link": "http://requirejs.com/",
-            "define": "require"
-        },
-        {
-            "path": "libraries/underscore/underscore-1.5.0.js",
-            "name": "underscore",
-            "version": "v1.5.0",
-            "description": "",
-            "link": "http://documentcloud.github.io/underscore/",
-            "define": "underscore"
+            }
         }
     ],
     "plugins": [
         {
             "path": "plugins/_boilerplate/plugin.js",
-            "name": "boilerplate",
+            "name": "plugin",
             "version": "",
             "description": "",
             "define": "plugins/_boilerplate/plugin"
@@ -224,7 +222,25 @@
             "name": "table",
             "version": "",
             "description": "",
-            "define": "plugins/table/plugin"
+            "define": "plugins/table/plugin",
+            "extras": {
+                "views": [
+                    {
+                        "path": "plugins/table/views/body/view.js",
+                        "name": "table",
+                        "version": "",
+                        "description": "",
+                        "define": "plugins/table/views/body/view"
+                    },
+                    {
+                        "path": "plugins/table/views/head/view.js",
+                        "name": "table",
+                        "version": "",
+                        "description": "",
+                        "define": "plugins/table/views/head/view"
+                    }
+                ]
+            }
         }
     ]
 }

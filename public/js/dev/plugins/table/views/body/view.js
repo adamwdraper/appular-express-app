@@ -5,47 +5,32 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    './model',
-    'template!./template.html',
-    'template!./templates/row.html'
-], function($, _, Backbone, Model, template, rowTemplate) {
+    'template!./template.html'
+], function($, _, Backbone, template) {
     var View = Backbone.View.extend({
             template: template,
-            triggers: {
+            listeners: {
+                'sorted': 'renderRows',
                 'change:body change:sortBy change:sortOrder': 'sort',
                 'change:page': 'renderRows'
             },
-            events: {
-                'click [data-sort-by]': 'setSort'
-            },
-            model: new Model(),
+            events: {},
             initialize: function () {
-                _.bindAll(this, 'setSort', 'renderRows');
+                _.bindAll(this, 'renderRows');
             },
             render: function () {
-                this.$el.html(this.template({
-                    head: this.get('head')
-                }));
-
-                this.$tbody = this.$el.find('tbody');
+                if (this.get('body').length) {
+                    this.trigger('change:body');
+                }
 
                 return this;
-            },
-            setSort: function (event) {
-                var sortBy = $(event.currentTarget).data('sortBy'),
-                    sortOrder = sortBy === this.get('sortBy') && this.get('sortOrder') === 'asc' ? 'desc' : 'asc';
-
-                this.set({
-                    sortBy: sortBy,
-                    sortOrder: sortOrder
-                });
             },
             sort: function () {
                 var sortIndex,
                     rows;
 
-                if (this.get('sortBy')) {
-                    sortIndex = this.$el.find('th[data-sort-by=' + this.get('sortBy') + ']').data('index');
+                if (this.get('sortBy') && this.get('sortIndex')) {
+                    sortIndex = this.get('sortIndex');
                     rows = _.sortBy(this.get('body'), function (row) {
                         return _.isArray(row) ? row[sortIndex].value : row.cells[sortIndex].value;
                     }, this);
@@ -59,7 +44,7 @@ define([
                     });
                 }
 
-                this.renderRows();
+                this.trigger('sorted');
             },
             renderRows: function () {
                 var html = '',
@@ -78,13 +63,13 @@ define([
                 for (i; i < count; i++) {
                     row = rows[firstRow + i];
 
-                    html += rowTemplate({
+                    html += template({
                         classes: row.classes || [],
                         cells: _.isArray(row) ? row : row.cells
                     });
                 }
 
-                this.$tbody.html(html);
+                this.$el.html(html);
             }
         });
 
