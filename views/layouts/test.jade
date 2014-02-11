@@ -1,0 +1,20 @@
+doctype 5
+html(lang="en-US")
+
+    head
+        meta(charset="UTF-8")
+        title Appular Project
+
+        block head
+            link(rel='stylesheet', href='/css/mocha.css')
+
+    body
+
+        #mocha
+
+        block content
+
+        block scripts
+            script(src="/js/dev/libraries/mocha/mocha-1.17.1.js")
+            script(src="/js/dev/libraries/chai/chai-1.9.0.js")
+            script(src="/js/dev/libraries/require/require-2.1.10.js", data-main="/js/dev/libraries/require/configs/test")

@@ -2,7 +2,7 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    './param',
+    './model',
     'utilities/cookies/utility'
 ], function ($, _, Backbone, Param, cookies) {
     var Collection = Backbone.Collection.extend({
@@ -52,7 +52,7 @@ define([
                 }, this);
 
                 // all params should be loaded
-                Backbone.trigger('params:initialized');
+                Backbone.trigger('appular:params:initialized');
             },
             /**
             @function getValue - shortcut to get model's value

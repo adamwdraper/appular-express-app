@@ -1,0 +1,7 @@
+<% _.each(rows, function (row) { %>
+<tr>
+    <% _.each(row, function (column, index) { %>
+    <th <% if (column.sortBy) { %>class="sortable" data-sort-by="<%= column.sortBy %>" data-index="<%= index %>"<% } %> <% if (column.span) { %>colspan="<%= column.span %>"<% } %>><%= column.text %></th>
+    <% }); %>
+</tr>
+<% }); %>

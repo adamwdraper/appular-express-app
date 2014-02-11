@@ -10,7 +10,7 @@ define([
             params: {},
             initialize: function () {},
             render: function () {
-                Backbone.trigger('app:initialized');
+                Backbone.trigger('appular:app:initialized');
 
                 return this;
             }

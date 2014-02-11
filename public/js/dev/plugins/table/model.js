@@ -9,6 +9,7 @@ define([
                 head: [],
                 sortBy: '',
                 sortOrder: 'asc',
+                sortIndex: '',
                 page: 1,
                 count: 25
             }

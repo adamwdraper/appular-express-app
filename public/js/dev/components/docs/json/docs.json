@@ -1,27 +1,34 @@
 {
     "apps": [
         {
-            "path": "apps/_boilerplate/view.js",
+            "path": "apps/_boilerplate/app.js",
             "name": "boilerplate",
             "version": "",
             "description": "",
-            "define": "apps/_boilerplate/view"
+            "define": "apps/_boilerplate/app"
         },
         {
-            "path": "apps/docs/view.js",
+            "path": "apps/default/app.js",
+            "name": "default",
+            "version": "",
+            "description": "",
+            "define": "apps/default/app"
+        },
+        {
+            "path": "apps/docs/app.js",
             "name": "docs",
             "version": "",
             "description": "",
-            "define": "apps/docs/view"
+            "define": "apps/docs/app"
         }
     ],
     "components": [
         {
-            "path": "components/_boilerplate/view.js",
+            "path": "components/_boilerplate/component.js",
             "name": "boilerplate",
             "version": "",
             "description": "",
-            "define": "components/_boilerplate/view"
+            "define": "components/_boilerplate/component"
         },
         {
             "path": "components/docs/component.js",
@@ -31,25 +38,25 @@
             "define": "components/docs/component"
         },
         {
-            "path": "components/filter/view.js",
+            "path": "components/filter/component.js",
             "name": "filter",
             "version": "",
             "description": "",
-            "define": "components/filter/view"
+            "define": "components/filter/component"
         },
         {
-            "path": "components/recommended-venues/view.js",
+            "path": "components/recommended-venues/component.js",
             "name": "recommendedVenues",
             "version": "v0.0.1",
             "description": "Uses keyword and location to get recommended venues from foursquare api",
-            "define": "components/recommended-venues/view"
+            "define": "components/recommended-venues/component"
         },
         {
-            "path": "components/tips-venues/view.js",
+            "path": "components/tips-venues/component.js",
             "name": "demo",
             "version": "",
             "description": "",
-            "define": "components/tips-venues/view"
+            "define": "components/tips-venues/component"
         },
         {
             "name": "tips-venues",
@@ -89,6 +96,13 @@
                                 "description": "shortcut to set param's value"
                             }
                         ]
+                    },
+                    {
+                        "path": "libraries/appular/extensions/backbone/backbone.js",
+                        "name": "app",
+                        "version": "",
+                        "description": "",
+                        "define": "libraries/appular/extensions/backbone/backbone"
                     }
                 ]
             }
@@ -190,25 +204,43 @@
     ],
     "plugins": [
         {
-            "path": "plugins/_boilerplate/view.js",
+            "path": "plugins/_boilerplate/plugin.js",
             "name": "plugin",
             "version": "",
             "description": "",
-            "define": "plugins/_boilerplate/view"
+            "define": "plugins/_boilerplate/plugin"
         },
         {
-            "path": "plugins/pagination/view.js",
+            "path": "plugins/pagination/plugin.js",
             "name": "pagination",
             "version": "",
             "description": "",
-            "define": "plugins/pagination/view"
+            "define": "plugins/pagination/plugin"
         },
         {
-            "path": "plugins/table/view.js",
+            "path": "plugins/table/plugin.js",
             "name": "table",
             "version": "",
             "description": "",
-            "define": "plugins/table/view"
+            "define": "plugins/table/plugin",
+            "extras": {
+                "views": [
+                    {
+                        "path": "plugins/table/views/body/view.js",
+                        "name": "table",
+                        "version": "",
+                        "description": "",
+                        "define": "plugins/table/views/body/view"
+                    },
+                    {
+                        "path": "plugins/table/views/head/view.js",
+                        "name": "table",
+                        "version": "",
+                        "description": "",
+                        "define": "plugins/table/views/head/view"
+                    }
+                ]
+            }
         }
     ]
 }

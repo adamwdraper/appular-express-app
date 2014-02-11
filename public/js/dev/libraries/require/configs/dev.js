@@ -28,7 +28,11 @@ requirejs.config({
     deps: [
         'modernizr',
         'jqueryFunctions',
-        'backboneStickit',
-        'appular'
-    ]
+        'backboneStickit'
+    ],
+    callback: function () {
+        require([
+            'initialize'
+        ]);
+    }
 });

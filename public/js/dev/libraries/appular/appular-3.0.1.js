@@ -3,242 +3,98 @@
 // author : Adam Draper
 // license : MIT
 // https://github.com/adamwdraper/Appular
+
 define([
     'module',
-    'domReady!',
     'jquery',
     'underscore',
     'backbone',
-    'libraries/appular/extensions/params/params',
-    'libraries/appular/extensions/router/router',
+    'libraries/appular/extensions/backbone/backbone',
     'libraries/appular/extensions/app/app'
-], function (module, doc, $, _, Backbone, Params, Router) {
-    var Appular = {
-            version: '3.0.1'
-        },
-        app,
-        params = new Params(),
-        $components = $('[data-appular-component]'),
-        log = function () {
-            var colors = {
-                    Library: 'FC913A',
-                    App: '00A8C6',
-                    Component: '40C0CB',
-                    Event: '8FBE00'
-                },
-                info = Array.prototype.slice.call(arguments);
+], function (module, $, _, Backbone) {
+    var Appular = {};
 
-            if (module.config().env === 'develop') {
-                console.log('%c' + info.join(' : '), 'color: #' + colors[info[0]]);
-            }
-        },
-        requireApp = function () {
-            var $element = $('body'),
-                name = $element.data('appularApp'),
-                path = 'apps/' + name + '/view';
+    Appular.version = '3.0.1';
 
-            if (name) {
-                require([
-                    path
-                ], function (App) {
-                    var models = [],
-                        options = {
-                            el: $element
-                        };
+    Appular.app = '';
 
-                    log('App', name, path);
+    Appular.components = {};
 
-                    app = new App(options);
-                    
-                    // add any params to collection
-                    _.each(app.params, function (value, key) {
-                        var model = {
-                                id: key
-                            };
+    Appular.config = module.config();
 
-                        if (_.isString(value)) {
-                            model.value = value;
-                        }
+    Appular.log = function () {
+        var colors = {
+                Library: 'FC913A',
+                App: '00A8C6',
+                Component: '40C0CB',
+                Event: '8FBE00'
+            },
+            info = Array.prototype.slice.call(arguments);
 
-                        if (_.isObject(value)) {
-                            model = _.extend(model, value);
-                        }
+        if (module.config().env === 'develop') {
+            console.log('%c' + info.join(' : '), 'color: #' + colors[info[0]]);
+        }
+    };
 
-                        // set the value of any param by data attribute on body
-                        if ($element.data(key)) {
-                            model.value = $element.data(key);
-                        }
+    Appular.require = {};
 
-                        models.push(model);
-                    });
+    Appular.require.app = function (name, options) {
+        var path = 'apps/' + name + '/app';
 
-                    params.add(models);
-                    app._params = params;
-                    app.config = module.config();
+        options = options || {};
 
-                    // pass through params collection changes
-                    app._params.on('all', function () {
-                        var args = Array.prototype.slice.call(arguments),
-                            event = args.shift();
-                        if (event !== 'change:value') {
-                            this.trigger(event, args);
-                        }
-                    }, app);
+        _.extend(options, {
+            el: $('body')
+        });
 
+        require([
+            path
+        ], function (App) {
+            // log load in dev
+            Appular.log('App', name, path);
 
-                    // create router and add params collection
-                    _.extend(Router.prototype, {
-                        _params: params
-                    });
-                    app.router = new Router();
+            Appular.app = new App(options);
 
-                    Backbone.history.start({
-                        root: window.location.pathname
-                    });
-                });
-            } else {
-                throw new Error('Appular : No app found');
-            }
-        },
-        renderComponents = function () {
-            _.each($components, function (element) {
-                var $element = $(element),
-                    name = $element.data('appularComponent'),
-                    path = 'components/' + name + '/view',
-                    options = {
-                        el: $element
-                    };
+            Backbone.trigger('appular:app:required', Appular.app);
+        });
+    };
+    
+    Appular.require.component = function (name, options) {
+        var path = 'components/' + name + '/component';
 
-                // add any data attributes to the components options
-                _.each($element.data(), function (value, key) {
-                    if (key !== 'appularComponent') {
-                        options[key] = value;
-                    }
-                });
-                
-                require([
-                    path
-                ], function (Component) {
-                    var component;
+        options = options || {};
 
-                    log('Component', name, path);
+        require([
+            path
+        ], function (Component) {
+            Appular.log('Component', name, path);
 
-                    _.extend(Component.prototype, {
-                        app: app,
-                        data: {
-                            path: path,
-                            name: name
-                        }
-                    });
-
-                    component = new Component(options).render();
-                });
+            _.extend(Component.prototype, {
+                app: Appular.app
             });
-        };
 
+            Appular.components[name] = new Component(options);
 
-    // add configs and custom functions to models, views, and collections
-    Backbone.Model = (function(Model) {
-        return Model.extend({
-            config: module.config(),
-            fetch: function (options) {
-                if (this.fixture && this.config.useFixtures) {
-                    options.url = this.fixture;
-                }
-
-                return Model.prototype.fetch.apply(this, arguments);
-            }
+            Backbone.trigger('appular:component:required', Appular.components[name]);
         });
-    })(Backbone.Model);
+    };
 
-    Backbone.Collection = (function(Collection) {
-        return Collection.extend({
-            config: module.config(),
-            fetch: function (options) {
-                if (this.fixture && this.config.useFixtures) {
-                    options.url = this.fixture;
-                }
-
-                return Collection.prototype.fetch.apply(this, arguments);
-            }
-        });
-    })(Backbone.Collection);
-
-    Backbone.View = (function(View) {
-        var viewOptions = [
-                'model',
-                'collection',
-                'el',
-                'id',
-                'attributes',
-                'className',
-                'tagName',
-                'events'
-            ];
-
-        return View.extend({
-            config: module.config(),
-            data: {},
-            views: {},
-            plugins: {},
-            listeners: {},
-            constructor: function(options) {
-                var modelAttributes = _.omit(options, viewOptions);
-
-                _.each(this.listeners, function (value, key) {
-                    var events = key.split(' '),
-                        property,
-                        callback = _.isFunction(value) ? value : this[value];
-
-                    // find out if we are listening to app, model, or collection so that we can use listenTo
-                    property = events[0] === 'app' || events[0] === 'model' || events[0] === 'collection' ? events.shift() : null;
-
-                    // add appropriate listening action
-                    if (property) {
-                        this.listenTo(this[property], events.join(' '), callback);
-                    } else {
-                        this.on(events.join(' '), callback);
-                    }
-                }, this);
-
-                if (this.model) {
-                    this.model.set(modelAttributes, {
-                        silent: true
-                    });
-                } else {
-                    // create new model here
-                    this.model = new Backbone.Model(modelAttributes);
-                }
-
-                this.listenTo(this.model, 'all', function () {
-                    this.trigger.apply(this, arguments);
-                });
-                
-                View.apply(this, arguments);
-            },
-            set: function () {
-                return this.model.set.apply(this.model, arguments);
-            },
-            get: function () {
-                return this.model.get.apply(this.model, arguments);
-            }
-        });
-    })(Backbone.View);
-
-
-    // Render App when all params are loaded
-    Backbone.on('params:initialized', function () {
-        app.render();
+    // add config to backbone objects
+    _.extend(Backbone.App.prototype, {
+        config: Appular.config
     });
 
-    // Render all components when app is ready
-    Backbone.on('app:initialized', renderComponents);
+    _.extend(Backbone.View.prototype, {
+        config: Appular.config
+    });
 
-    log('Library', 'Appular', 'v' + Appular.version);
-    log('Library', 'jQuery', 'v' + $().jquery);
-    log('Library', 'Backbone', 'v' + Backbone.VERSION);
-    log('Library', 'Underscore', 'v' + _.VERSION);
+    _.extend(Backbone.Collection.prototype, {
+        config: Appular.config
+    });
 
-    // Get this party started
-    requireApp();
+    _.extend(Backbone.Model.prototype, {
+        config: Appular.config
+    });
+
+    return Appular;
 });

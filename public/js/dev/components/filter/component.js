@@ -7,7 +7,7 @@
     'underscore',
     'backbone',
     'template!./template.html',
-    'plugins/select/view'
+    'plugins/select/plugin'
 ], function ($, _, Backbone, template, Select) {
     var View = Backbone.View.extend({
             template: template,

@@ -11,7 +11,7 @@ define([
             params: {},
             initialize: function () {},
             render: function () {
-                Backbone.trigger('app:initialized');
+                Backbone.trigger('app:rendered');
 
                 return this;
             }
