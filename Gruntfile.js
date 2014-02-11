@@ -137,7 +137,7 @@ module.exports = function(grunt) {
                     baseUrl: 'public/js/dev',
                     dir: 'public/js/build',
                     paths: {
-                        'appular': 'libraries/appular/appular-3.0.1',
+                        'appular': 'libraries/appular/appular-4.0.0',
                         'modernizr': 'libraries/modernizr/modernizr-2.6.3',
                         'jquery': 'libraries/jquery/jquery-2.1.0',
                         'jqueryFunctions': 'libraries/jquery/extensions/functions',

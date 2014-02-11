@@ -1,5 +1,5 @@
 // Appular
-// version : 3.0.1
+// version : 4.0.0
 // author : Adam Draper
 // license : MIT
 // https://github.com/adamwdraper/Appular
@@ -14,7 +14,7 @@ define([
 ], function (module, $, _, Backbone) {
     var Appular = {};
 
-    Appular.version = '3.0.1';
+    Appular.version = '4.0.0';
 
     Appular.app = '';
 
