@@ -232,7 +232,7 @@ module.exports = function(grunt) {
         'watch'
     ]);
 
-    grunt.registerTask('build', 'Builds hints and builds production JS, builds JS documentation json, builds production CSS', [
+    grunt.registerTask('build', 'Hints and builds production JS, runs tests, builds JS documentation, builds production CSS', [
         'jshint',
         'test',
         'docs:build',
