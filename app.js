@@ -1,6 +1,7 @@
 var express = require('express'),
     app = express(),
-    port = process.env.PORT || 5000;
+    port = process.env.PORT || 5000,
+    fs = require('fs');
 
 // app.use(express.logger());
 app.use(express.compress());
@@ -15,11 +16,48 @@ app.get('/', function (req, res) {
     });
 });
 
-app.get('/test/:type/:name', function (req, res) {
+app.get('/test/:type?/:name?', function (req, res) {
+    var tests = [],
+        appular = {
+            paths: {
+                apps: './public/js/dev/apps',
+                components: './public/js/dev/components',
+                plugins: './public/js/dev/plugins'
+            }
+        };
+
+    if (req.params.type && req.params.name) {
+        tests.push(req.params.type + 's/' + req.params.name + '/tests');
+    } else {
+        // run all tests
+        // add appular app definition for build
+        fs.readdirSync(appular.paths.apps).forEach(function (name) {
+            // add spec file if it exists
+            if (fs.existsSync(appular.paths.apps + '/' + name + '/tests.js')) {
+                tests.push('apps/' + name + '/tests');
+            }
+        });
+        
+        // add appular component definition for build and test files
+        fs.readdirSync(appular.paths.components).forEach(function (name) {
+            // add spec file if it exists
+            if (fs.existsSync(appular.paths.components + '/' + name + '/tests.js')) {
+                tests.push('components/' + name + '/tests');
+            }
+        });
+        
+        // add appular component definition for build and test files
+        fs.readdirSync(appular.paths.plugins).forEach(function (name) {
+            // add spec file if it exists
+            if (fs.existsSync(appular.paths.plugins + '/' + name + '/tests.js')) {
+                tests.push('plugins/' + name + '/tests');
+            }
+        });
+    }
+
     res.render('test', {
         environment: process.env.NODE_ENV,
-        type: req.params.type,
-        name: req.params.name
+        tests: tests
     });
 });
 
