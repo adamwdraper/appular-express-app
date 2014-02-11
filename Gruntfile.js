@@ -8,8 +8,7 @@ module.exports = function(grunt) {
                 plugins: './public/js/dev/plugins'
             },
             apps: [],
-            components: [],
-            tests: []
+            components: []
         };
 
     // add appular app definition for build
@@ -22,11 +21,6 @@ module.exports = function(grunt) {
                 ]
             });
         }
-
-        // add spec file if it exists
-        if (fs.existsSync(appular.paths.apps + '/' + name + '/tests.js')) {
-            appular.tests.push('http://localhost:5000/test/app/' + name);
-        }
     });
     
     // add appular component definition for build and test files
@@ -38,19 +32,6 @@ module.exports = function(grunt) {
                     'appular'
                 ]
             });
-        }
-
-        // add spec file if it exists
-        if (fs.existsSync(appular.paths.components + '/' + name + '/tests.js')) {
-            appular.tests.push('http://localhost:5000/test/component/' + name);
-        }
-    });
-    
-    // add appular component definition for build and test files
-    fs.readdirSync(appular.paths.plugins).forEach(function (name) {
-        // add spec file if it exists
-        if (fs.existsSync(appular.paths.plugins + '/' + name + '/tests.js')) {
-            appular.tests.push('http://localhost:5000/test/plugin/' + name);
         }
     });
 
@@ -102,7 +83,9 @@ module.exports = function(grunt) {
         mocha: {
             test: {
                 options: {
-                    urls: appular.tests,
+                    urls: [
+                        'http://localhost:5000/test'
+                    ],
                     run: false,
                 }
             }
