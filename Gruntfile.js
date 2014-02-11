@@ -87,6 +87,7 @@ module.exports = function(grunt) {
                         'http://localhost:5000/test'
                     ],
                     run: false,
+                    reporter: 'Spec'
                 }
             }
         },
