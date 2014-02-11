@@ -33,7 +33,7 @@ requirejs.config({
     ],
     callback: function () {
         require([
-            'test'
+            'tests'
         ]);
     }
 });
