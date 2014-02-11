@@ -15,17 +15,11 @@ app.get('/', function (req, res) {
     });
 });
 
-
-app.get('/test/appular', function (req, res) {
-    res.render('tests/appular/tests', {
-        environment: process.env.NODE_ENV
-    });
-});
-
-app.get('/tests', function (req, res) {
-    res.render('tests/apps/default', {
+app.get('/test/:type/:name', function (req, res) {
+    res.render('test', {
         environment: process.env.NODE_ENV,
-        app: 'default'
+        type: req.params.type,
+        name: req.params.name
     });
 });
 

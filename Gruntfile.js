@@ -2,13 +2,19 @@ var fs = require('fs');
 
 module.exports = function(grunt) {
     var appular = {
-        apps: [],
-        components: []
-    };
+            paths: {
+                apps: './public/js/dev/apps',
+                components: './public/js/dev/components',
+                plugins: './public/js/dev/plugins'
+            },
+            apps: [],
+            components: [],
+            tests: []
+        };
 
     // add appular app definition for build
-    fs.readdirSync('./public/js/dev/apps').forEach(function (name) {
-        if (name[0] !== '.') {
+    fs.readdirSync(appular.paths.apps).forEach(function (name) {
+        if (name[0] !== '.' && name[0] !== '_') {
             appular.apps.push({
                 name: 'apps/' + name + '/app',
                 exclude: [
@@ -16,16 +22,35 @@ module.exports = function(grunt) {
                 ]
             });
         }
+
+        // add spec file if it exists
+        if (fs.existsSync(appular.paths.apps + '/' + name + '/tests.js')) {
+            appular.tests.push('http://localhost:5000/test/app/' + name);
+        }
     });
-    // add appular component definition for build
-    fs.readdirSync('./public/js/dev/components').forEach(function (name) {
-        if (name[0] !== '.') {
+    
+    // add appular component definition for build and test files
+    fs.readdirSync(appular.paths.components).forEach(function (name) {
+        if (name[0] !== '.' && name[0] !== '_') {
             appular.components.push({
                 name: 'components/' + name + '/component',
                 exclude: [
                     'appular'
                 ]
             });
+        }
+
+        // add spec file if it exists
+        if (fs.existsSync(appular.paths.components + '/' + name + '/tests.js')) {
+            appular.tests.push('http://localhost:5000/test/component/' + name);
+        }
+    });
+    
+    // add appular component definition for build and test files
+    fs.readdirSync(appular.paths.plugins).forEach(function (name) {
+        // add spec file if it exists
+        if (fs.existsSync(appular.paths.plugins + '/' + name + '/tests.js')) {
+            appular.tests.push('http://localhost:5000/test/plugin/' + name);
         }
     });
 
@@ -77,9 +102,7 @@ module.exports = function(grunt) {
         mocha: {
             test: {
                 options: {
-                    urls: [
-                        'http://127.0.0.1:5000/test/appular'
-                    ],
+                    urls: appular.tests,
                     run: false,
                 }
             }
