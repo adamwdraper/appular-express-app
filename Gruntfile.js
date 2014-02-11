@@ -137,6 +137,10 @@ module.exports = function(grunt) {
                 undef: true,
                 globals: {
                     define: false,
+                    describe: false,
+                    it: false,
+                    assert: false,
+                    expect: false,
                     require: false,
                     requirejs: false
                 },
