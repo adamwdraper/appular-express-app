@@ -2,8 +2,9 @@ define([
     'domReady!',
     'jquery',
     'underscore',
-    'backbone'
-], function (doc, $, _, Backbone) {
+    'backbone',
+    'appular'
+], function (doc, $, _, Backbone, Appular) {
     window.expect = chai.expect;
     window.assert = chai.assert;
 
@@ -14,5 +15,4 @@ define([
     ], function () {
         mocha.run();
     });
-    
 });

@@ -9,7 +9,7 @@
     "url": "git@github.com:adamwdraper/appular-express-app.git"
   },
   "dependencies": {
-    "express": "~3.1.0",
+    "express": "~3.1.2",
     "jade": "~0.30.0"
   },
   "devDependencies": {
@@ -19,7 +19,7 @@
     "grunt-open": "~0.2.0",
     "grunt-concurrent": "~0.3.0",
     "grunt-contrib-jshint": "~0.1.1",
-    "grunt-contrib-requirejs": "~0.4.0",
+    "grunt-contrib-requirejs": "~0.4.1",
     "grunt-appular-docs": ">=0.1.0",
     "grunt-express-server": "~0.4.5",
     "load-grunt-tasks": "~0.2.0",

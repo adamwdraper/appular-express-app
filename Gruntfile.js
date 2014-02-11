@@ -143,11 +143,11 @@ module.exports = function(grunt) {
                     },
                     modules: [
                         {
-                            name: './appular',
+                            name: 'initialize',
                             include: [
                                 'modernizr',
                                 'libraries/require/require-2.1.10',
-                                'libraries/require/config-build',
+                                'libraries/require/configs/build',
                                 'appular',
                                 'jquery',
                                 'jqueryFunctions',
@@ -155,7 +155,8 @@ module.exports = function(grunt) {
                                 'backbone',
                                 'backboneStickit',
                                 'domReady',
-                                'text'
+                                'text',
+                                'initialize'
                             ]
                         }
                     ].concat(appular.apps, appular.components),
@@ -215,8 +216,7 @@ module.exports = function(grunt) {
         'mocha'
     ]);
     
-    grunt.registerTask('production', 'Builds starts server in production environment, and watches NODE.js files for changes.', [
-        'build',
+    grunt.registerTask('production', 'Starts server in production environment.', [
         'express:production',
         'watch'
     ]);
