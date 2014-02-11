@@ -10,9 +10,7 @@ define([
 
     mocha.setup('bdd');
 
-    require([
-        testsToRun.type + 's/' + testsToRun.name + '/tests'
-    ], function () {
+    require(testsToRun, function () {
         mocha.run();
     });
 });
