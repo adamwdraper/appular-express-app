@@ -11,7 +11,7 @@ define([
     mocha.setup('bdd');
 
     require([
-        'libraries/appular/tests/test'
+        testsToRun.type + 's/' + testsToRun.name + '/tests'
     ], function () {
         mocha.run();
     });

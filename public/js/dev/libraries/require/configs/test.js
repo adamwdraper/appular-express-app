@@ -29,7 +29,8 @@ requirejs.config({
     deps: [
         'modernizr',
         'jqueryFunctions',
-        'backboneStickit'
+        'backboneStickit',
+        'appular'
     ],
     callback: function () {
         require([

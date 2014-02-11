@@ -51,6 +51,8 @@ define([
             constructor: function(options) {
                 var modelAttributes = _.omit(options, viewOptions);
 
+                options = options || {};
+
                 // go ahead and set the model if sent in options
                 if (options.model) {
                     this.model = options.model;
