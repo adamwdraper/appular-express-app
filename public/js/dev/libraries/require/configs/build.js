@@ -14,7 +14,7 @@ requirejs.config({
             'libraries/moment/moment-2.4.0'
         ],
         'numeral': [
-            '//cdnjs.cloudflare.com/ajax/libs/numeral.js/1.5.0/numeral.min',
+            '//cdnjs.cloudflare.com/ajax/libs/numeral.js/1.5.2/numeral.min',
             'libraries/numeral/numeral-1.5.2'
         ]
     },
