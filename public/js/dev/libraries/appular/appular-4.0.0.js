@@ -1,3 +1,9 @@
+/**
+ * @appular appular v4.0.0
+ * @link https://github.com/adamwdraper/Appular
+ * @define appular
+ */
+
 // Appular
 // version : 4.0.0
 // author : Adam Draper

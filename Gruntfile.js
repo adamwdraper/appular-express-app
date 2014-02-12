@@ -97,7 +97,7 @@ module.exports = function(grunt) {
                     pretty: true
                 },
                 files: {
-                    'public/js/dev/components/docs/json/docs.json': [
+                    'public/js/dev/components/docs/docs.js': [
                         'public/js/dev/**/*.js'
                     ]
                 }
