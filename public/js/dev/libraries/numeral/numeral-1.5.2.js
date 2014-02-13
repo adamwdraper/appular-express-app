@@ -1,5 +1,5 @@
 /**
- * @appular numeral v1.4.8
+ * @appular numeral v1.5.2
  * @link http://numeraljs.com/
  * @define numeral
  */

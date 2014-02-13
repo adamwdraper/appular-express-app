@@ -1,5 +1,11 @@
+/**
+ * @appular appular v4.0.0
+ * @link https://github.com/adamwdraper/Appular
+ * @define appular
+ */
+
 // Appular
-// version : 3.0.1
+// version : 4.0.0
 // author : Adam Draper
 // license : MIT
 // https://github.com/adamwdraper/Appular
@@ -14,7 +20,7 @@ define([
 ], function (module, $, _, Backbone) {
     var Appular = {};
 
-    Appular.version = '3.0.1';
+    Appular.version = '4.0.0';
 
     Appular.app = '';
 
@@ -96,5 +102,12 @@ define([
         config: Appular.config
     });
 
+    // add config for template variable syntax
+    _.templateSettings = {
+        evaluate: /\{\{#([\s\S]+?)\}\}/g, // {{# console.log("blah") }}
+        interpolate: /\{\{\{([\s\S]+?)\}\}\}/g, // {{{ title }}}
+        escape: /\{\{[^#\{]([\s\S]+?)[^\}]\}\}/g, // {{ title }}
+    };
+    
     return Appular;
 });
