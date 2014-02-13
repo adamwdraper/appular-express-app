@@ -88,6 +88,7 @@ module.exports = function(grunt) {
             test: {
                 options: {
                     urls: [
+                        'http://localhost:5000/test/appular',
                         'http://localhost:5000/test'
                     ],
                     run: false,
