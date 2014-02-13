@@ -102,15 +102,12 @@ define([
         config: Appular.config
     });
 
+    // add config for template variable syntax
     _.templateSettings = {
         evaluate: /\{\{#([\s\S]+?)\}\}/g, // {{# console.log("blah") }}
         interpolate: /\{\{\{([\s\S]+?)\}\}\}/g, // {{{ title }}}
         escape: /\{\{[^#\{]([\s\S]+?)[^\}]\}\}/g, // {{ title }}
     };
-
-    Backbone.on('all', function(name) {
-        Appular.log('Event', name);
-    });
     
     return Appular;
 });
