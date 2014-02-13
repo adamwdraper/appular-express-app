@@ -22,7 +22,7 @@ module.exports = function(grunt) {
             });
         }
     });
-    
+
     // add appular component definition for build and test files
     fs.readdirSync(appular.paths.components).forEach(function (name) {
         if (name[0] !== '.' && name[0] !== '_') {
@@ -62,6 +62,10 @@ module.exports = function(grunt) {
                 tasks: [
                     'sass:dev'
                 ]
+            },
+            testFiles: {
+                files: ['**/tests.js'],
+                tasks: ['test']
             }
         },
         express: {
@@ -215,18 +219,18 @@ module.exports = function(grunt) {
     grunt.registerTask('default', [
         'develop'
     ]);
-    
+
     grunt.registerTask('develop', 'Starts server in development environment, and watches NODE.js and SASS files for changes.', [
         'sass:dev',
         'express:development',
         'watch'
     ]);
-    
+
     grunt.registerTask('test', 'Runs tests', [
         'express:development',
         'mocha'
     ]);
-    
+
     grunt.registerTask('production', 'Starts server in production environment.', [
         'express:production',
         'watch'
