@@ -16,6 +16,17 @@ app.get('/', function (req, res) {
     });
 });
 
+app.get('/test/appular', function (req, res) {
+    var tests = [];
+
+    tests.push('libraries/appular/tests/tests');
+
+    res.render('test', {
+        environment: process.env.NODE_ENV,
+        tests: tests
+    });
+});
+
 app.get('/test/:type?/:name?', function (req, res) {
     var tests = [],
         appular = {
@@ -37,7 +48,7 @@ app.get('/test/:type?/:name?', function (req, res) {
                 tests.push('apps/' + name + '/tests');
             }
         });
-        
+
         // add appular component definition for build and test files
         fs.readdirSync(appular.paths.components).forEach(function (name) {
             // add spec file if it exists
@@ -45,7 +56,7 @@ app.get('/test/:type?/:name?', function (req, res) {
                 tests.push('components/' + name + '/tests');
             }
         });
-        
+
         // add appular component definition for build and test files
         fs.readdirSync(appular.paths.plugins).forEach(function (name) {
             // add spec file if it exists
