@@ -87,6 +87,7 @@ module.exports = function(grunt) {
                         'http://localhost:5000/test'
                     ],
                     run: false,
+                    reporter: 'Spec'
                 }
             }
         },
@@ -96,7 +97,7 @@ module.exports = function(grunt) {
                     pretty: true
                 },
                 files: {
-                    'public/js/dev/components/docs/json/docs.json': [
+                    'public/js/dev/components/docs/docs.js': [
                         'public/js/dev/**/*.js'
                     ]
                 }
@@ -136,7 +137,7 @@ module.exports = function(grunt) {
                     baseUrl: 'public/js/dev',
                     dir: 'public/js/build',
                     paths: {
-                        'appular': 'libraries/appular/appular-3.0.1',
+                        'appular': 'libraries/appular/appular-4.0.0',
                         'modernizr': 'libraries/modernizr/modernizr-2.6.3',
                         'jquery': 'libraries/jquery/jquery-2.1.0',
                         'jqueryFunctions': 'libraries/jquery/extensions/functions',
@@ -231,7 +232,7 @@ module.exports = function(grunt) {
         'watch'
     ]);
 
-    grunt.registerTask('build', 'Builds hints and builds production JS, builds JS documentation json, builds production CSS', [
+    grunt.registerTask('build', 'Hints and builds production JS, runs tests, builds JS documentation, builds production CSS', [
         'jshint',
         'test',
         'docs:build',

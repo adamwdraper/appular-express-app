@@ -1,4 +1,4 @@
-{
+define({
     "apps": [
         {
             "path": "apps/_boilerplate/app.js",
@@ -75,7 +75,12 @@
     ],
     "libraries": [
         {
+            "path": "libraries/appular/appular-4.0.0.js",
             "name": "appular",
+            "version": "v4.0.0",
+            "description": "",
+            "link": "https://github.com/adamwdraper/Appular",
+            "define": "appular",
             "extras": {
                 "extensions": [
                     {
@@ -168,7 +173,7 @@
         {
             "path": "libraries/numeral/numeral-1.5.2.js",
             "name": "numeral",
-            "version": "v1.4.8",
+            "version": "v1.5.2",
             "description": "",
             "link": "http://numeraljs.com/",
             "define": "numeral"
@@ -243,4 +248,4 @@
             }
         }
     ]
-}
+});

@@ -2,9 +2,10 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'text!../templates/nav.html'
+    'template!./template.html'
 ], function ($, _, Backbone, template) {
     var view = Backbone.View.extend({
+            template: template,
             events: {
                 'click [data-link]': 'updateDocType'
             },
@@ -12,14 +13,14 @@ define([
                 _.bindAll(this, 'updateDocType');
             },
             render: function () {
-                this.$el.html(_.template(template, {
-                    docs: this.options.docs
+                this.$el.html(this.template({
+                    docs: this.get('docs')
                 }));
 
                 return this;
             },
             updateDocType: function (event) {
-                this.module.app.params.setValue('view', $(event.currentTarget).data('link'));
+                this.set('view', $(event.currentTarget).data('link'));
                 
                 event.preventDefault();
             }
