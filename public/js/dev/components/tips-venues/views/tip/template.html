@@ -1,3 +1,3 @@
 <div class="content span-4">
-    <%= tip %> - <em><%= name %></em> at <a href="<%= venue.website %>" target="_blank"><%= venue.name %></a>
+    {{ tip }} - <em>{{ name }}</em> {{# if (venue.website) { }} at <a href="{{{ venue.website }}}" target="_blank">{{ venue.name }}</a>{{# } else { }}{{ venue.name }}{{# } }}
 </div>

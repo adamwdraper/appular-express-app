@@ -102,5 +102,12 @@ define([
         config: Appular.config
     });
 
+    // add config for template variable syntax
+    _.templateSettings = {
+        evaluate: /\{\{#([\s\S]+?)\}\}/g, // {{# console.log("blah") }}
+        interpolate: /\{\{\{([\s\S]+?)\}\}\}/g, // {{{ title }}}
+        escape: /\{\{[^#\{]([\s\S]+?)[^\}]\}\}/g, // {{ title }}
+    };
+    
     return Appular;
 });
