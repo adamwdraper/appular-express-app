@@ -10,6 +10,7 @@ define([
         describe('App', function () {
             it('Exists', function () {
                 assert.ok(app);
+                expect(app).to.be.instanceOf(Backbone.App);
             });
         });
     });
