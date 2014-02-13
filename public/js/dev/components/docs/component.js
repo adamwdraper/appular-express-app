@@ -5,26 +5,26 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    './views/nav',
-    './views/docs',
-    './docs',
+    './model',
+    './views/nav/view',
+    // './views/docs',
     'template!./template.html'
-], function ($, _, Backbone, Nav, Docs, docs, template) {
+], function ($, _, Backbone, Model, Nav, template) {
     var View = Backbone.View.extend({
+            model: new Model(),
             template: template,
+            listeners: {
+                'model change:view': 'updateView'
+            },
             events: {},
             initialize: function () {},
             render: function () {
                 this.$el.html(this.template());
-
-                console.log(docs);
-
-
                 
-                // this.views.nav = this.initView(Nav, {
-                //     el: '#module-docs-nav',
-                //     docs: DocsJson
-                // }).render();
+                this.views.nav = new Nav({
+                    el: '#module-docs-nav',
+                    model: this.model
+                }).render();
 
                 // this.views.docs = this.initView(Docs, {
                 //     el: '#module-docs-docs',
@@ -32,6 +32,9 @@ define([
                 // }).render();
 
                 return this;
+            },
+            updateView: function () {
+                this.app.set('view', this.get('view'));
             }
         });
 
