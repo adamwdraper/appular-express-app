@@ -21,23 +21,23 @@
     {{# if (typeof events !== 'undefined') { }}
     <h4>Events</h4>
     {{# _.each(events, function (e) {
-        print(_.template(templates.e, e));
+        print(templates.e(e));
     }); }} 
     {{# } }}
     {{# if (typeof functions !== 'undefined') { }}
     <h4>Functions</h4>
     {{# _.each(functions, function (func) {
-        print(_.template(templates.func, func));
+        print(templates.func(func));
     }); }} 
     {{# } }}
     {{# if (typeof extras !== 'undefined') {
     _.each(extras, function (extra, key) { }}
         <h4>{{ key }}</h4>
-        {{ 
+        {{# 
         _.each(extra, function (ext, key) {
             ext.templates = templates;
             ext.jsRepoUrl = jsRepoUrl;
-            print(_.template(templates.doc, ext));
+            print(templates.doc(ext));
         }); 
     }); }} 
     {{# } }}

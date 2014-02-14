@@ -2,24 +2,23 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'text!../templates/docs.html',
-    'text!../templates/doc.html',
-    'text!../templates/function.html',
-    'text!../templates/event.html'
-], function ($, _, Backbone, template, docTemplate, functionTemplate, eventTemplate) {
+    'template!./template.html',
+    'template!./templates/function.html',
+    'template!./templates/event.html',
+    'template!./templates/doc.html'
+], function ($, _, Backbone, template, funcTemplate, eventTemplate, docTemplate) {
     var View = Backbone.View.extend({
+            template: template,
             events: {},
-            initialize: function() {
-            },
-            render: function() {
-                var docs = {};
-                
-                this.$el.html(_.template(template, {
-                    docs: docs,
+            initialize: function () {},
+            render: function () {
+                this.$el.html(this.template({
+                    type: this.get('view'),
+                    docs: this.get('docs')[this.get('view')],
                     templates: {
-                        doc: docTemplate,
+                        func: funcTemplate,
                         e: eventTemplate,
-                        func: functionTemplate
+                        doc: docTemplate
                     },
                     jsRepoUrl: 'https://github.com/adamwdraper/appular-express-app/blob/master/public'
                 }));
