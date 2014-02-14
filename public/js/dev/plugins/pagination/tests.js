@@ -26,6 +26,10 @@ define([
             expect(Subject.get('count')).to.equal(5);
             expect(Subject.get('total')).to.equal(30);
         });
+
+        it ('should have a model instance after construction', function () {
+            expect(Defaults.model).to.be.an.instanceOf(Backbone.Model);
+        });
     });
 
 });
