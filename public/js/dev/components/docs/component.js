@@ -7,17 +7,24 @@ define([
     'backbone',
     './model',
     './views/nav/view',
-    // './views/docs',
+    './views/docs/view',
     'template!./template.html'
-], function ($, _, Backbone, Model, Nav, template) {
+], function ($, _, Backbone, Model, Nav, Docs, template) {
     var View = Backbone.View.extend({
             model: new Model(),
             template: template,
             listeners: {
-                'model change:view': 'updateView'
+                'model change:view': 'updateView',
+                'app change:view': 'render'
             },
             events: {},
-            initialize: function () {},
+            initialize: function () {
+                this.set({
+                    view: this.app.get('view')
+                }, {
+                    silent: true
+                });
+            },
             render: function () {
                 this.$el.html(this.template());
                 
@@ -25,11 +32,11 @@ define([
                     el: '#module-docs-nav',
                     model: this.model
                 }).render();
-
-                // this.views.docs = this.initView(Docs, {
-                //     el: '#module-docs-docs',
-                //     docs: DocsJson
-                // }).render();
+                
+                this.views.docs = new Docs({
+                    el: '#module-docs-docs',
+                    model: this.model
+                }).render();
 
                 return this;
             },
