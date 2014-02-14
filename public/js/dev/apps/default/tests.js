@@ -2,9 +2,8 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'appular',
     './app'
-], function ($, _, Backbone, Appular, App) {
+], function ($, _, Backbone, App) {
     var app = new App();
 
     describe('Default App', function () {
