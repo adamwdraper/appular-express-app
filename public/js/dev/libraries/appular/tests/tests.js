@@ -23,7 +23,7 @@ define([
 
         it ('Can load an appular component', function (done) {
 
-            Backbone.on('appular:component:required', function (component) {
+            Backbone.once('appular:component:required', function (component) {
                 assert.ok(component);
                 expect(component.get('foo')).to.equal('bar');
                 done();
@@ -33,7 +33,7 @@ define([
         });
 
         it ('Can load an appular app', function (done) {
-            Backbone.on('appular:app:required', function (app) {
+            Backbone.once('appular:app:required', function (app) {
                 assert.ok(app);
                 expect(app).to.be.an.instanceOf(Backbone.App);
                 done();
