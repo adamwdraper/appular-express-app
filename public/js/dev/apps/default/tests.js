@@ -8,7 +8,7 @@ define([
 
     describe('Default App', function () {
         describe('App', function () {
-            it('Exhists', function () {
+            it('Exists', function () {
                 assert.ok(app);
             });
         });
