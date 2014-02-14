@@ -10,7 +10,7 @@ define([
 ], function($, _, Backbone, Model, template) {
     var View = Backbone.View.extend({
             template: template,
-            model: new Model(),
+            model: Model,
             listeners: {
                 'change:page change:total': 'renderHtml'
             },
@@ -66,6 +66,6 @@ define([
                 }
             }
         });
-    
+
     return View;
 });

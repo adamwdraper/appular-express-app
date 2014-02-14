@@ -8,7 +8,7 @@ define([
 
     describe('Boilerplate Plugin', function () {
         describe('Plugin', function () {
-            it('Exhists', function () {
+            it('Exists', function () {
                 assert.ok(plugin);
             });
         });
