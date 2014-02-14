@@ -76,10 +76,12 @@ define([
                 }, this);
 
                 // add options to view's model as attributes
-                if (this.model) {
+                if (this.model instanceof Backbone.Model) {
                     this.model.set(modelAttributes, {
                         silent: true
                     });
+                } else if (typeof this.model == "function") {
+                    this.model = new this.model(modelAttributes);
                 } else {
                     // create new model here
                     this.model = new Backbone.Model(modelAttributes);
@@ -89,7 +91,7 @@ define([
                 this.listenTo(this.model, 'all', function () {
                     this.trigger.apply(this, arguments);
                 });
-                
+
                 View.apply(this, arguments);
             },
             set: function () {
