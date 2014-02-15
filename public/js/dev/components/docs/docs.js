@@ -53,24 +53,10 @@ define({
         },
         {
             "path": "components/tips-venues/component.js",
-            "name": "demo",
+            "name": "tipsVenues",
             "version": "",
             "description": "",
             "define": "components/tips-venues/component"
-        },
-        {
-            "name": "tips-venues",
-            "extras": {
-                "views": [
-                    {
-                        "path": "components/tips-venues/views/tip/view.js",
-                        "name": "boilerplate",
-                        "version": "",
-                        "description": "",
-                        "define": "components/tips-venues/views/tip/view"
-                    }
-                ]
-            }
         }
     ],
     "libraries": [
@@ -113,7 +99,12 @@ define({
             }
         },
         {
+            "path": "libraries/backbone/backbone-1.1.0.js",
             "name": "backbone",
+            "version": "v1.1.0",
+            "description": "",
+            "link": "http://backbonejs.org/",
+            "define": "backbone",
             "extras": {
                 "extensions": [
                     {
@@ -160,7 +151,12 @@ define({
                         ]
                     }
                 ]
-            }
+            },
+            "path": "libraries/jquery/jquery-2.1.0.js",
+            "version": "v2.1.0",
+            "description": "",
+            "link": "http://jquery.com/",
+            "define": "jquery"
         },
         {
             "path": "libraries/moment/moment-2.4.0.js",
@@ -204,7 +200,20 @@ define({
                         "define": "text!"
                     }
                 ]
-            }
+            },
+            "path": "libraries/require/require-2.1.10.js",
+            "version": "v2.1.10",
+            "description": "",
+            "link": "http://requirejs.org/",
+            "define": "libraries/require/require-2.1.10"
+        },
+        {
+            "path": "libraries/underscore/underscore-1.5.2.js",
+            "name": "underscore",
+            "version": "v1.5.2",
+            "description": "",
+            "link": "hhttp://underscorejs.org/",
+            "define": "underscore"
         }
     ],
     "plugins": [
@@ -227,25 +236,7 @@ define({
             "name": "table",
             "version": "",
             "description": "",
-            "define": "plugins/table/plugin",
-            "extras": {
-                "views": [
-                    {
-                        "path": "plugins/table/views/body/view.js",
-                        "name": "table",
-                        "version": "",
-                        "description": "",
-                        "define": "plugins/table/views/body/view"
-                    },
-                    {
-                        "path": "plugins/table/views/head/view.js",
-                        "name": "table",
-                        "version": "",
-                        "description": "",
-                        "define": "plugins/table/views/head/view"
-                    }
-                ]
-            }
+            "define": "plugins/table/plugin"
         }
     ]
 });
