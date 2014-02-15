@@ -7,7 +7,7 @@ define([
     var Model = Backbone.Model.extend({
             defaults: {
                 docs: docs,
-                view: 'libraries'
+                view: ''
             }
         });
 
