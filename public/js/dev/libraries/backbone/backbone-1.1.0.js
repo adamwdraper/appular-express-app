@@ -1,4 +1,10 @@
-//     Backbone.js 1.1.0
+/**
+ * @appular backbone v1.1.0
+ * @link http://backbonejs.org/
+ * @define backbone
+ */
+
+ //     Backbone.js 1.1.0
 
 //     (c) 2010-2011 Jeremy Ashkenas, DocumentCloud Inc.
 //     (c) 2011-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors

@@ -62,8 +62,11 @@ Appular can generate documentation code for your project with its [documentation
 
 ## Grunt Commands
 `grunt` or `grunt develop` : Starts server in development environment, and watches NODE.js and SASS files for changes.
+
 `grunt test` : Runs tests.
+
 `grunt production` : Starts server in production environment.
+
 `grunt build` : Hints and builds production JS, runs tests, builds JS documentation, builds production CSS.
 
 

@@ -1,5 +1,5 @@
 /**
- * @appular demo
+ * @appular tipsVenues
  */
 
  define([

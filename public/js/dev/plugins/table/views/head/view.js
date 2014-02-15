@@ -1,6 +1,3 @@
-/**
- * @appular table
- */
 define([
     'jquery',
     'underscore',
