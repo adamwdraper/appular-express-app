@@ -1,9 +1,3 @@
-/**
- * @appular underscore v1.6.0
- * @link hhttp://underscorejs.org/
- * @define underscore
- */
-
 //     Underscore.js 1.6.0
 //     http://underscorejs.org
 //     (c) 2009-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -289,7 +283,7 @@
   };
 
   // Shuffle an array, using the modern version of the
-  // [Fisher-Yates shuffle](http://en.wikipedia.org/wiki/Fisher–Yates_shuffle).
+  // [Fisher-Yates shuffle](http://en.wikipedia.org/wiki/Fisherâ€“Yates_shuffle).
   _.shuffle = function(obj) {
     var rand;
     var index = 0;
@@ -468,11 +462,10 @@
 
   // Split an array into two arrays: one whose elements all satisfy the given
   // predicate, and one whose elements all do not satisfy the predicate.
-  _.partition = function(array, predicate, context) {
-    predicate = lookupIterator(predicate);
+  _.partition = function(array, predicate) {
     var pass = [], fail = [];
     each(array, function(elem) {
-      (predicate.call(context, elem) ? pass : fail).push(elem);
+      (predicate(elem) ? pass : fail).push(elem);
     });
     return [pass, fail];
   };

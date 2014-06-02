@@ -5,8 +5,7 @@ define([
     'underscore',
     'backbone',
     './collection',
-    './router',
-    '../backbone/backbone'
+    './router'
 ], function (_, Backbone, Collection, Router) {
     Backbone.App = (function(View) {
         var viewOptions = [
