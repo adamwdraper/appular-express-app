@@ -10,9 +10,9 @@ define([
 ], function($, _, Backbone, Model, template) {
     var View = Backbone.View.extend({
             template: template,
-            model: Model,
+            model: new Model(),
             listeners: {
-                'change:page change:total': 'renderHtml'
+                'model change:page change:total': 'renderHtml'
             },
             events: {
                 'click [data-page]': 'updatePage'
@@ -25,43 +25,43 @@ define([
             },
             renderHtml: function () {
                 var pages = [],
-                    lastPage = Math.ceil(this.get('total')/this.get('count')),
-                    magicNumber = Math.floor(this.get('items') / 2),
+                    lastPage = Math.ceil(this.model.get('total')/this.model.get('count')),
+                    magicNumber = Math.floor(this.model.get('items') / 2),
                     page,
                     i = 0;
 
-                if (this.get('page') - magicNumber < 1) {
+                if (this.model.get('page') - magicNumber < 1) {
                     page = 1;
-                } else if (this.get('page') + magicNumber > lastPage) {
-                    page = lastPage - this.get('items') + 1;
+                } else if (this.model.get('page') + magicNumber > lastPage) {
+                    page = lastPage - this.model.get('items') + 1;
                 } else {
-                    page = this.get('page') - magicNumber;
+                    page = this.model.get('page') - magicNumber;
                 }
 
-                for (i; i < this.get('items'); i++) {
+                for (i; i < this.model.get('items'); i++) {
                     if (page >= 1 && page <= lastPage) {
                         pages.push({
                             page: page,
-                            current: (page === this.get('page')) ? true : false
+                            current: (page === this.model.get('page')) ? true : false
                         });
                     }
                     page++;
                 }
 
                 this.$el.html(this.template({
-                    page: this.get('page'),
+                    page: this.model.get('page'),
                     pages: pages,
-                    previousPage: this.get('page') - 1 || 1,
-                    nextPage: this.get('page') + 1,
+                    previousPage: this.model.get('page') - 1 || 1,
+                    nextPage: this.model.get('page') + 1,
                     lastPage: lastPage
                 }));
             },
             updatePage: function (e) {
-                this.set('page', $(e.currentTarget).data('page'));
+                this.model.set('page', $(e.currentTarget).data('page'));
 
-                if (this.get('scrollTopSelector')) {
+                if (this.model.get('scrollTopSelector')) {
                     $('html, body').animate({
-                        scrollTop: $(this.get('scrollTopSelector')).offset().top
+                        scrollTop: $(this.model.get('scrollTopSelector')).offset().top
                     }, 'fast');
                 }
             }

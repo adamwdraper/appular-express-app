@@ -113,18 +113,18 @@
                     });
                 }, this);
 
-                this.plugins.table.set('body', rows);
-                this.plugins.pagination.set('total', this.collection.length);
+                this.plugins.table.model.set('body', rows);
+                this.plugins.pagination.model.set('total', this.collection.length);
             },
             setPage: function (view, page) {
-                this.plugins.table.set('page', page);
+                this.plugins.table.model.set('page', page);
                 this.app.set('page', page);
             },
             setSortOrder: function (view, sortOrder) {
                 this.app.set('sortOrder', sortOrder);
             },
             setSortBy: function (view, sortBy) {
-                this.plugins.table.set('page', 1);
+                this.plugins.table.model.set('page', 1);
                 this.app.set('sortBy', sortBy);
             }
         });

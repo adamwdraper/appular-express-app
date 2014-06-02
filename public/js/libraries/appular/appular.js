@@ -1,11 +1,11 @@
 /**
- * @appular appular v4.0.0
+ * @appular appular v4.0.1
  * @link https://github.com/adamwdraper/Appular
  * @define appular
  */
 
 // Appular
-// version : 4.0.0
+// version : 4.0.1
 // author : Adam Draper
 // license : MIT
 // https://github.com/adamwdraper/Appular
@@ -71,14 +71,12 @@ define([
 
         options = options || {};
 
+        options.app = Appular.app;
+
         require([
             path
         ], function (Component) {
             Appular.log('Component', name, path);
-
-            _.extend(Component.prototype, {
-                app: Appular.app
-            });
 
             Appular.components[name] = new Component(options);
 

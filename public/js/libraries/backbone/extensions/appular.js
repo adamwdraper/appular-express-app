@@ -40,16 +40,17 @@ define([
                 'attributes',
                 'className',
                 'tagName',
-                'events'
+                'events',
+                'app'
             ];
 
         return View.extend({
             config: {},
-            views: {},
-            plugins: {},
             listeners: {},
             constructor: function(options) {
-                var modelAttributes = _.omit(options, viewOptions);
+                this.views = {};
+                this.plugins = {};
+                this.options = this.options || {};
 
                 options = options || {};
 
@@ -57,22 +58,13 @@ define([
                 if (options.model) {
                     this.model = options.model;
                 }
-                // add options to view's model as attributes
-                if (this.model instanceof Backbone.Model) {
-                    this.model.set(modelAttributes, {
-                        silent: true
-                    });
-                } else if (typeof this.model === 'function') {
-                    this.model = new this.model(modelAttributes);
-                } else {
-                    // create new model here
-                    this.model = new Backbone.Model(modelAttributes);
+
+                if (options.app) {
+                    this.app = options.app;
                 }
 
-                // propagate all model events to the view
-                this.listenTo(this.model, 'all', function () {
-                    this.trigger.apply(this, arguments);
-                });
+                // add data object to view and model
+                _.extend(this.options, _.omit(options, viewOptions));
 
                 // set up on's or listenTo's from the listeners object
                 _.each(this.listeners, function (value, key) {
@@ -85,19 +77,19 @@ define([
 
                     // add appropriate listening action
                     if (property) {
-                        this.listenTo(this[property], events.join(' '), callback);
+                        if (this[property]) {
+                            this.listenTo(this[property], events.join(' '), callback);
+                        } else {
+                            throw new Error('Property does not exist.');
+                        }
                     } else {
                         this.on(events.join(' '), callback);
                     }
                 }, this);
 
+                this.$body = $('body');
+
                 View.apply(this, arguments);
-            },
-            set: function () {
-                return this.model.set.apply(this.model, arguments);
-            },
-            get: function () {
-                return this.model.get.apply(this.model, arguments);
             }
         });
     })(Backbone.View);

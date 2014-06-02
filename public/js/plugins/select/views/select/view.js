@@ -14,7 +14,7 @@ define([
             render: function () {
                 var options = [];
 
-                _.each(this.get('options'), function (option) {
+                _.each(this.model.get('options'), function (option) {
                     options.push(_.isObject(option) ? option : {
                         text: option,
                         value: option
@@ -22,13 +22,13 @@ define([
                 });
 
                 this.collection = new Options(options);
-                this.listenTo(this.collection, 'change:selected', this.setToggleText);
+                this.listenTo(this.collection, 'change:selected', this.model.setToggleText);
 
                 this.$el.html(this.template({
                     options: this.collection.toJSON()
                 }));
 
-                this.collection.select(this.get('value'));
+                this.collection.select(this.model.get('value'));
 
                 return this;
             },
@@ -36,7 +36,7 @@ define([
                 var value = $(event.currentTarget).data('value');
 
                 this.collection.select(value);
-                this.set('value', value);
+                this.model.set('value', value);
 
                 event.preventDefault();
             }

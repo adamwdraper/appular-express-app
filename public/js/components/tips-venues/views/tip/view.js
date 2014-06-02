@@ -9,12 +9,12 @@ define([
             events: {},
             initialize: function () {},
             render: function () {
-                var user = this.get('user'),
-                    venue = this.get('venue');
+                var user = this.model.get('user'),
+                    venue = this.model.get('venue');
 
                 this.$el.html(this.template({
                     name: user.firstName + ' ' + user.lastName,
-                    tip: this.get('text'),
+                    tip: this.model.get('text'),
                     venue: {
                         name: venue.name,
                         website: venue.url

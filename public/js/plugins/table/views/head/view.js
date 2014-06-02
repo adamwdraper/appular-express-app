@@ -22,7 +22,7 @@ define([
             setSort: function (event) {
                 var sortBy = $(event.currentTarget).data('sortBy'),
                     sortIndex = $(event.currentTarget).data('index'),
-                    sortOrder = sortBy === this.get('sortBy') && this.get('sortOrder') === 'asc' ? 'desc' : 'asc';
+                    sortOrder = sortBy === this.model.get('sortBy') && this.model.get('sortOrder') === 'asc' ? 'desc' : 'asc';
 
                 this.model.set({
                     sortBy: sortBy,

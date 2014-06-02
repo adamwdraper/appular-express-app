@@ -9,7 +9,7 @@ define([
     var selects = [],
         View = Backbone.View.extend({
             template: template,
-            options: new Model(),
+            model: new Model(),
             bindings: {
                 '[data-toggle-text]': 'value'
             },
@@ -43,7 +43,7 @@ define([
             },
             toggle: function (e) {
                 this.$el.toggleClass('open');
-                this.set('isOpen', !this.get('isOpen'));
+                this.model.set('isOpen', !this.model.get('isOpen'));
 
                 // close all other selects
                 _.each(selects, function (select) {
@@ -57,11 +57,11 @@ define([
             },
             open: function () {
                 this.$el.addClass('open');
-                this.set('isOpen', true);
+                this.model.set('isOpen', true);
             },
             close: function () {
                 this.$el.removeClass('open');
-                this.set('isOpen', false);
+                this.model.set('isOpen', false);
             },
             closeAll: function () {
                 _.each(selects, function(select) {

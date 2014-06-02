@@ -80,6 +80,12 @@ define([
             */
             set: function(id, value, options) {
                 return this.collection.setValue(id, value, options);
+            },
+            /**
+            @function set - shortcut to set param's value
+            */
+            toggle: function (name) {
+                this.collection.setValue(name, !this.collection.get('value'));
             }
         });
     })(Backbone.View);
