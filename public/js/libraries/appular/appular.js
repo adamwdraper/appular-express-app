@@ -15,7 +15,8 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'libraries/appular/extensions/backbone/backbone',
+    'libraries/backbone/extensions/stickit',
+    'libraries/backbone/extensions/appular',
     'libraries/appular/extensions/app/app'
 ], function (module, $, _, Backbone) {
     var Appular = {};
