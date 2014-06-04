@@ -4,9 +4,12 @@ define([
     'backbone',
     './collection',
     'template!./template.html'
-], function ($, _, Backbone, Options, template) {
+], function ($, _, Backbone, Collection, template) {
     var View = Backbone.View.extend({
             template: template,
+            listeners: {
+                'model change:value': 'triggerChange'
+            },
             events: {
                 'click [data-value]': 'select'
             },
@@ -14,15 +17,18 @@ define([
             render: function () {
                 var options = [];
 
-                _.each(this.model.get('options'), function (option) {
+                if (this.options.value) {
+                    this.model.set('value', this.options.value);
+                }
+
+                _.each(this.options.options, function (option) {
                     options.push(_.isObject(option) ? option : {
                         text: option,
                         value: option
                     });
                 });
 
-                this.collection = new Options(options);
-                this.listenTo(this.collection, 'change:selected', this.model.setToggleText);
+                this.collection = new Collection(options);
 
                 this.$el.html(this.template({
                     options: this.collection.toJSON()
@@ -39,6 +45,9 @@ define([
                 this.model.set('value', value);
 
                 event.preventDefault();
+            },
+            triggerChange: function (option, value) {
+                this.trigger('change:value', option, value);
             }
         });
 

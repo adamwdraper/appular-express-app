@@ -22,6 +22,7 @@
                     value: this.app.get('keyword')
                 }));
 
+                // add select plugin
                 this.plugins.select = new Select({
                     el: '#location',
                     options: [
@@ -32,8 +33,9 @@
                     ],
                     value: this.app.get('location')
                 }).render();
-                this.listenTo(this.plugins.select, 'change:value', this.setLocation);
+                this.listenTo(this.plugins.select, 'change', this.setLocation);
 
+                // keyword input element
                 this.$keyword = $('#keyword');
 
                 return this;
@@ -43,7 +45,7 @@
                     this.app.set('keyword', this.$keyword.val());
                 }
             }, 500),
-            setLocation: function (option, value) {
+            setLocation: function (value) {
                 this.app.set('location', value);
             }
         });

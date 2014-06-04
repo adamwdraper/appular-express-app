@@ -7,7 +7,7 @@ define([
     var Collection = Backbone.Collection.extend({
             model: Option,
             select: function (value) {
-                // set all options to unselected
+                // set all options isSelected attribute
                 this.each(function (option) {
                     option.set('isSelected', option.get('value') === value ? true : false);
                 });

@@ -13,25 +13,25 @@ define([
             bindings: {
                 '[data-toggle-text]': 'value'
             },
-            listeners: {},
+            listeners: {
+                'model change:value': 'triggerChange'
+            },
             events: {
                 'click [data-action="toggle"]': 'toggle'
             },
             initialize: function () {
-                _.bindAll(this, 'toggle');
+                _.bindAll(this, 'toggle', 'closeAll');
             },
             render: function () {
-                var _this = this;
-
-                $(document).on('click', function () {
-                    _this.closeAll();
-                });
+                $(document).on('click', this.closeAll);
 
                 this.$el.html(this.template());
 
                 this.views.selects = new Select({
                     el: this.$el.find('[data-items]'),
-                    model: this.model
+                    model: this.model,
+                    options: this.options.options,
+                    value: this.options.value
                 }).render();
 
                 // add to array of all selects on page
@@ -41,7 +41,10 @@ define([
 
                 return this;
             },
-            toggle: function (e) {
+            toggle: function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                
                 this.$el.toggleClass('open');
                 this.model.set('isOpen', !this.model.get('isOpen'));
 
@@ -51,9 +54,6 @@ define([
                         select.close();
                     }
                 }, this);
-
-                e.preventDefault();
-                e.stopPropagation();
             },
             open: function () {
                 this.$el.addClass('open');
@@ -67,6 +67,9 @@ define([
                 _.each(selects, function(select) {
                     select.close();
                 });
+            },
+            triggerChange: function (model, value) {
+                this.trigger('change', value);
             }
         });
 
