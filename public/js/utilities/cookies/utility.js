@@ -1,3 +1,7 @@
+/**
+ * @appular cookies - easily get and set cookies
+ */
+
 define([
     'underscore'
 ], function (_) {
