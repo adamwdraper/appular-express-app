@@ -11,7 +11,16 @@ define([
             template: template,
             model: new Model(),
             bindings: {
-                '[data-toggle-text]': 'value'
+                '[data-toggle-text]': 'value',
+                ':el': {
+                    attributes: [
+                        {
+                            name: 'class',
+                            observe: 'isOpen',
+                            onGet: 'formatOpenClass'
+                        }
+                    ]
+                }
             },
             listeners: {
                 'model change:value': 'triggerChange'
@@ -45,7 +54,6 @@ define([
                 event.preventDefault();
                 event.stopPropagation();
                 
-                this.$el.toggleClass('open');
                 this.model.set('isOpen', !this.model.get('isOpen'));
 
                 // close all other selects
@@ -56,17 +64,18 @@ define([
                 }, this);
             },
             open: function () {
-                this.$el.addClass('open');
                 this.model.set('isOpen', true);
             },
             close: function () {
-                this.$el.removeClass('open');
                 this.model.set('isOpen', false);
             },
             closeAll: function () {
                 _.each(selects, function(select) {
                     select.close();
                 });
+            },
+            formatOpenClass: function (value) {
+                return value ? 'open' : '';
             },
             triggerChange: function (model, value) {
                 this.trigger('change', value);
