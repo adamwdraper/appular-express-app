@@ -17,11 +17,7 @@ define([
             render: function () {
                 var options = [];
 
-                if (this.options.value) {
-                    this.model.set('value', this.options.value);
-                }
-
-                _.each(this.options.options, function (option) {
+                _.each(this.model.get('options'), function (option) {
                     options.push(_.isObject(option) ? option : {
                         text: option,
                         value: option

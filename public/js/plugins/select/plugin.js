@@ -9,7 +9,7 @@ define([
     var selects = [],
         View = Backbone.View.extend({
             template: template,
-            model: new Model(),
+            model: Model,
             bindings: {
                 '[data-toggle-text]': 'value',
                 ':el': {
@@ -34,13 +34,16 @@ define([
             render: function () {
                 $(document).on('click', this.closeAll);
 
+                this.model.set({
+                    options: this.options.options,
+                    value: this.options.value
+                });
+
                 this.$el.html(this.template());
 
                 this.views.selects = new Select({
                     el: this.$el.find('[data-items]'),
-                    model: this.model,
-                    options: this.options.options,
-                    value: this.options.value
+                    model: this.model
                 }).render();
 
                 // add to array of all selects on page

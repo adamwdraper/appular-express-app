@@ -9,8 +9,8 @@ define([
     'template!./template.html'
 ], function($, _, Backbone, Model, template) {
     var View = Backbone.View.extend({
+            model: Model,
             template: template,
-            model: new Model(),
             listeners: {
                 'model change:page change:total': 'renderHtml'
             },
@@ -21,7 +21,6 @@ define([
                 _.bindAll(this, 'updatePage');
             },
             render: function () {
-                debugger;
                 if (this.options.count) {
                     this.model.set({
                         count: this.options.count
