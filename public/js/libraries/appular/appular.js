@@ -16,10 +16,21 @@ define([
     'underscore',
     'backbone',
     'libraries/backbone/extensions/stickit',
-    'libraries/backbone/extensions/appular',
     'libraries/appular/extensions/app/app'
 ], function (module, $, _, Backbone) {
-    var Appular = {};
+    var Appular = {},
+        $body = $('body'),
+        viewOptions = [
+            'model',
+            'collection',
+            'el',
+            'id',
+            'attributes',
+            'className',
+            'tagName',
+            'events',
+            'app'
+        ];
 
     Appular.version = '4.0.0';
 
@@ -84,22 +95,94 @@ define([
         });
     };
 
-    // add config to backbone objects
+    // Extending backbone objects
     _.extend(Backbone.App.prototype, {
         config: Appular.config
     });
 
-    _.extend(Backbone.View.prototype, {
-        config: Appular.config
-    });
+    Backbone.View = (function(View) {
+        return View.extend({
+            config: Appular.config,
+            listeners: {},
+            constructor: function(options) {
+                this.plugins = {};
+                this.views = {};
 
-    _.extend(Backbone.Collection.prototype, {
-        config: Appular.config
-    });
+                this.options = this.options || {};
 
-    _.extend(Backbone.Model.prototype, {
-        config: Appular.config
-    });
+                options = options || {};
+
+                if (options.app) {
+                    this.app = options.app;
+                }
+
+                // instantiate model if it is uninstantiated
+                if (typeof this.model === 'function') {
+                    this.model = new this.model();
+                }
+
+                // instantiate collection if it is uninstantiated
+                if (typeof this.collection === 'function') {
+                    this.model = new this.model();
+                }
+
+                // add data object to view
+                _.extend(this.options, _.omit(options, viewOptions));
+
+                // set up on's or listenTo's from the listeners object
+                _.each(this.listeners, function (value, key) {
+                    var events = key.split(' '),
+                        property,
+                        callback = _.isFunction(value) ? value : this[value];
+
+                    // find out if we are listening to app, model, or collection so that we can use listenTo
+                    property = events[0] === 'app' || events[0] === 'model' || events[0] === 'collection' ? events.shift() : null;
+
+                    // add appropriate listening action
+                    if (property) {
+                        if (this[property]) {
+                            this.listenTo(this[property], events.join(' '), callback);
+                        } else {
+                            throw new Error('Property does not exist.');
+                        }
+                    } else {
+                        this.on(events.join(' '), callback);
+                    }
+                }, this);
+
+                // add common selectors
+                this.$body = $body;
+
+                View.apply(this, arguments);
+            }
+        });
+    })(Backbone.View);
+    
+    Backbone.Collection = (function(Collection) {
+        return Collection.extend({
+            config: Appular.config,
+            fetch: function (options) {
+                if (this.fixture && this.config.useFixtures) {
+                    options.url = this.fixture;
+                }
+
+                return Collection.prototype.fetch.apply(this, arguments);
+            }
+        });
+    })(Backbone.Collection);
+
+    Backbone.Model = (function(Model) {
+        return Model.extend({
+            config: Appular.config,
+            fetch: function (options) {
+                if (this.fixture && this.config.useFixtures) {
+                    options.url = this.fixture;
+                }
+
+                return Model.prototype.fetch.apply(this, arguments);
+            }
+        });
+    })(Backbone.Model);
 
     // add config for template variable syntax
     _.templateSettings = {

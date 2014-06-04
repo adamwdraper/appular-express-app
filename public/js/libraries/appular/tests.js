@@ -22,7 +22,6 @@ define([
         });
 
         it ('Can load an appular component', function (done) {
-
             Backbone.once('appular:component:required', function (component) {
                 assert.ok(component);
                 expect(component.options.foo).to.equal('bar');
