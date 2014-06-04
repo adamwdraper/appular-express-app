@@ -116,6 +116,10 @@ define([
                     this.app = options.app;
                 }
 
+                if (options.model) {
+                    this.model = options.model;
+                }
+
                 // instantiate model if it is uninstantiated
                 if (typeof this.model === 'function') {
                     this.model = new this.model();

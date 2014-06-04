@@ -48,7 +48,10 @@ define([
                 var view;
 
                 beforeEach(function (done) {
-                    view = new Backbone.View();
+                    view = new Backbone.View({
+                        app: 'app',
+                        test: 'test'
+                    });
                     done();
                 });
 
@@ -56,7 +59,15 @@ define([
                     assert.property(view, 'config');
                     assert.property(view, 'plugins');
                     assert.property(view, 'views');
+                });
+
+                it ('creates options property on construct', function () {
                     assert.property(view, 'options');
+                    expect(view.options.test).to.equal('test');
+                });
+
+                it ('creates an app property', function () {
+                    expect(view.app).to.equal('app');
                 });
             });
 

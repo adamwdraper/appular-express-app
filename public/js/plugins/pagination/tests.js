@@ -6,28 +6,30 @@ define([
 ], function ($, _, Backbone, Pagination) {
 
     describe('Pagination plugin', function () {
-        var Subject,
-            Defaults;
+        var subject,
+            defaults;
 
         beforeEach(function (done) {
-            Subject = new Pagination({
+            subject = new Pagination({
                 total: 30,
                 count: 5
             }).render();
-            Defaults = new Pagination();
+            
+            defaults = new Pagination();
+
             done();
         });
 
         it ('should set default options when custom options are not passed', function () {
-            expect(Defaults.model.get('count')).to.eql(1);
+            expect(defaults.model.get('count')).to.eql(1);
         });
 
         it ('should have a custom page count', function () {
-            expect(Subject.model.get('count')).to.equal(5);
+            expect(subject.model.get('count')).to.equal(5);
         });
 
         it ('should have a model instance after construction', function () {
-            expect(Defaults.model).to.be.an.instanceOf(Backbone.Model);
+            expect(defaults.model).to.be.an.instanceOf(Backbone.Model);
         });
     });
 
