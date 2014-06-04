@@ -34,11 +34,6 @@ define([
             render: function () {
                 $(document).on('click', this.closeAll);
 
-                this.model.set({
-                    options: this.options.options,
-                    value: this.options.value
-                });
-
                 this.$el.html(this.template());
 
                 this.views.selects = new Select({

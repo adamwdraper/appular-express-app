@@ -12,7 +12,7 @@ define([
 ], function($, _, Backbone, Model, template, Head, Body) {
     var View = Backbone.View.extend({
             template: template,
-            model: new Model(),
+            model: Model,
             render: function () {
                 this.$el.html(this.template());
 

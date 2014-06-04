@@ -108,8 +108,6 @@ define([
                 this.plugins = {};
                 this.views = {};
 
-                this.options = this.options || {};
-
                 options = options || {};
 
                 if (options.app) {
@@ -131,7 +129,9 @@ define([
                 }
 
                 // add data object to view
-                _.extend(this.options, _.omit(options, viewOptions));
+                if (this.model) {
+                    this.model.set(_.omit(options, viewOptions));
+                }
 
                 // set up on's or listenTo's from the listeners object
                 _.each(this.listeners, function (value, key) {

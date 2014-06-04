@@ -24,8 +24,6 @@ define([
         it ('Can load an appular component', function (done) {
             Backbone.once('appular:component:required', function (component) {
                 assert.ok(component);
-                expect(component.options.foo).to.equal('bar');
-                expect(component).to.have.property('$body');
                 done();
             });
 
@@ -50,7 +48,8 @@ define([
                 beforeEach(function (done) {
                     view = new Backbone.View({
                         app: 'app',
-                        test: 'test'
+                        test: 'test',
+                        model: new Backbone.Model()
                     });
                     done();
                 });
@@ -61,9 +60,8 @@ define([
                     assert.property(view, 'views');
                 });
 
-                it ('creates options property on construct', function () {
-                    assert.property(view, 'options');
-                    expect(view.options.test).to.equal('test');
+                it ('sets model attributes when options are passed to it', function () {
+                    expect(view.model.get('test')).to.equal('test');
                 });
 
                 it ('creates an app property', function () {
