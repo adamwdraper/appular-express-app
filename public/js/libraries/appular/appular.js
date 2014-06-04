@@ -128,7 +128,7 @@ define([
                     this.model = new this.model();
                 }
 
-                // add data object to view
+                // pass any options throught to model to be attributes
                 if (this.model) {
                     this.model.set(_.omit(options, viewOptions));
                 }
