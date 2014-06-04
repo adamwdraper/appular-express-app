@@ -8,7 +8,7 @@ define([
     return {
         get: function (key) {
             var value = decodeURIComponent(document.cookie.replace(new RegExp('(?:(?:^|.*;)\\s*' + encodeURIComponent(key).replace(/[\-\.\+\*]/g, '\\$&') + '\\s*\\=\\s*([^;]*).*$)|^.*$'), '$1')) || null;
-            if (value && value.match(/^{.*}$/)) {
+            if (value && value.match(/^\{.*\}$/)) {
                 value = JSON.parse(value);
             }
             return value;

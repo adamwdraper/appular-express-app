@@ -3,9 +3,9 @@ var fs = require('fs');
 module.exports = function(grunt) {
     var appular = {
             paths: {
-                apps: './public/js/dev/apps',
-                components: './public/js/dev/components',
-                plugins: './public/js/dev/plugins'
+                apps: './public/js/apps',
+                components: './public/js/components',
+                plugins: './public/js/plugins'
             },
             apps: [],
             components: []
@@ -102,28 +102,27 @@ module.exports = function(grunt) {
                     pretty: true
                 },
                 files: {
-                    'public/js/dev/components/docs/docs.js': [
-                        'public/js/dev/**/*.js'
+                    'public/js/components/docs/docs.js': [
+                        'public/js/**/*.js'
                     ]
                 }
             }
         },
         jshint: {
             all: [
-                'public/js/dev/components/**/*.js',
-                'public/js/dev/plugins/**/*.js',
-                'public/js/dev/utilities/**/*.js'
+                'public/js/components/**/*.js',
+                'public/js/plugins/**/*.js',
+                'public/js/utilities/**/*.js'
             ],
             options: {
                 node: true,
                 browser: true,
                 curly: true,
-                devel: false,
+                devel: true,
                 eqeqeq: true,
-                eqnull: true,
                 noarg: true,
                 sub: true,
-                undef: true,
+                expr: true,
                 globals: {
                     define: false,
                     describe: false,
@@ -139,7 +138,7 @@ module.exports = function(grunt) {
         requirejs: {
             compile: {
                 options: {
-                    baseUrl: 'public/js/dev',
+                    baseUrl: 'public/js',
                     dir: 'public/js/build',
                     paths: {
                         'appular': 'libraries/appular/appular-4.0.0',

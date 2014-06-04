@@ -21,7 +21,7 @@ define([
                 expect(component.$el.html()).to.be.empty;
                 component.render();
                 expect(component.$el.html()).to.match(/This is a module/);
-            })
+            });
         });
     });
 });
