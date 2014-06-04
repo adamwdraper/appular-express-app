@@ -6,7 +6,8 @@ define([
 ], function ($, _, Backbone, Pagination) {
 
     describe('Pagination plugin', function () {
-        var Subject, Defaults;
+        var Subject,
+            Defaults;
 
         beforeEach(function (done) {
             Subject = new Pagination({
