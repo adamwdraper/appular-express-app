@@ -19,7 +19,7 @@ app.get('/', function (req, res) {
 app.get('/test/appular', function (req, res) {
     var tests = [];
 
-    tests.push('libraries/appular/tests/tests');
+    tests.push('libraries/appular/tests');
 
     res.render('test', {
         environment: process.env.NODE_ENV,
@@ -31,9 +31,9 @@ app.get('/test/:type?/:name?', function (req, res) {
     var tests = [],
         appular = {
             paths: {
-                apps: './public/js/dev/apps',
-                components: './public/js/dev/components',
-                plugins: './public/js/dev/plugins'
+                apps: './public/js/apps',
+                components: './public/js/components',
+                plugins: './public/js/plugins'
             }
         };
 

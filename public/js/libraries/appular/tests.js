@@ -25,7 +25,8 @@ define([
 
             Backbone.once('appular:component:required', function (component) {
                 assert.ok(component);
-                expect(component.get('foo')).to.equal('bar');
+                expect(component.options.foo).to.equal('bar');
+                expect(component).to.have.property('$body');
                 done();
             });
 

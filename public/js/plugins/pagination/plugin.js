@@ -21,6 +21,19 @@ define([
                 _.bindAll(this, 'updatePage');
             },
             render: function () {
+                debugger;
+                if (this.options.count) {
+                    this.model.set({
+                        count: this.options.count
+                    }, {
+                        silent: true
+                    });
+                }
+
+                if (this.options.page) {
+                    this.model.set('page', this.options.page);
+                }
+
                 return this;
             },
             renderHtml: function () {

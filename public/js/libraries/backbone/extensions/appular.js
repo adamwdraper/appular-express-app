@@ -2,9 +2,12 @@
  * @appular app
  */
 define([
+    'jquery',
     'underscore',
     'backbone'
-], function (_, Backbone) {
+], function ($, _, Backbone) {
+    var $body = $('body');
+
     Backbone.Model = (function(Model) {
         return Model.extend({
             config: {},
@@ -87,7 +90,8 @@ define([
                     }
                 }, this);
 
-                this.$body = $('body');
+                // add common selectors
+                this.$body = $body;
 
                 View.apply(this, arguments);
             }
