@@ -33,7 +33,7 @@
                     ],
                     value: this.app.get('location')
                 }).render();
-                this.listenTo(this.plugins.select, 'change', this.setLocation);
+                this.listenTo(this.plugins.select, 'change:value', this.setLocation);
 
                 // keyword input element
                 this.$keyword = $('#keyword');
@@ -45,7 +45,7 @@
                     this.app.set('keyword', this.$keyword.val());
                 }
             }, 500),
-            setLocation: function (value) {
+            setLocation: function (model, value) {
                 this.app.set('location', value);
             }
         });

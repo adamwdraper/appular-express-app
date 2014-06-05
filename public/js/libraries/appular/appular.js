@@ -120,10 +120,12 @@ define([
                 // construct this.model and add options to view's model as attributes
                 if (options.model) {
                     this.model = options.model;
-                    
+
                     // make sure backbone doesn't override our model
                     delete options.model;
+                }
 
+                if (this.model) {
                     // get attributes to set
                     attributes = _.omit(options, viewOptions);
 

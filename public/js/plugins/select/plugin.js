@@ -22,9 +22,7 @@ define([
                     ]
                 }
             },
-            listeners: {
-                'model change:value': 'triggerChange'
-            },
+            listeners: {},
             events: {
                 'click [data-action="toggle"]': 'toggle'
             },
@@ -52,7 +50,7 @@ define([
                 event.preventDefault();
                 event.stopPropagation();
                 
-                this.model.set('isOpen', !this.model.get('isOpen'));
+                this.set('isOpen', !this.get('isOpen'));
 
                 // close all other selects
                 _.each(selects, function (select) {
@@ -62,10 +60,10 @@ define([
                 }, this);
             },
             open: function () {
-                this.model.set('isOpen', true);
+                this.set('isOpen', true);
             },
             close: function () {
-                this.model.set('isOpen', false);
+                this.set('isOpen', false);
             },
             closeAll: function () {
                 _.each(selects, function(select) {
@@ -74,9 +72,6 @@ define([
             },
             formatOpenClass: function (value) {
                 return value ? 'open' : '';
-            },
-            triggerChange: function (model, value) {
-                this.trigger('change', value);
             }
         });
 

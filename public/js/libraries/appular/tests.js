@@ -78,7 +78,7 @@ define([
                     it ('bubbles up model general change', function (done) {
                         var setValue = 'testing';
 
-                        view.on('change:test', function (model, options) {
+                        view.on('change', function (model, options) {
                             assert.ok(model);
                             assert.ok(options);
                             done();
