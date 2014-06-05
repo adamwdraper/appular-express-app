@@ -73,17 +73,32 @@ define([
                     expect(view.get('test')).to.equal('testing');
                 });
 
-                it ('bubbles up model events', function (done) {
-                    var setValue = 'testing';
+                describe('model events bubbled', function () {
 
-                    view.on('change:test', function (model, value, options) {
-                        assert.ok(model);
-                        expect(value).to.equal(setValue);
-                        assert.ok(options);
-                        done();
+                    it ('bubbles up model general change', function (done) {
+                        var setValue = 'testing';
+
+                        view.on('change:test', function (model, options) {
+                            assert.ok(model);
+                            assert.ok(options);
+                            done();
+                        });
+
+                        view.set('test', setValue);
                     });
+                    
+                    it ('bubbles up model attribute change', function (done) {
+                        var setValue = 'testing';
 
-                    view.set('test', setValue);
+                        view.on('change:test', function (model, value, options) {
+                            assert.ok(model);
+                            expect(value).to.equal(setValue);
+                            assert.ok(options);
+                            done();
+                        });
+
+                        view.set('test', setValue);
+                    });
                 });
             });
 
