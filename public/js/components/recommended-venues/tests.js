@@ -2,17 +2,14 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    '../../apps/_boilerplate/app',
     './component'
-], function ($, _, Backbone, App, Component) {
+], function ($, _, Backbone, Component) {
     var component;
 
-    describe('Boilerplate Component', function () {
+    describe('Recommended Venues Component', function () {
         describe('Construction', function () {
             beforeEach(function (done) {
-                component = new Component({
-                    app: new App()
-                });
+                component = new Component();
                 done();
             });
 

@@ -7,7 +7,7 @@ define([
 ], function ($, _, Backbone, App, Component) {
     var component;
 
-    describe('Boilerplate Component', function () {
+    describe('Tips & Venues Component', function () {
         describe('Construction', function () {
             beforeEach(function (done) {
                 component = new Component({

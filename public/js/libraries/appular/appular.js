@@ -105,6 +105,8 @@ define([
             config: Appular.config,
             listeners: {},
             constructor: function(options) {
+                var attributes;
+
                 this.plugins = {};
                 this.views = {};
 
@@ -116,21 +118,26 @@ define([
 
                 if (options.model) {
                     this.model = options.model;
+                    delete options.model;
                 }
 
-                // instantiate model if it is uninstantiated
-                if (typeof this.model === 'function') {
-                    this.model = new this.model();
+                // construct this.model and add options to view's model as attributes
+                if (this.model) {
+                    attributes = _.omit(options, viewOptions);
+
+                    if (typeof this.model === 'function') {
+                        this.model = new this.model(attributes);
+                    }
+
+                    // propagate all model events to the view
+                    this.listenTo(this.model, 'all', function () {
+                        this.trigger.apply(this, arguments);
+                    });
                 }
 
                 // instantiate collection if it is uninstantiated
                 if (typeof this.collection === 'function') {
-                    this.model = new this.model();
-                }
-
-                // pass any options throught to model to be attributes
-                if (this.model) {
-                    this.model.set(_.omit(options, viewOptions));
+                    this.collection = new this.collection();
                 }
 
                 // set up on's or listenTo's from the listeners object
@@ -147,7 +154,7 @@ define([
                         if (this[property]) {
                             this.listenTo(this[property], events.join(' '), callback);
                         } else {
-                            throw new Error('Property does not exist.');
+                            throw new Error('this.' + property + ' does not exist.');
                         }
                     } else {
                         this.on(events.join(' '), callback);
@@ -158,6 +165,12 @@ define([
                 this.$body = $body;
 
                 View.apply(this, arguments);
+            },
+            set: function () {
+                return this.model.set.apply(this.model, arguments);
+            },
+            get: function () {
+                return this.model.get.apply(this.model, arguments);
             }
         });
     })(Backbone.View);

@@ -49,7 +49,7 @@ define([
                     view = new Backbone.View({
                         app: 'app',
                         test: 'test',
-                        model: new Backbone.Model()
+                        model: Backbone.Model.extend()
                     });
                     done();
                 });
@@ -66,6 +66,24 @@ define([
 
                 it ('creates an app property', function () {
                     expect(view.app).to.equal('app');
+                });
+
+                it ('can has functioning get and set model shortcuts', function () {
+                    view.set('test', 'testing');
+                    expect(view.get('test')).to.equal('testing');
+                });
+
+                it ('bubbles up model events', function (done) {
+                    var newValue = 'testing';
+
+                    view.on('change:test', function (model, value, options) {
+                        assert.ok(model);
+                        expect(value).to.equal(newValue);
+                        assert.ok(options);
+                        done();
+                    });
+
+                    view.set('test', 'testing');
                 });
             });
 
