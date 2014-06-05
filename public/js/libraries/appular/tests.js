@@ -74,16 +74,16 @@ define([
                 });
 
                 it ('bubbles up model events', function (done) {
-                    var newValue = 'testing';
+                    var setValue = 'testing';
 
                     view.on('change:test', function (model, value, options) {
                         assert.ok(model);
-                        expect(value).to.equal(newValue);
+                        expect(value).to.equal(setValue);
                         assert.ok(options);
                         done();
                     });
 
-                    view.set('test', 'testing');
+                    view.set('test', setValue);
                 });
             });
 
