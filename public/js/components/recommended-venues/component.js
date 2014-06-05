@@ -62,7 +62,7 @@
                     page: this.app.get('page'),
                     scrollTopSelector: '#recommended-table'
                 }).render();
-                this.listenTo(this.plugins.pagination, 'change:page', this.setPage);
+                this.listenTo(this.plugins.pagination, 'change', this.setPage);
 
                 this.updateVenues();
 
@@ -116,7 +116,7 @@
                 this.plugins.table.model.set('body', rows);
                 this.plugins.pagination.model.set('total', this.collection.length);
             },
-            setPage: function (view, page) {
+            setPage: function (page) {
                 this.plugins.table.model.set('page', page);
                 this.app.set('page', page);
             },

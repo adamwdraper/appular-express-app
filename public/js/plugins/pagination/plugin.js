@@ -21,18 +21,6 @@ define([
                 _.bindAll(this, 'updatePage');
             },
             render: function () {
-                if (this.options.count) {
-                    this.model.set({
-                        count: this.options.count
-                    }, {
-                        silent: true
-                    });
-                }
-
-                if (this.options.page) {
-                    this.model.set('page', this.options.page);
-                }
-
                 return this;
             },
             renderHtml: function () {
@@ -67,6 +55,8 @@ define([
                     nextPage: this.model.get('page') + 1,
                     lastPage: lastPage
                 }));
+
+                this.trigger('change', this.model.get('page'));
             },
             updatePage: function (e) {
                 this.model.set('page', $(e.currentTarget).data('page'));
