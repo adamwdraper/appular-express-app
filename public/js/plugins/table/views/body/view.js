@@ -7,7 +7,7 @@ define([
     var View = Backbone.View.extend({
             template: template,
             listeners: {
-                'model sorted': 'renderRows',
+                'sorted': 'renderRows',
                 'model change:body change:sortBy change:sortOrder': 'sort',
                 'model change:page': 'renderRows'
             },
@@ -16,7 +16,7 @@ define([
                 _.bindAll(this, 'renderRows');
             },
             render: function () {
-                if (this.model.get('body').length) {
+                if (this.get('body').length) {
                     this.trigger('change:body');
                 }
 
@@ -26,13 +26,13 @@ define([
                 var sortIndex,
                     rows;
 
-                if (this.model.get('sortBy') && this.model.get('sortIndex')) {
-                    sortIndex = this.model.get('sortIndex');
-                    rows = _.sortBy(this.model.get('body'), function (row) {
+                if (this.get('sortBy') && this.get('sortIndex')) {
+                    sortIndex = this.get('sortIndex');
+                    rows = _.sortBy(this.get('body'), function (row) {
                         return _.isArray(row) ? row[sortIndex].value : row.cells[sortIndex].value;
                     }, this);
 
-                    if (this.model.get('sortOrder') === 'desc') {
+                    if (this.get('sortOrder') === 'desc') {
                         rows.reverse();
                     }
 
@@ -45,16 +45,16 @@ define([
             },
             renderRows: function () {
                 var html = '',
-                    rows = this.model.get('body'),
+                    rows = this.get('body'),
                     row,
                     firstRow = 0,
                     i = 0,
-                    count = this.model.get('count') || this.model.get('body').length;
+                    count = this.get('count') || this.get('body').length;
 
-                if (this.model.get('page') === 2) {
-                    firstRow = this.model.get('count');
-                } else if (this.model.get('page') > 2) {
-                    firstRow = this.model.get('count') * (this.model.get('page') - 1);
+                if (this.get('page') === 2) {
+                    firstRow = this.get('count');
+                } else if (this.get('page') > 2) {
+                    firstRow = this.get('count') * (this.get('page') - 1);
                 }
 
                 for (i; i < count; i++) {

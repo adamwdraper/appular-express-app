@@ -15,7 +15,7 @@
 ], function ($, _, Backbone, template, venueTemplate, addressTemplate, Venues, Table, Pagination) {
     var View = Backbone.View.extend({
             template: template,
-            collection: new Venues(),
+            collection: Venues,
             events: {},
             listeners: {
                 'collection sync': 'renderVenues',
@@ -62,7 +62,7 @@
                     page: this.app.get('page'),
                     scrollTopSelector: '#recommended-table'
                 }).render();
-                this.listenTo(this.plugins.pagination, 'change', this.setPage);
+                this.listenTo(this.plugins.pagination, 'change:page', this.setPage);
 
                 this.updateVenues();
 
@@ -113,18 +113,18 @@
                     });
                 }, this);
 
-                this.plugins.table.model.set('body', rows);
-                this.plugins.pagination.model.set('total', this.collection.length);
+                this.plugins.table.set('body', rows);
+                this.plugins.pagination.set('total', this.collection.length);
             },
-            setPage: function (page) {
-                this.plugins.table.model.set('page', page);
+            setPage: function (model, page) {
+                this.plugins.table.set('page', page);
                 this.app.set('page', page);
             },
             setSortOrder: function (view, sortOrder) {
                 this.app.set('sortOrder', sortOrder);
             },
             setSortBy: function (view, sortBy) {
-                this.plugins.table.model.set('page', 1);
+                this.plugins.table.set('page', 1);
                 this.app.set('sortBy', sortBy);
             }
         });
