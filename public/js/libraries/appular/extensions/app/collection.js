@@ -62,7 +62,7 @@ define([
                     value;
 
                 if (model) {
-                    value = model.get('value');
+                    value = model.getValue();
                 }
 
                 return value;

@@ -8,7 +8,19 @@ define([
                 alias: '',
                 addToHistory: true,
                 addToUrl: true,
-                loadFromCookie: false
+                loadFromCookie: false,
+                type: ''
+            },
+            getValue: function () {
+                var type = this.get('type'),
+                    value = this.get('value');
+
+                // typecast for retrieval
+                if (type === 'number') {
+                    value = Number(value);
+                }
+
+                return value;
             }
         });
 

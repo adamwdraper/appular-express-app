@@ -30,11 +30,13 @@ define([
                 },
                 page: {
                     value: 1,
-                    alias: 'p'
+                    alias: 'p',
+                    type: 'number'
                 },
                 count: {
                     value: 10,
-                    addToUrl: false
+                    addToUrl: false,
+                    type: 'number'
                 }
             },
             initialize: function () {},
