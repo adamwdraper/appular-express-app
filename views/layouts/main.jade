@@ -21,6 +21,6 @@ html(lang="en-US")
 
         block scripts
             - if (environment === 'development')
-                script(src="/js/dev/libraries/require/require-2.1.10.js", data-main="/js/dev/libraries/require/configs/dev")
+                script(src="/js/libraries/require/require.js", data-main="/js/libraries/require/configs/dev")
             - else
                 script(src="/js/build/initialize.js")
