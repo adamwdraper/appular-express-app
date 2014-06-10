@@ -5,11 +5,13 @@ module.exports = function(grunt) {
             paths: {
                 apps: './public/js/apps',
                 components: './public/js/components',
-                plugins: './public/js/plugins'
+                plugins: './public/js/plugins',
+                utilities: './public/js/utilities'
             },
             apps: [],
             components: [],
-            plugins: []
+            plugins: [],
+            utilities: []
         };
 
     // add appular app definition for build
@@ -40,6 +42,13 @@ module.exports = function(grunt) {
     fs.readdirSync(appular.paths.plugins).forEach(function (name) {
         if (name[0] !== '.' && name[0] !== '_') {
             appular.plugins.push('plugins/' + name + '/plugin');
+        }
+    });
+
+    // add appular utilities definition for build files
+    fs.readdirSync(appular.paths.utilities).forEach(function (name) {
+        if (name[0] !== '.' && name[0] !== '_') {
+            appular.plugins.push('utilities/' + name + '/utility');
         }
     });
 
@@ -184,7 +193,7 @@ module.exports = function(grunt) {
                                 'domReady',
                                 'text',
                                 'initialize'
-                            ].concat(appular.plugins)
+                            ].concat(appular.plugins, appular.utilities)
                         }
                     ].concat(appular.apps, appular.components),
                     removeCombined: true
