@@ -68,7 +68,7 @@ define([
                     expect(view.app).to.equal('app');
                 });
 
-                it ('can has functioning get and set model shortcuts', function () {
+                it ('has get and set model shortcuts', function () {
                     view.set('test', 'testing');
                     expect(view.get('test')).to.equal('testing');
                 });
