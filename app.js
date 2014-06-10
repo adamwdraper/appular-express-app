@@ -1,7 +1,8 @@
 var express = require('express'),
     app = express(),
     port = process.env.PORT || 5000,
-    fs = require('fs');
+    fs = require('fs'),
+    environment = process.env.NODE_ENV || 'production';
 
 // app.use(express.logger());
 app.use(express.compress());
@@ -12,7 +13,7 @@ app.set('view engine', 'jade');
 // Routes ---------------------------------------
 app.get('/', function (req, res) {
     res.render('index', {
-        environment: process.env.NODE_ENV
+        environment: environment
     });
 });
 
@@ -22,7 +23,7 @@ app.get('/test/appular', function (req, res) {
     tests.push('libraries/appular/tests');
 
     res.render('test', {
-        environment: process.env.NODE_ENV,
+        environment: environment,
         tests: tests
     });
 });
@@ -67,14 +68,14 @@ app.get('/test/:type?/:name?', function (req, res) {
     }
 
     res.render('test', {
-        environment: process.env.NODE_ENV,
+        environment: environment,
         tests: tests
     });
 });
 
 app.get('/:view/:data?', function (req, res) {
     res.render(req.params.view, {
-        environment: process.env.NODE_ENV
+        environment: environment
     });
 });
 
