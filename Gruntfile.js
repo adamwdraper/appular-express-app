@@ -127,6 +127,7 @@ module.exports = function(grunt) {
         },
         jshint: {
             all: [
+                'public/js/apps/**/*.js',
                 'public/js/components/**/*.js',
                 'public/js/plugins/**/*.js',
                 'public/js/utilities/**/*.js'
