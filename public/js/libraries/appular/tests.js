@@ -112,6 +112,8 @@ define([
 
                 it ('Should have certain properties', function () {
                     assert.property(app, 'config');
+                    assert.property(app, 'params');
+                    assert.property(app, 'router');
                 });
             });
 

@@ -61,50 +61,42 @@ define({
     ],
     "libraries": [
         {
-            "path": "libraries/appular/appular-4.0.0.js",
+            "path": "libraries/appular/appular.js",
             "name": "appular",
-            "version": "v4.0.0",
+            "version": "v0.9.0",
             "description": "",
             "link": "https://github.com/adamwdraper/Appular",
             "define": "appular",
-            "extras": {
-                "extensions": [
-                    {
-                        "path": "libraries/appular/extensions/app/app.js",
-                        "name": "app",
-                        "version": "",
-                        "description": "",
-                        "define": "libraries/appular/extensions/app/app",
-                        "functions": [
-                            {
-                                "path": "libraries/appular/extensions/app/app.js",
-                                "name": "get",
-                                "description": "shortcut to get params's value"
-                            },
-                            {
-                                "path": "libraries/appular/extensions/app/app.js",
-                                "name": "set",
-                                "description": "shortcut to set param's value"
-                            }
-                        ]
-                    },
-                    {
-                        "path": "libraries/appular/extensions/backbone/backbone.js",
-                        "name": "app",
-                        "version": "",
-                        "description": "",
-                        "define": "libraries/appular/extensions/backbone/backbone"
-                    }
-                ]
-            }
+            "functions": [
+                {
+                    "path": "libraries/appular/appular.js",
+                    "name": "getValue",
+                    "description": "shortcut to get model's value"
+                },
+                {
+                    "path": "libraries/appular/appular.js",
+                    "name": "setValueOf",
+                    "description": "shortcut to set model's value"
+                },
+                {
+                    "path": "libraries/appular/appular.js",
+                    "name": "get",
+                    "description": "shortcut to get params's value"
+                },
+                {
+                    "path": "libraries/appular/appular.js",
+                    "name": "set",
+                    "description": "shortcut to set param's value"
+                },
+                {
+                    "path": "libraries/appular/appular.js",
+                    "name": "set",
+                    "description": "shortcut to set param's value"
+                }
+            ]
         },
         {
-            "path": "libraries/backbone/backbone-1.1.0.js",
             "name": "backbone",
-            "version": "v1.1.0",
-            "description": "",
-            "link": "http://backbonejs.org/",
-            "define": "backbone",
             "extras": {
                 "extensions": [
                     {
@@ -151,23 +143,10 @@ define({
                         ]
                     }
                 ]
-            },
-            "path": "libraries/jquery/jquery-2.1.0.js",
-            "version": "v2.1.0",
-            "description": "",
-            "link": "http://jquery.com/",
-            "define": "jquery"
+            }
         },
         {
-            "path": "libraries/moment/moment-2.4.0.js",
-            "name": "moment",
-            "version": "v2.0.0",
-            "description": "",
-            "link": "http://momentjs.com/",
-            "define": "moment"
-        },
-        {
-            "path": "libraries/numeral/numeral-1.5.2.js",
+            "path": "libraries/numeral/numeral.js",
             "name": "numeral",
             "version": "v1.5.2",
             "description": "",
@@ -191,29 +170,9 @@ define({
                         "version": "v0.3.0",
                         "description": "include file as json",
                         "define": "json!"
-                    },
-                    {
-                        "path": "libraries/require/plugins/text.js",
-                        "name": "text",
-                        "version": "v2.0.9",
-                        "description": "include file as text",
-                        "define": "text!"
                     }
                 ]
-            },
-            "path": "libraries/require/require-2.1.10.js",
-            "version": "v2.1.10",
-            "description": "",
-            "link": "http://requirejs.org/",
-            "define": "libraries/require/require-2.1.10"
-        },
-        {
-            "path": "libraries/underscore/underscore-1.5.2.js",
-            "name": "underscore",
-            "version": "v1.5.2",
-            "description": "",
-            "link": "hhttp://underscorejs.org/",
-            "define": "underscore"
+            }
         }
     ],
     "plugins": [
@@ -237,6 +196,15 @@ define({
             "version": "",
             "description": "",
             "define": "plugins/table/plugin"
+        }
+    ],
+    "utilities": [
+        {
+            "path": "utilities/cookies/utility.js",
+            "name": "cookies",
+            "version": "",
+            "description": "easily get and set cookies",
+            "define": "utilities/cookies/utility"
         }
     ]
 });

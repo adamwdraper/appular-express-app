@@ -25,6 +25,11 @@ requirejs.config({
         'template': 'libraries/require/plugins/template',
         'text': 'libraries/require/plugins/text'
     },
+    shim: {
+        'modernizr': {
+            exports: 'Modernizr'
+        }
+    },
     deps: [
         'modernizr',
         'jqueryFunctions',

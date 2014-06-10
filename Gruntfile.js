@@ -8,7 +8,8 @@ module.exports = function(grunt) {
                 plugins: './public/js/plugins'
             },
             apps: [],
-            components: []
+            components: [],
+            plugins: []
         };
 
     // add appular app definition for build
@@ -17,7 +18,7 @@ module.exports = function(grunt) {
             appular.apps.push({
                 name: 'apps/' + name + '/app',
                 exclude: [
-                    'appular'
+                    'initialize'
                 ]
             });
         }
@@ -29,9 +30,16 @@ module.exports = function(grunt) {
             appular.components.push({
                 name: 'components/' + name + '/component',
                 exclude: [
-                    'appular'
+                    'initialize'
                 ]
             });
+        }
+    });
+
+    // add appular plugins definition for build files
+    fs.readdirSync(appular.paths.plugins).forEach(function (name) {
+        if (name[0] !== '.' && name[0] !== '_') {
+            appular.plugins.push('plugins/' + name + '/plugin');
         }
     });
 
@@ -141,38 +149,42 @@ module.exports = function(grunt) {
                     baseUrl: 'public/js',
                     dir: 'public/js/build',
                     paths: {
-                        'appular': 'libraries/appular/appular-4.0.0',
-                        'modernizr': 'libraries/modernizr/modernizr-2.6.3',
-                        'jquery': 'libraries/jquery/jquery-2.1.0',
+                        'appular': 'libraries/appular/appular',
+                        'modernizr': 'libraries/modernizr/modernizr',
+                        'jquery': 'empty:',
                         'jqueryFunctions': 'libraries/jquery/extensions/functions',
-                        'underscore': 'libraries/underscore/underscore-1.5.2',
-                        'backbone': 'libraries/backbone/backbone-1.1.0',
+                        'underscore': 'libraries/underscore/underscore',
+                        'backbone': 'libraries/backbone/backbone',
                         'backboneStickit': 'libraries/backbone/extensions/stickit',
-                        'moment': 'libraries/moment/moment-2.4.0',
-                        'numeral': 'libraries/numeral/numeral-1.5.2',
+                        'moment': 'empty:',
+                        'numeral': 'empty:',
                         'domReady': 'libraries/require/plugins/domReady',
                         'async': 'libraries/require/plugins/async',
                         'json': 'libraries/require/plugins/json',
                         'template': 'libraries/require/plugins/template',
                         'text': 'libraries/require/plugins/text'
                     },
+                    shim: {
+                        'modernizr': {
+                            exports: 'Modernizr'
+                        }
+                    },
                     modules: [
                         {
                             name: 'initialize',
                             include: [
                                 'modernizr',
-                                'libraries/require/require-2.1.10',
+                                'libraries/require/require',
                                 'libraries/require/configs/build',
-                                'appular',
-                                'jquery',
-                                'jqueryFunctions',
                                 'underscore',
                                 'backbone',
+                                'appular',
+                                'jqueryFunctions',
                                 'backboneStickit',
                                 'domReady',
                                 'text',
                                 'initialize'
-                            ]
+                            ].concat(appular.plugins)
                         }
                     ].concat(appular.apps, appular.components),
                     removeCombined: true
