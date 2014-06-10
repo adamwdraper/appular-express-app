@@ -9,7 +9,12 @@ define([
     describe('Recommended Venues Component', function () {
         describe('Construction', function () {
             beforeEach(function (done) {
-                component = new Component();
+                var App = Backbone.App.extend();
+
+                component = new Component({
+                    app: new App()
+                });
+
                 done();
             });
 
