@@ -1,11 +1,11 @@
 /**
- * @appular appular v4.0.1
+ * @appular appular v0.9.0
  * @link https://github.com/adamwdraper/Appular
  * @define appular
  */
 
 // Appular
-// version : 4.0.1
+// version : 0.9.0
 // author : Adam Draper
 // license : MIT
 // https://github.com/adamwdraper/Appular
@@ -32,7 +32,7 @@ define([
             'app'
         ];
 
-    Appular.version = '4.0.0';
+    Appular.version = '0.9.0';
 
     Appular.app = '';
 
