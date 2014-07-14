@@ -20,7 +20,6 @@
     "grunt-concurrent": "~0.3.0",
     "grunt-contrib-jshint": "~0.1.1",
     "grunt-contrib-requirejs": "~0.4.4",
-    "grunt-appular-docs": ">=0.1.0",
     "grunt-express-server": "~0.4.5",
     "load-grunt-tasks": "~0.2.0",
     "karma": "~0.12.16",

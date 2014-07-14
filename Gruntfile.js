@@ -101,18 +101,6 @@ module.exports = function(grunt) {
                 }
             }
         },
-        docs: {
-            build: {
-                options: {
-                    pretty: true
-                },
-                files: {
-                    'public/js/components/docs/docs.js': [
-                        'public/js/**/*.js'
-                    ]
-                }
-            }
-        },
         jshint: {
             all: [
                 'public/js/apps/**/*.js',
@@ -258,7 +246,6 @@ module.exports = function(grunt) {
 
     grunt.registerTask('build', 'Hints and builds production JS, runs tests, builds JS documentation, builds production CSS', [
         'test',
-        'docs:build',
         'requirejs',
         'sass:build'
     ]);
