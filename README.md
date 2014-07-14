@@ -13,14 +13,6 @@ Appular isn't really a framework.  It does a couple of nice things, like loading
 ## Slideshow
 [http://slid.es/adamwdraper/appular](http://slid.es/adamwdraper/appular)
 
-## Example Project
-To check out a quick example of appular in action:
-- Clone the repo
-- Run `npm install`
-- Run `grunt`
-- Go to `http://localhost:5000/demo` in your browser
-- Tip: Open your console to see what modules loaded
-
 ## Concepts
 In Appular there are 3 different types of modules.
 
