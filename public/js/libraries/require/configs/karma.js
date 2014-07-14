@@ -1,9 +1,23 @@
 /*
- * Dev Config Settings
+ * Test Config Settings
  */
+var allTestFiles = [],
+    TESTS_REGEXP = /tests\.js$/,
+    LIB_REGEXP = /libraries/,
+    pathToModule = function(path) {
+        return path.replace(/^\/base\//, '').replace(/\.js$/, '');
+    };
+
+Object.keys(window.__karma__.files).forEach(function(file) {
+    if (TESTS_REGEXP.test(file) && !LIB_REGEXP.test(file)) {
+        // Normalize paths to RequireJS module names.
+        allTestFiles.push(pathToModule(file));
+    }
+});
+
 requirejs.config({
     waitSeconds: 0,
-    baseUrl: '/js',
+    baseUrl: '/base',
     config: {
         'appular': {
             env: 'develop',
@@ -17,6 +31,7 @@ requirejs.config({
         'jqueryFunctions': 'libraries/jquery/extensions/functions',
         'underscore': 'libraries/underscore/underscore',
         'backbone': 'libraries/backbone/backbone',
+        'backboneStickit': 'libraries/backbone/extensions/stickit',
         'moment': 'libraries/moment/moment',
         'numeral': 'libraries/numeral/numeral',
         'domReady': 'libraries/require/plugins/domReady',
@@ -25,14 +40,15 @@ requirejs.config({
         'template': 'libraries/require/plugins/template',
         'text': 'libraries/require/plugins/text'
     },
+    shim: {
+        'modernizr': {
+            exports: 'Modernizr'
+        }
+    },
     deps: [
-        'modernizr',
+        'appular',
         'jqueryFunctions',
-        'appular'
-    ],
-    callback: function () {
-        require([
-            'tests'
-        ]);
-    }
+        'backboneStickit'
+    ].concat(allTestFiles),
+    callback: window.__karma__.start
 });
