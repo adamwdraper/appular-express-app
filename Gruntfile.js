@@ -101,30 +101,6 @@ module.exports = function(grunt) {
                 }
             }
         },
-        mocha: {
-            test: {
-                options: {
-                    urls: [
-                        'http://localhost:5000/test/appular',
-                        'http://localhost:5000/test'
-                    ],
-                    run: false,
-                    reporter: 'Spec'
-                }
-            }
-        },
-        docs: {
-            build: {
-                options: {
-                    pretty: true
-                },
-                files: {
-                    'public/js/components/docs/docs.js': [
-                        'public/js/**/*.js'
-                    ]
-                }
-            }
-        },
         jshint: {
             all: [
                 'public/js/apps/**/*.js',
@@ -151,6 +127,16 @@ module.exports = function(grunt) {
                     requirejs: false
                 },
                 strict: false
+            }
+        },
+        karma: {
+            unit: {
+                configFile: 'public/js/karma.conf.js'
+            },
+            ci: {
+                configFile: 'public/js/karma.conf.js',
+                singleRun: true,
+                autoWatch: false
             }
         },
         requirejs: {
@@ -249,8 +235,8 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('test', 'Runs tests', [
-        'express:development',
-        'mocha'
+        'jshint',
+        'karma:ci'
     ]);
 
     grunt.registerTask('production', 'Starts server in production environment.', [
@@ -259,9 +245,7 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('build', 'Hints and builds production JS, runs tests, builds JS documentation, builds production CSS', [
-        'jshint',
         'test',
-        'docs:build',
         'requirejs',
         'sass:build'
     ]);

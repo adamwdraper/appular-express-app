@@ -8,14 +8,6 @@ requirejs.config({
         'jquery': [
             '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min',
             'libraries/jquery/jquery'
-        ],
-        'moment': [
-            '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min',
-            'libraries/moment/moment'
-        ],
-        'numeral': [
-            '//cdnjs.cloudflare.com/ajax/libs/numeral.js/1.5.2/numeral.min',
-            'libraries/numeral/numeral'
         ]
     },
     deps: [
