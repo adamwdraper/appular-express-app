@@ -143,10 +143,10 @@ module.exports = function(grunt) {
         },
         karma: {
             unit: {
-                configFile: 'public/js/karma.js'
+                configFile: 'public/js/karma.conf.js'
             },
             ci: {
-                configFile: 'public/js/karma.js',
+                configFile: 'public/js/karma.conf.js',
                 singleRun: true,
                 autoWatch: false
             }
