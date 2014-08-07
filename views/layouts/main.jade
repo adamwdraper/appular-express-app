@@ -1,26 +1,24 @@
 doctype 5
 html(lang="en-US")
     block vars
-        - var app = 'default'
+        - var router = 'default'
 
     head
         meta(charset="UTF-8")
-        title Appular Project
+        title App Title
+
+        meta(content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0", name="viewport")
+
+        link(rel="stylesheet", href="/css/search.css")
 
         block head
 
-    body(data-appular-app="#{app}")
-
-        header 
-            block header
+    body(data-appular-router="#{router}")
 
         block content
-
-        footer
-            block footer
 
         block scripts
             - if (environment === 'development')
                 script(src="/js/libraries/require/require.js", data-main="/js/libraries/require/configs/dev")
             - else
-                script(src="/js/build/initialize.js")
+                script(src="/js/build/libraries/require/require.js")
