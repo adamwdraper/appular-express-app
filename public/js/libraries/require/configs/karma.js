@@ -20,7 +20,7 @@ requirejs.config({
     baseUrl: '/base',
     config: {
         'appular': {
-            env: 'develop',
+            env: 'test',
             useFixtures: true
         }
     },
