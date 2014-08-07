@@ -3,24 +3,24 @@ var fs = require('fs');
 module.exports = function(grunt) {
     var appular = {
             paths: {
-                apps: './public/js/apps',
+                routers: './public/js/routers',
                 components: './public/js/components',
                 plugins: './public/js/plugins',
                 utilities: './public/js/utilities'
             },
-            apps: [],
+            routers: [],
             components: [],
             plugins: [],
             utilities: []
         };
 
-    // add appular app definition for build
-    fs.readdirSync(appular.paths.apps).forEach(function (name) {
+    // add appular router definition for build
+    fs.readdirSync(appular.paths.routers).forEach(function (name) {
         if (name[0] !== '.' && name[0] !== '_') {
-            appular.apps.push({
-                name: 'apps/' + name + '/app',
+            appular.routers.push({
+                name: 'routers/' + name + '/router',
                 exclude: [
-                    'initialize'
+                    'libraries/require/require'
                 ]
             });
         }
@@ -32,7 +32,7 @@ module.exports = function(grunt) {
             appular.components.push({
                 name: 'components/' + name + '/component',
                 exclude: [
-                    'initialize'
+                    'libraries/require/require'
                 ]
             });
         }
@@ -103,7 +103,7 @@ module.exports = function(grunt) {
         },
         jshint: {
             all: [
-                'public/js/apps/**/*.js',
+                'public/js/routers/**/*.js',
                 'public/js/components/**/*.js',
                 'public/js/plugins/**/*.js',
                 'public/js/utilities/**/*.js'
@@ -117,6 +117,7 @@ module.exports = function(grunt) {
                 noarg: true,
                 sub: true,
                 expr: true,
+                es5: true,
                 globals: {
                     define: false,
                     describe: false,
@@ -167,7 +168,7 @@ module.exports = function(grunt) {
                     },
                     modules: [
                         {
-                            name: 'initialize',
+                            name: 'libraries/require/require',
                             include: [
                                 'modernizr',
                                 'libraries/require/require',
@@ -178,11 +179,10 @@ module.exports = function(grunt) {
                                 'jqueryFunctions',
                                 'backboneStickit',
                                 'domReady',
-                                'text',
-                                'initialize'
+                                'text'
                             ].concat(appular.plugins, appular.utilities)
                         }
-                    ].concat(appular.apps, appular.components),
+                    ].concat(appular.routers, appular.components),
                     removeCombined: true
                 }
             }
@@ -244,8 +244,7 @@ module.exports = function(grunt) {
         'watch'
     ]);
 
-    grunt.registerTask('build', 'Hints and builds production JS, runs tests, builds JS documentation, builds production CSS', [
-        'test',
+    grunt.registerTask('build', 'Hints and builds production JS, builds JS documentation, builds production CSS', [
         'requirejs',
         'sass:build'
     ]);
